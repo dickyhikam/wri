@@ -5,7 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Admin WRI</title>
-  <link rel="shortcut icon" href="img/logo2.png">
   <!-- Load Adobe Fonts -->
   <link rel="stylesheet" href="https://use.typekit.net/erz2zrt.css">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -129,6 +128,61 @@
       scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
     }
 
+    /* Tab styles */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .tab-button.active {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    /* Map styles */
+    #map {
+      height: 500px;
+      width: 100%;
+      border-radius: 0.75rem;
+      z-index: 1;
+    }
+
+    .map-container {
+      position: relative;
+    }
+
+    .map-overlay {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .legend {
+      padding: 6px 8px;
+      font-size: 12px;
+      background: white;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+      line-height: 18px;
+    }
+
+    .legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 0.7;
+    }
+
     [x-cloak] {
       display: none !important;
     }
@@ -170,7 +224,7 @@
       <nav class="flex-1 overflow-y-auto py-4 space-y-1 text-sm">
         <!-- Dashboard -->
         <div>
-          <a href="index" @click="currentMenu = 'dashboard'" :class="{'sidebar-item active': currentMenu === 'dashboard', 'sidebar-item': currentMenu !== 'dashboard'}" class="flex items-center px-6 py-3">
+          <a href="index.php" @click="currentMenu = 'dashboard'" :class="{'sidebar-item active': currentMenu === 'dashboard', 'sidebar-item': currentMenu !== 'dashboard'}" class="flex items-center px-6 py-3">
             <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
             Dashboard
           </a>
@@ -186,20 +240,20 @@
             <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.masterData}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="petani" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Petani</a>
-            <a href="lahan" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Lahan/Persil</a>
+            <a href="petani.php" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Petani</a>
+            <a href="lahan.php" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Lahan/Persil</a>
             <a href="#" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Parcel Data</a>
-            <a href="ics" @click="currentMenu = 'ics'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">ICS & Fasilitator</a>
-            <a href="pelatihan" @click="currentMenu = 'trainings'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pelatihan</a>
-            <a href="sertifikasi" @click="currentMenu = 'certifications'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Sertifikasi & Audit</a>
-            <a href="pekerja" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pekerja</a>
-            <a href="transaksi" @click="currentMenu = 'transactions'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Transaksi</a>
-            <a href="mitra" @click="currentMenu = 'partners'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Mitra & Organisasi</a>
-            <a href="#" @click="currentMenu = 'hcv'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">HCV/NKT</a>
-            <a href="kelompok_tani" @click="currentMenu = 'farmers_gt'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Kelompok Tani</a>
-            <a href="produksi" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Produksi</a>
-            <a href="perawatan" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Perawatan</a>
-            <a href="limbah" @click="currentMenu = 'limbah'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Limbah B3 dan K3</a>
+            <a href="ics.php" @click="currentMenu = 'ics'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">ICS & Fasilitator</a>
+            <a href="pelatihan.php" @click="currentMenu = 'trainings'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pelatihan</a>
+            <a href="sertifikasi.php" @click="currentMenu = 'certifications'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Sertifikasi & Audit</a>
+            <a href="pekerja.php" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pekerja</a>
+            <a href="transaksi.php" @click="currentMenu = 'transactions'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Transaksi</a>
+            <a href="mitra.php" @click="currentMenu = 'partners'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Mitra & Organisasi</a>
+            <a href="nkt.php" @click="currentMenu = 'hcv'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">HCV/NKT</a>
+            <a href="kelompok_tani.php" @click="currentMenu = 'farmers_gt'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Kelompok Tani</a>
+            <a href="produksi.php" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Produksi</a>
+            <a href="perawatan.php" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Perawatan</a>
+            <a href="limbah.php" @click="currentMenu = 'limbah'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Limbah B3 dan K3</a>
           </div>
         </div>
 
@@ -232,7 +286,7 @@
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
             <a href="#" @click="currentMenu = 'queryBuilder'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Query Builder</a>
-            <a href="analitik" @click="currentMenu = 'analyticsDashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Dashboard Analitik</a>
+            <a href="analitik.php" @click="currentMenu = 'analyticsDashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Dashboard Analitik</a>
             <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Rangkuman Produksi</a>
             <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Export Data</a>
           </div>
