@@ -1,0 +1,26 @@
+/* styles.css */
+:root {
+  --wri-yellow: #f0ab00;
+  --wri-black: #000000;
+  --wri-brown: #a35424;
+}
+
+.text-wri-yellow {
+  color: var(--wri-yellow);
+}
+.text-wri-black {
+  color: var(--wri-black);
+}
+.text-wri-brown {
+  color: var(--wri-brown);
+}
+.bg-wri-yellow {
+  background-color: var(--wri-yellow);
+}
+.border-wri-yellow {
+  border-color: var(--wri-yellow);
+}
+.focus-ring-wri-yellow:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--wri-yellow);
+}

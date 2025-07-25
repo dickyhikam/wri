@@ -1,7 +1,7 @@
 <?php
+// Include header
 include 'header.php';
 ?>
-
 
 <!-- Main Dashboard Content -->
 <section class="flex-1 overflow-y-auto p-8 bg-gray-50">
