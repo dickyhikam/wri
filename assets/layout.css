@@ -1,6 +1,9 @@
 :root {
   --font-acumin: "acumin-pro", sans-serif;
   --font-acumin-cond: "acumin-pro-condensed", sans-serif;
+  --wri-yellow: #f0ab00;
+  --wri-black: #000000;
+  --wri-brown: #a35424;
 }
 
 body {
@@ -88,7 +91,7 @@ blockquote cite strong {
 
 /* Sidebar styles */
 .sidebar-item.active {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
   font-weight: 500;
 }
 

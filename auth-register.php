@@ -68,7 +68,7 @@
     </div>
     <div class="relative z-10 text-center mt-8 text-xs text-white">
         &copy; <span id="year"></span> MIS Portal. Built by
-        <span class="text-wri-yellow font-medium">WRI Indonesia</span>.
+        <a class="text-wri-yellow font-medium" href="https://wri-indonesia.org/id" target="_blank">WRI Indonesia</a>.
     </div>
 
     <script>
