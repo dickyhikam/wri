@@ -51,7 +51,7 @@
                 </a>
             </div>
 
-            <button type="button" class="w-full bg-wri-yellow hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded-md transition">
+            <button type="submit" class="w-full bg-wri-yellow hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded-md transition">
                 Sign In
             </button>
         </form>

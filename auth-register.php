@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+// Read the data from the JSON file
+$json_data = file_get_contents('new_user.json');
+
+?>
 
 <head>
     <meta charset="UTF-8" />
@@ -8,7 +13,51 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* Tab container */
+        .tab-container {
+            display: flex;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
 
+        /* Tab button style */
+        .tab-button {
+            flex: 1;
+            padding: 10px 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid #ddd;
+            border-radius: 8px 8px 8px 8px;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        /* Hover effect for tabs */
+        .tab-button:hover {
+            background-color: #9B9B9B;
+            color: white;
+        }
+
+        /* Active tab styling */
+        .tab-button.active {
+            background-color: #f0ab00;
+            color: white;
+            font-weight: bold;
+            border-color: #f0ab00;
+        }
+
+        .tab-button.active:hover {
+            background-color: #9B9B9B;
+            border-color: #9B9B9B;
+            color: white;
+        }
+
+        /* Hiding radio buttons */
+        input[type="radio"] {
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="relative min-h-screen flex flex-col items-center justify-center font-sans px-4">
@@ -24,7 +73,15 @@
             <p class="text-sm text-wri-black">Join our platform for collaboration & reporting</p>
         </div>
 
-        <form class="space-y-5">
+        <form class="space-y-5" id="registerForm">
+            <!-- Radio Buttons as Tabs -->
+            <div class="tab-container" id="tab-container">
+                <label for="ics" class="tab-button" id="ics-tab">ICS</label>
+                <label for="wri" class="tab-button" id="wri-tab">WRI</label>
+            </div>
+            <input type="radio" id="ics" name="organization" value="ics" required checked>
+            <input type="radio" id="wri" name="organization" value="wri" required>
+
             <div>
                 <label for="name" class="block text-sm text-wri-black mb-1">Full Name <span class="text-red-500">*</span></label>
                 <input type="text" id="name" name="name" placeholder="Your full name" class="w-full px-4 py-2 rounded-md border border-gray-300 focus-ring-wri-yellow" required />
@@ -71,6 +128,9 @@
         <a class="text-wri-yellow font-medium" href="https://wri-indonesia.org/id" target="_blank">WRI Indonesia</a>.
     </div>
 
+    <!-- Include SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         function togglePassword(inputId, toggleBtn) {
             const input = document.getElementById(inputId);
@@ -85,6 +145,117 @@
 
         // Set dynamic year in footer
         document.getElementById("year").textContent = new Date().getFullYear();
+
+        // JavaScript to manage the active tab state
+        const icsTab = document.getElementById('ics-tab');
+        const wriTab = document.getElementById('wri-tab');
+        const icsRadio = document.getElementById('ics');
+        const wriRadio = document.getElementById('wri');
+        const tabContainer = document.getElementById('tab-container');
+
+        // Function to handle tab switching
+        function handleTabSwitch() {
+            if (icsRadio.checked) {
+                icsTab.classList.add('active');
+                wriTab.classList.remove('active');
+                // tabContainer.classList.add('active');
+            } else if (wriRadio.checked) {
+                wriTab.classList.add('active');
+                icsTab.classList.remove('active');
+                // tabContainer.classList.add('active');
+            }
+        }
+
+        // Event listeners for the radio buttons
+        icsRadio.addEventListener('change', handleTabSwitch);
+        wriRadio.addEventListener('change', handleTabSwitch);
+
+        // Initialize the active tab state
+        handleTabSwitch();
+
+        // Form submission handler
+        document.querySelector('#registerForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Capture data from form fields
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const type_user = document.querySelector('input[name="organization"]:checked').value;
+
+            // Prepare data as an object
+            const formData = {
+                name: name,
+                email: email,
+                password: password,
+                type_user: type_user
+            };
+
+            // Send data to the server via AJAX (fetch)
+            fetch('action/auth.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData) // Send the form data as JSON
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Log response from server (for debugging)
+                    if (data.status === 'success') {
+                        showSweetAlert('success', 'Register Success', data.message, true);
+
+                        setTimeout(function() {
+                            window.location.href = 'auth-register-verif'; // Redirect to a success page
+                        }, 2000); // 2 second delay before redirection
+
+                    } else {
+                        showSweetAlert('error', 'Invalid Register', data.message, false);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+
+        // Reusable SweetAlert function
+        function showSweetAlert(icon, title, text, autoClose) {
+            if (autoClose) {
+                // Auto-close alert after a set time (e.g., 3000 milliseconds or 3 seconds)
+                Swal.fire({
+                    icon: icon, // 'success', 'error', etc.
+                    title: title, // The title of the modal
+                    text: text, // The message shown inside the modal
+                    confirmButtonText: 'OK', // The button text
+                    background: '#f3f4f6', // The background color of the modal
+                    allowOutsideClick: false, // Disable clicking outside the modal
+                    allowEscapeKey: false, // Disable closing with the Escape key
+                    timer: 3000, // Auto-close after 3 seconds
+                    timerProgressBar: true, // Show progress bar for the timer
+                }).then((result) => {
+                    // Redirect to dashboard after auto-close or button click
+                    if (result.isConfirmed) {
+                        // Navigate to the dashboard when "OK" is clicked or after the auto-close timer
+                        window.location.href = "auth-register-verif"; // Replace with your actual dashboard URL
+                    }
+                });
+            } else {
+                // Error alert that requires the user to click "OK" to close
+                Swal.fire({
+                    icon: icon, // 'error' for invalid OTP
+                    title: title, // The title of the modal
+                    text: text, // The message shown inside the modal
+                    confirmButtonText: 'OK', // The button text
+                    background: '#f3f4f6', // The background color of the modal
+                    allowOutsideClick: false, // Disable clicking outside the modal
+                    allowEscapeKey: false, // Disable closing with the Escape key
+                }).then((result) => {
+                    // No navigation needed for error, but we can handle any action if required
+                    if (result.isConfirmed) {
+                        // Handle the action after the user clicks "OK"
+                        // For example, you could clear the OTP inputs or perform other actions
+                    }
+                });
+            }
+        }
     </script>
 </body>
 

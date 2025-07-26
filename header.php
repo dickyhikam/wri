@@ -14,6 +14,21 @@
 
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
+<?php
+$host = $_SERVER['HTTP_HOST'];
+$request_uri = $_SERVER['REQUEST_URI'];
+
+// Check if '/wri' exists in the URI path
+if (strpos($request_uri, '/wri/') !== false) {
+  // If '/wri' exists, remove it from the URI path
+  $modified_uri = str_replace('/wri/', '', $request_uri);
+} else {
+  // If '/wri' doesn't exist, keep the original URI
+  $modified_uri = $request_uri;
+}
+// echo $modified_uri;
+?>
+
 
 <body class="bg-gray-50 text-gray-800" x-data="{
     openModal: false,
@@ -33,7 +48,9 @@
       <!-- Logo -->
       <div class="h-20 flex items-center px-6 font-bold text-xl tracking-wide border-b border-yellow-500">
         <div class="flex items-center space-x-2">
-          <img src="img/logo.png" alt="MIS Admin Logo" class="h-10 w-auto" />
+          <a href="index">
+            <img src="img/logo.png" alt="MIS Admin Logo" class="h-10 w-auto" />
+          </a>
         </div>
       </div>
 
@@ -41,7 +58,7 @@
       <nav class="flex-1 overflow-y-auto py-4 space-y-1 text-sm">
         <!-- Dashboard -->
         <div>
-          <a href="index" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 sidebar-item active">
+          <a href="index" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 sidebar-item <?php echo ($modified_uri == 'index' || $modified_uri == '') ? 'active' : ''; ?>">
             <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
             Dashboard
           </a>
@@ -49,15 +66,15 @@
 
         <!-- Master Data -->
         <div class="menu-collapse" :class="{'collapsed': !menuCollapse.masterData}">
-          <div @click="menuCollapse.masterData = !menuCollapse.masterData" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
+          <div @click="menuCollapse.masterData = !menuCollapse.masterData" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer <?php echo ($modified_uri == 'petani') ? 'active' : ''; ?>">
             <div class="flex items-center">
               <i class="fas fa-database w-5 mr-3 text-[#f0ab00]"></i>
               Master Data
             </div>
-            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.projectManagement}"></i>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.masterData}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="petani" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">Petani</a>
+            <a href="petani" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black sidebar-item <?php echo ($modified_uri == 'petani') ? 'active' : ''; ?>">Petani</a>
             <a href="lahan" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">Lahan/Persil</a>
             <a href="#" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">Parcel Data</a>
             <a href="ics" @click="currentMenu = 'ics'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">ICS & Fasilitator</a>
@@ -216,7 +233,7 @@
 
             <!-- Dropdown -->
             <div x-show="open" @click.outside="open = false" x-transition class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-20">
-              <a href="#profile"
+              <a href="profile"
                 class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600">
                 <i class="fas fa-user mr-2 w-4"></i> Profile
               </a>
