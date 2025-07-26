@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Admin WRI</title>
-  <!-- Load Adobe Fonts -->
-  <link rel="stylesheet" href="https://use.typekit.net/erz2zrt.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="assets/layout.css" />
-
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-</head>
 <?php
 $host = $_SERVER['HTTP_HOST'];
 $request_uri = $_SERVER['REQUEST_URI'];
@@ -26,12 +13,42 @@ if (strpos($request_uri, '/wri/') !== false) {
   // If '/wri' doesn't exist, keep the original URI
   $modified_uri = $request_uri;
 }
-// echo $modified_uri;
+
+$name_menu = [
+  'index' => 'Dashboard',
+  '' => 'Dashboard',
+  'petani' => 'Petani',
+  'lahan' => 'Lahan/Persil',
+  'parcel' => 'Parcel Data',
+  'ics' => 'ICS & Fasilitator',
+  'pelatihan' => 'Pelatihan',
+  'sertifikasi' => 'Sertifikasi & Audit',
+  'pekerja' => 'Pekerja',
+  'transaksi' => 'Transaksi',
+  'mitra' => 'Mitra & Organisasi',
+  'nkt' => 'HCV/NKT',
+  'kelompok_tani' => 'Kelompok Tani',
+  'produksi' => 'Produksi',
+  'perawatan' => 'Perawatan',
+  'limbah' => 'Limbah B3 dan K3',
+];
 ?>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><?= $name_menu[$modified_uri] ?> | MIS</title>
+  <!-- Load Adobe Fonts -->
+  <link rel="stylesheet" href="https://use.typekit.net/erz2zrt.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="assets/layout.css" />
 
-<body class="bg-gray-50 text-gray-800" x-data="{
-    openModal: false,
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800" x-data="{ openModal: false,
     currentMenu: 'dashboard',
     menuCollapse: {
         masterData: false,
@@ -40,8 +57,7 @@ if (strpos($request_uri, '/wri/') !== false) {
         cms: false,
         userManagement: false,
         systemAdmin: false
-    }
-}">
+    }}">
   <div class="flex h-screen overflow-hidden">
     <!-- Sidebar with Child Menus -->
     <aside class="w-64 bg-[#403c3c] text-white flex flex-col shadow-xl z-10">
@@ -76,7 +92,7 @@ if (strpos($request_uri, '/wri/') !== false) {
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
             <a href="petani" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black sidebar-item <?php echo ($modified_uri == 'petani') ? 'active' : ''; ?>">Petani</a>
             <a href="lahan" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">Lahan/Persil</a>
-            <a href="#" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">Parcel Data</a>
+            <a href="parcel" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">Parcel Data</a>
             <a href="ics" @click="currentMenu = 'ics'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">ICS & Fasilitator</a>
             <a href="pelatihan" @click="currentMenu = 'trainings'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">Pelatihan</a>
             <a href="sertifikasi" @click="currentMenu = 'certifications'" class="block px-4 py-2 rounded-md hover:bg-[#f0ab00] hover:text-black">Sertifikasi & Audit</a>
@@ -193,7 +209,7 @@ if (strpos($request_uri, '/wri/') !== false) {
     <main class="flex-1 flex flex-col overflow-hidden">
       <header class="h-20 bg-white border-b shadow-sm flex items-center justify-between px-8">
         <div class="flex items-center space-x-4">
-          <h1 class="text-2xl font-bold text-gray-800">Dashboard Overview</h1>
+          <h1 class="text-2xl font-bold text-gray-800"><?= $name_menu[$modified_uri] ?></h1>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
               <i class="fas fa-search text-gray-400"></i>
