@@ -1,8 +1,4 @@
-# Monitoring NKT 1 & NKT 4
 
-Based on your request, I'll create a similar interface for monitoring NKT 1 and NKT 4 areas, following the structure of your fire risk monitoring system but with the specific fields you've provided. Here's the implementation:
-
-```php
 <?php
 // Include header
 include 'header.php';

@@ -1,22 +1,13 @@
-<?php include 'header.php'; ?>
-
 <?php
-// Simulasi action (add/view/edit)
-$action = isset($_GET['action']) ? $_GET['action'] : 'list';
-$id = isset($_GET['id']) ? $_GET['id'] : '';
-
-// Dummy data with new ID format
-// Dummy data with all fields
-// Handle form submission
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Initialize parcels array in session if not exists
+// Initialize parcels data in session if not exists
 if (!isset($_SESSION['parcels'])) {
     $_SESSION['parcels'] = [
-        [
+        'ID084d862d5' => [
             'parcel_id' => 'ID084d862d5',
-            'id' => 'ID084d862d5',
             'rspo' => 'Ya',
             'nama_petani' => 'Petani 1',
             'nik' => '1408060907930001',
@@ -40,567 +31,957 @@ if (!isset($_SESSION['parcels'])) {
             'pola_tanam' => 'Monokultur',
             'luas_lahan' => 2.04,
             'status_lahan' => 'APL',
-            'coordinates' => '',
-            'bl_timur_jenis' => '',
-            'bl_barat_jenis' => '',
-            'bl_utara_jenis' => '',
-            'bl_selatan_jenis' => '',
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'coordinates' => '101.111111,0.222222;101.111100,0.222200',
+            'bl_timur_jenis' => 'Kebun Tetangga',
+            'bl_barat_jenis' => 'Lahan Kosong',
+            'bl_utara_jenis' => 'Jalan Desa',
+            'bl_selatan_jenis' => 'Sungai Kecil',
+            'created_at' => '2024-02-05 10:00:00',
+            'updated_at' => '2024-02-05 10:00:00',
+            'status' => 'Aktif'
+        ],
+        'ID114da4c49' => [
+            'parcel_id' => 'ID114da4c49',
+            'rspo' => 'Tidak',
+            'nama_petani' => 'Petani 2',
+            'nik' => '1408060907930002',
+            'npwp' => '123456789012345',
+            'jenis_kelamin' => 'P',
+            'tempat_lahir' => 'Berumbung Baru',
+            'tanggal_lahir' => '1980-05-15',
+            'alamat_domisili' => 'Alamat lengkap sesuai KTP',
+            'id_lahan' => '14.08.06.2006.KMJ.0002',
+            'provinsi' => 'Riau',
+            'kabupaten' => 'Siak',
+            'kecamatan' => 'Dayun',
+            'desa' => 'Berumbung Baru',
+            'kategori_kebun' => 'Kebun',
+            'jenis_tanah' => 'Mineral',
+            'status_pengelola' => 'Pemilik',
+            'kelompok_tani' => 'Kelompok Tani',
+            'tanggal_masuk' => '2024-02-10',
+            'tahun_tanam' => 1985,
+            'jml_pohon' => 57,
+            'pola_tanam' => 'Monokultur',
+            'luas_lahan' => 1.13,
+            'status_lahan' => 'APL',
+            'coordinates' => '101.222222,0.333333;101.222200,0.333300',
+            'bl_timur_jenis' => 'Kebun Tetangga',
+            'bl_barat_jenis' => 'Lahan Kosong',
+            'bl_utara_jenis' => 'Jalan Desa',
+            'bl_selatan_jenis' => 'Sungai Kecil',
+            'created_at' => '2024-02-10 11:00:00',
+            'updated_at' => '2024-02-10 11:00:00',
+            'status' => 'Aktif'
         ]
     ];
 }
 
-$parcels = &$_SESSION['parcels'];
-
-// Handle actions
-$action = $_GET['action'] ?? 'list';
-$id = $_GET['id'] ?? '';
-
-// Process form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
-    $new_parcel = [
-        'parcel_id' => $_POST['parcel_id'] ?? 'ID' . uniqid(),
-        'id' => $_POST['parcel_id'] ?? 'ID' . uniqid(),
-        'rspo' => $_POST['rspo'] ?? 'Tidak',
-        'nama_petani' => $_POST['nama_petani'] ?? '',
-        'nik' => $_POST['nik'] ?? '',
-        'npwp' => $_POST['npwp'] ?? 'Tidak Ada',
-        'jenis_kelamin' => $_POST['jenis_kelamin'] ?? 'L',
-        'tempat_lahir' => $_POST['tempat_lahir'] ?? '',
-        'tanggal_lahir' => $_POST['tanggal_lahir'] ?? '',
-        'alamat_domisili' => $_POST['alamat_domisili'] ?? '',
-        'id_lahan' => $_POST['id_lahan'] ?? '',
-        'provinsi' => $_POST['provinsi'] ?? 'Riau',
-        'kabupaten' => $_POST['kabupaten'] ?? 'Siak',
-        'kecamatan' => $_POST['kecamatan'] ?? 'Dayun',
-        'desa' => $_POST['desa'] ?? 'Berumbung Baru',
-        'kategori_kebun' => $_POST['kategori_kebun'] ?? 'Kebun',
-        'jenis_tanah' => $_POST['jenis_tanah'] ?? 'Mineral',
-        'status_pengelola' => $_POST['status_pengelola'] ?? 'Pemilik',
-        'kelompok_tani' => $_POST['kelompok_tani'] ?? 'Kelompok Tani',
-        'tanggal_masuk' => $_POST['tanggal_masuk'] ?? date('Y-m-d'),
-        'tahun_tanam' => $_POST['tahun_tanam'] ?? date('Y'),
-        'jml_pohon' => $_POST['jml_pohon'] ?? 0,
-        'pola_tanam' => $_POST['pola_tanam'] ?? 'Monokultur',
-        'luas_lahan' => $_POST['luas_lahan'] ?? 0,
-        'status_lahan' => $_POST['status_lahan'] ?? 'APL',
-        'coordinates' => $_POST['coordinates'] ?? '',
-        'bl_timur_jenis' => $_POST['bl_timur_jenis'] ?? '',
-        'bl_barat_jenis' => $_POST['bl_barat_jenis'] ?? '',
-        'bl_utara_jenis' => $_POST['bl_utara_jenis'] ?? '',
-        'bl_selatan_jenis' => $_POST['bl_selatan_jenis'] ?? '',
-        'created_at' => date('Y-m-d H:i:s'),
-        'updated_at' => date('Y-m-d H:i:s')
-    ];
-
-    // Add to parcels array
-    $parcels[] = $new_parcel;
-
-    // Redirect to prevent form resubmission
-    header('Location: parcel.php');
-    exit;
-}
-
-// Get current parcel for view/edit
-$current_parcel = null;
-if ($id && in_array($action, ['view', 'edit'])) {
-    foreach ($parcels as $parcel) {
-        if ($parcel['id'] === $id || $parcel['parcel_id'] === $id) {
-            $current_parcel = $parcel;
-            break;
+// Handle form submissions
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['save'])) {
+        $parcel_id = $_POST['parcel_id'] ?? 'ID' . uniqid();
+        
+        $_SESSION['parcels'][$parcel_id] = [
+            'parcel_id' => $parcel_id,
+            'rspo' => $_POST['rspo'] ?? 'Tidak',
+            'nama_petani' => $_POST['nama_petani'] ?? '',
+            'nik' => $_POST['nik'] ?? '',
+            'npwp' => $_POST['npwp'] ?? 'Tidak Ada',
+            'jenis_kelamin' => $_POST['jenis_kelamin'] ?? 'L',
+            'tempat_lahir' => $_POST['tempat_lahir'] ?? '',
+            'tanggal_lahir' => $_POST['tanggal_lahir'] ?? '',
+            'alamat_domisili' => $_POST['alamat_domisili'] ?? '',
+            'id_lahan' => $_POST['id_lahan'] ?? '',
+            'provinsi' => $_POST['provinsi'] ?? 'Riau',
+            'kabupaten' => $_POST['kabupaten'] ?? 'Siak',
+            'kecamatan' => $_POST['kecamatan'] ?? 'Dayun',
+            'desa' => $_POST['desa'] ?? 'Berumbung Baru',
+            'kategori_kebun' => $_POST['kategori_kebun'] ?? 'Kebun',
+            'jenis_tanah' => $_POST['jenis_tanah'] ?? 'Mineral',
+            'status_pengelola' => $_POST['status_pengelola'] ?? 'Pemilik',
+            'kelompok_tani' => $_POST['kelompok_tani'] ?? 'Kelompok Tani',
+            'tanggal_masuk' => $_POST['tanggal_masuk'] ?? date('Y-m-d'),
+            'tahun_tanam' => $_POST['tahun_tanam'] ?? date('Y'),
+            'jml_pohon' => $_POST['jml_pohon'] ?? 0,
+            'pola_tanam' => $_POST['pola_tanam'] ?? 'Monokultur',
+            'luas_lahan' => $_POST['luas_lahan'] ?? 0,
+            'status_lahan' => $_POST['status_lahan'] ?? 'APL',
+            'coordinates' => $_POST['coordinates'] ?? '',
+            'bl_timur_jenis' => $_POST['bl_timur_jenis'] ?? '',
+            'bl_barat_jenis' => $_POST['bl_barat_jenis'] ?? '',
+            'bl_utara_jenis' => $_POST['bl_utara_jenis'] ?? '',
+            'bl_selatan_jenis' => $_POST['bl_selatan_jenis'] ?? '',
+            'created_at' => $_POST['created_at'] ?? date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+            'status' => 'Aktif'
+        ];
+        
+        header('Location: parcel.php?action=view&id=' . $parcel_id);
+        exit;
+    }
+    
+    if (isset($_POST['delete'])) {
+        $id = $_POST['id'];
+        if (isset($_SESSION['parcels'][$id])) {
+            unset($_SESSION['parcels'][$id]);
         }
+        header('Location: parcel.php');
+        exit;
     }
 }
+
+// Get current action and ID
+$action = $_GET['action'] ?? 'list';
+$id = $_GET['id'] ?? null;
+$current_parcel = $id ? ($_SESSION['parcels'][$id] ?? null) : null;
+
+// Get unique values for filters
+$kecamatans = array_unique(array_column($_SESSION['parcels'], 'kecamatan'));
+$kabupatens = array_unique(array_column($_SESSION['parcels'], 'kabupaten'));
+$statuses = array_unique(array_column($_SESSION['parcels'], 'status'));
+$rspo_status = array_unique(array_column($_SESSION['parcels'], 'rspo'));
+
+// Apply filters
+$filtered_parcels = $_SESSION['parcels'];
+$filter_kecamatan = $_GET['filter_kecamatan'] ?? '';
+$filter_kabupaten = $_GET['filter_kabupaten'] ?? '';
+$filter_status = $_GET['filter_status'] ?? '';
+$filter_rspo = $_GET['filter_rspo'] ?? '';
+$search = $_GET['search'] ?? '';
+
+if ($filter_kecamatan) {
+    $filtered_parcels = array_filter($filtered_parcels, fn($p) => $p['kecamatan'] === $filter_kecamatan);
+}
+if ($filter_kabupaten) {
+    $filtered_parcels = array_filter($filtered_parcels, fn($p) => $p['kabupaten'] === $filter_kabupaten);
+}
+if ($filter_status) {
+    $filtered_parcels = array_filter($filtered_parcels, fn($p) => $p['status'] === $filter_status);
+}
+if ($filter_rspo) {
+    $filtered_parcels = array_filter($filtered_parcels, fn($p) => $p['rspo'] === $filter_rspo);
+}
+if ($search) {
+    $search = strtolower($search);
+    $filtered_parcels = array_filter($filtered_parcels, function($p) use ($search) {
+        return strpos(strtolower($p['nama_petani']), $search) !== false || 
+               strpos(strtolower($p['id_lahan']), $search) !== false ||
+               strpos(strtolower($p['desa']), $search) !== false;
+    });
+}
+
+// Pagination
+$itemsPerPage = 5;
+$currentPage = max(1, intval($_GET['page'] ?? 1));
+$totalItems = count($filtered_parcels);
+$totalPages = ceil($totalItems / $itemsPerPage);
+$currentPage = min($currentPage, $totalPages);
+$startIndex = ($currentPage - 1) * $itemsPerPage;
+$paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, true);
 ?>
 
-<section class="flex-1 overflow-y-auto p-8 bg-gray-50">
+<?php include 'header.php'; ?>
 
-    <?php if ($action == 'list'): ?>
-        <!-- Page Header -->
-        <div class="flex justify-between items-center mb-8">
-            <h1 class="text-2xl font-bold text-gray-800">Manajemen Data Parcel Kebun</h1>
-
-            <a href="parcel.php?action=add" class="bg-[#F0AB00] hover:bg-[#D69E00] text-white px-4 py-2 rounded-lg flex items-center">
-                <i class="fas fa-plus mr-2"></i> Tambah Parcel
-            </a>
-        </div>
-
-        <!-- Filter and Search Section -->
-        <div class="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Cari Nama Petani</label>
-                    <input type="text" id="searchInput" placeholder="Masukkan nama petani..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Status RSPO</label>
-                    <select id="rspoFilter" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        <option value="">Semua</option>
-                        <option value="Ya">Ya</option>
-                        <option value="Tidak">Tidak</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
-                    <select id="kecamatanFilter" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        <option value="">Semua</option>
-                        <option value="Dayun">Dayun</option>
-                    </select>
-                </div>
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <header class="h-20 shadow-sm flex items-center justify-between px-8">
+            <div class="flex items-center space-x-4">
+                <h1 class="text-2xl font-bold text-gray-800">
+                    <?php if ($action === 'list'): ?>
+                        Manajemen Data Parcel Kebun
+                    <?php elseif ($action === 'add'): ?>
+                        Tambah Parcel Baru
+                    <?php elseif ($action === 'view'): ?>
+                        Detail Parcel
+                    <?php elseif ($action === 'edit'): ?>
+                        Edit Data Parcel
+                    <?php endif; ?>
+                </h1>
             </div>
-            <div class="mt-4 flex justify-end">
-                <button id="exportBtn" class="mr-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">Export</button>
-                <button id="importBtn" class="mr-2 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">Import</button>
-                <button id="applyFilter" class="px-4 py-2 bg-[#F0AB00] text-white rounded-md hover:bg-[#D69E00]">Terapkan Filter</button>
+            <div class="flex items-center space-x-6">
+                <?php if ($action === 'list'): ?>
+                    <a href="parcel.php?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-plus mr-2"></i> Tambah Parcel
+                    </a>
+                <?php elseif ($action === 'view'): ?>
+                    <a href="parcel.php?action=list" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Kembali
+                    </a>
+                    <a href="parcel.php?action=edit&id=<?= $id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-edit mr-2"></i> Edit
+                    </a>
+                <?php elseif ($action === 'edit' || $action === 'add'): ?>
+                    <a href="parcel.php?action=list" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-arrow-left mr-2"></i> Kembali
+                    </a>
+                <?php endif; ?>
             </div>
-        </div>
+        </header>
 
-        <!-- Data Table -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parcel ID</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RSPO</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Petani</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NIK</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Lahan</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kecamatan</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Luas Lahan (Ha)</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="parcelTableBody">
-                        <?php foreach ($parcels as $parcel): ?>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($parcel['parcel_id']) ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 <?= $parcel['rspo'] == 'Ya' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' ?> rounded-full text-xs">
-                                        <?= htmlspecialchars($parcel['rspo']) ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($parcel['nama_petani']) ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($parcel['nik']) ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($parcel['id_lahan']) ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($parcel['kecamatan']) ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($parcel['luas_lahan']) ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
-                                        <?= htmlspecialchars($parcel['status_lahan']) ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="parcel.php?action=view&id=<?= $parcel['parcel_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-2"><i class="fas fa-eye"></i></a>
-                                    <a href="parcel.php?action=edit&id=<?= $parcel['parcel_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-2"><i class="fas fa-edit"></i></a>
-                                    <a href="#" onclick="confirmDelete('<?= $parcel['parcel_id'] ?>')" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Pagination -->
-            <div class="bg-gray-50 px-6 py-3 flex items-center justify-between border-t border-gray-200">
-                <div class="flex-1 flex justify-between sm:hidden">
-                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Previous </a>
-                    <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Next </a>
-                </div>
-                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                    <div>
-                        <p class="text-sm text-gray-700">
-                            Showing <span class="font-medium">1</span> to <span class="font-medium"><?= count($parcels) ?></span> of <span class="font-medium"><?= count($parcels) ?></span> results
-                        </p>
+        <section class="flex-1 overflow-y-auto p-8 bg-gray-50">
+            <?php if ($action === 'list'): ?>
+                <!-- List Page -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-4 bg-gray-50 border-b">
+                        <form method="get" class="space-y-4">
+                            <input type="hidden" name="action" value="list">
+                            <div class="mb-4">
+                                <div class="relative">
+                                    <input type="text" id="search" name="search" value="<?= htmlspecialchars($search) ?>" 
+                                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                           placeholder="Cari data parcel...">
+                                    <button type="submit" class="absolute right-2 top-2 text-gray-500 hover:text-gray-700">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <!-- RSPO Filter -->
+                                <div>
+                                    <select id="filter_rspo" name="filter_rspo" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="">Semua RSPO</option>
+                                        <?php foreach($rspo_status as $rspo): ?>
+                                            <option value="<?= htmlspecialchars($rspo) ?>" <?= $filter_rspo === $rspo ? 'selected' : '' ?>><?= htmlspecialchars($rspo) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                
+                                <!-- Kecamatan Filter -->
+                                <div>
+                                    <select id="filter_kecamatan" name="filter_kecamatan" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="">Semua Kecamatan</option>
+                                        <?php foreach($kecamatans as $kecamatan): ?>
+                                            <option value="<?= htmlspecialchars($kecamatan) ?>" <?= $filter_kecamatan === $kecamatan ? 'selected' : '' ?>><?= htmlspecialchars($kecamatan) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                
+                                <!-- Kabupaten Filter -->
+                                <div>
+                                    <select id="filter_kabupaten" name="filter_kabupaten" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="">Semua Kabupaten</option>
+                                        <?php foreach($kabupatens as $kabupaten): ?>
+                                            <option value="<?= htmlspecialchars($kabupaten) ?>" <?= $filter_kabupaten === $kabupaten ? 'selected' : '' ?>><?= htmlspecialchars($kabupaten) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                
+                                <!-- Status Filter -->
+                                <div>
+                                    <select id="filter_status" name="filter_status" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        <option value="">Semua Status</option>
+                                        <?php foreach($statuses as $status): ?>
+                                            <option value="<?= htmlspecialchars($status) ?>" <?= $filter_status === $status ? 'selected' : '' ?>><?= htmlspecialchars($status) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex justify-end space-x-3">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                    <i class="fas fa-filter mr-2"></i> Filter
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div>
-                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Previous</span>
-                                <i class="fas fa-chevron-left"></i>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parcel ID</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">RSPO</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Petani</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Lahan</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kecamatan</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Luas (Ha)</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <?php if (empty($paginatedParcels)): ?>
+                                    <tr>
+                                        <td colspan="9" class="px-6 py-4 text-center text-gray-500">Tidak ada data parcel</td>
+                                    </tr>
+                                <?php else: ?>
+                                    <?php foreach ($paginatedParcels as $id_parcel => $parcel): 
+                                        $rowNumber = $startIndex + array_search($id_parcel, array_keys($filtered_parcels)) + 1;
+                                    ?>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $rowNumber ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= $parcel['parcel_id'] ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 py-1 <?= $parcel['rspo'] == 'Ya' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' ?> rounded-full text-xs">
+                                                    <?= $parcel['rspo'] ?>
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $parcel['nama_petani'] ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $parcel['id_lahan'] ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $parcel['kecamatan'] ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $parcel['luas_lahan'] ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
+                                                    <?= $parcel['status_lahan'] ?>
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                <a href="parcel.php?action=view&id=<?= $id_parcel ?>" class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-eye"></i></a>
+                                                <a href="parcel.php?action=edit&id=<?= $id_parcel ?>" class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></a>
+                                                <form action="parcel.php" method="post" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                    <input type="hidden" name="id" value="<?= $id_parcel ?>">
+                                                    <input type="hidden" name="delete" value="1">
+                                                    <button type="submit" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                Previous
                             </a>
-                            <a href="#" aria-current="page" class="z-10 bg-[#F0AB00] border-[#F0AB00] text-white relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 1 </a>
-                            <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 2 </a>
-                            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Next</span>
-                                <i class="fas fa-chevron-right"></i>
+                            <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                Next
                             </a>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            // Filter functionality
-            document.getElementById('applyFilter').addEventListener('click', function() {
-                const searchValue = document.getElementById('searchInput').value.toLowerCase();
-                const rspoValue = document.getElementById('rspoFilter').value;
-                const kecamatanValue = document.getElementById('kecamatanFilter').value;
-
-                const rows = document.querySelectorAll('#parcelTableBody tr');
-
-                rows.forEach(row => {
-                    const nama = row.cells[2].textContent.toLowerCase();
-                    const rspo = row.cells[1].textContent.trim();
-                    const kecamatan = row.cells[5].textContent.trim();
-
-                    const namaMatch = nama.includes(searchValue);
-                    const rspoMatch = rspoValue === '' || rspo.includes(rspoValue);
-                    const kecamatanMatch = kecamatanValue === '' || kecamatan.includes(kecamatanValue);
-
-                    if (namaMatch && rspoMatch && kecamatanMatch) {
-                        row.style.display = '';
-                    } else {
-                        row.style.display = 'none';
-                    }
-                });
-            });
-
-            // Add event listeners for the new buttons
-            document.getElementById('exportBtn').addEventListener('click', function() {
-                // Add your export functionality here
-                console.log('Export button clicked');
-                // Implement your export logic (e.g., export to Excel, CSV, etc.)
-            });
-
-            document.getElementById('importBtn').addEventListener('click', function() {
-                // Add your import functionality here
-                console.log('Import button clicked');
-
-                function confirmDelete(id) {
-                    if (confirm('Apakah Anda yakin ingin menghapus data parcel ini?')) {
-                        window.location.href = 'parcel.php?action=delete&id=' + id;
-                    }
-                }
-            });
-        </script>
-
-    <?php elseif ($action == 'add' || $action == 'edit'): ?>
-        <!-- Form Header -->
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">
-                <?= ($action == 'add') ? 'Tambah Data Parcel' : 'Edit Data Parcel' ?>
-            </h1>
-            <a href="parcel.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> Kembali
-            </a>
-        </div>
-
-        <!-- Form Container -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
-            <form method="post" class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Column 1 - Data Petani -->
-                    <div>
-                        <h4 class="font-medium text-gray-700 mb-3 border-b pb-2">Data Petani</h4>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Daftar RSPO</label>
-                            <select name="rspo" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                                <option value="Ya" <?= ($action == 'edit' && $current_parcel['rspo'] == 'Ya') ? 'selected' : '' ?>>Ya</option>
-                                <option value="Tidak" <?= ($action == 'edit' && $current_parcel['rspo'] == 'Tidak') ? 'selected' : '' ?>>Tidak</option>
-                            </select>
                         </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Petani</label>
-                            <input type="text" name="nama_petani" value="<?= ($action == 'edit') ? $current_parcel['nama_petani'] : '' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">NIK</label>
-                            <input type="text" name="nik" value="<?= ($action == 'edit') ? $current_parcel['nik'] : '' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">No. NPWP</label>
-                            <input type="text" name="npwp" value="<?= ($action == 'edit') ? $current_parcel['npwp'] : 'Tidak Ada' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
-                            <select name="jenis_kelamin" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                                <option value="L" <?= ($action == 'edit' && $current_parcel['jenis_kelamin'] == 'L') ? 'selected' : '' ?>>Laki-laki</option>
-                                <option value="P" <?= ($action == 'edit' && $current_parcel['jenis_kelamin'] == 'P') ? 'selected' : '' ?>>Perempuan</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir</label>
-                            <input type="text" name="tempat_lahir" value="<?= ($action == 'edit') ? $current_parcel['tempat_lahir'] : '' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir</label>
-                            <input type="date" name="tanggal_lahir" value="<?= ($action == 'edit') ? $current_parcel['tanggal_lahir'] : '' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Alamat Domisili (Sesuai KTP)</label>
-                            <textarea name="alamat_domisili" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]"><?= ($action == 'edit') ? $current_parcel['alamat_domisili'] : '' ?></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Column 2 - Data Lahan -->
-                    <div>
-                        <h4 class="font-medium text-gray-700 mb-3 border-b pb-2">Data Lahan</h4>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Parcel ID</label>
-                            <input type="text" name="parcel_id" value="<?= ($action == 'edit') ? $current_parcel['parcel_id'] : '' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]" <?= ($action == 'edit') ? 'readonly' : '' ?>>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">ID Lahan</label>
-                            <input type="text" name="id_lahan" value="<?= ($action == 'edit') ? $current_parcel['id_lahan'] : '' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Provinsi</label>
-                            <input type="text" name="provinsi" value="<?= ($action == 'edit') ? $current_parcel['provinsi'] : 'Riau' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Kabupaten</label>
-                            <input type="text" name="kabupaten" value="<?= ($action == 'edit') ? $current_parcel['kabupaten'] : 'Siak' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
-                            <input type="text" name="kecamatan" value="<?= ($action == 'edit') ? $current_parcel['kecamatan'] : 'Dayun' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Desa/Kelurahan</label>
-                            <input type="text" name="desa" value="<?= ($action == 'edit') ? $current_parcel['desa'] : 'Berumbung Baru' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Kategori Kebun</label>
-                            <select name="kategori_kebun" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                                <option value="Kebun" <?= ($action == 'edit' && $current_parcel['kategori_kebun'] == 'Kebun') ? 'selected' : '' ?>>Kebun</option>
-                                <option value="Lainnya" <?= ($action == 'edit' && $current_parcel['kategori_kebun'] == 'Lainnya') ? 'selected' : '' ?>>Lainnya</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Tanah</label>
-                            <select name="jenis_tanah" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                                <option value="Mineral" <?= ($action == 'edit' && $current_parcel['jenis_tanah'] == 'Mineral') ? 'selected' : '' ?>>Mineral</option>
-                                <option value="Gambut" <?= ($action == 'edit' && $current_parcel['jenis_tanah'] == 'Gambut') ? 'selected' : '' ?>>Gambut</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Column 3 - Data Tambahan -->
-                    <div>
-                        <h4 class="font-medium text-gray-700 mb-3 border-b pb-2">Informasi Tambahan</h4>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Status Pengelola Lahan</label>
-                            <select name="status_pengelola" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                                <option value="Pemilik" <?= ($action == 'edit' && $current_parcel['status_pengelola'] == 'Pemilik') ? 'selected' : '' ?>>Pemilik</option>
-                                <option value="Penggarap" <?= ($action == 'edit' && $current_parcel['status_pengelola'] == 'Penggarap') ? 'selected' : '' ?>>Penggarap</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Koperasi/Kelompok Tani</label>
-                            <input type="text" name="kelompok_tani" value="<?= ($action == 'edit') ? $current_parcel['kelompok_tani'] : 'Kelompok Tani' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Masuk Anggota</label>
-                            <input type="date" name="tanggal_masuk" value="<?= ($action == 'edit') ? $current_parcel['tanggal_masuk'] : '' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tahun Tanam Perdana</label>
-                            <input type="number" name="tahun_tanam" value="<?= ($action == 'edit') ? $current_parcel['tahun_tanam'] : '' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Pokok Tegakan Pohon</label>
-                            <input type="number" name="jml_pohon" value="<?= ($action == 'edit') ? $current_parcel['jml_pohon'] : '' ?>" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Pola Tanam</label>
-                            <select name="pola_tanam" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                                <option value="Monokultur" <?= ($action == 'edit' && $current_parcel['pola_tanam'] == 'Monokultur') ? 'selected' : '' ?>>Monokultur</option>
-                                <option value="Polikultur" <?= ($action == 'edit' && $current_parcel['pola_tanam'] == 'Polikultur') ? 'selected' : '' ?>>Polikultur</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Status Lahan</label>
-                            <select name="status_lahan" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F0AB00]">
-                                <option value="APL" <?= ($action == 'edit' && $current_parcel['status_lahan'] == 'APL') ? 'selected' : '' ?>>APL</option>
-                                <option value="HPK" <?= ($action == 'edit' && $current_parcel['status_lahan'] == 'HPK') ? 'selected' : '' ?>>HPK</option>
-                                <option value="HL" <?= ($action == 'edit' && $current_parcel['status_lahan'] == 'HL') ? 'selected' : '' ?>>HL</option>
-                                <option value="HGU" <?= ($action == 'edit' && $current_parcel['status_lahan'] == 'HGU') ? 'selected' : '' ?>>HGU</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Additional sections can be added here for more fields -->
-
-                <div class="mt-6 flex justify-end">
-                    <button type="submit" name="save" class="bg-[#F0AB00] hover:bg-[#D69E00] text-white px-4 py-2 rounded-lg">
-                        Simpan Data
-                    </button>
-                </div>
-            </form>
-        </div>
-
-
-    <?php elseif ($action == 'view' && $current_parcel): ?>
-        <!-- View Header -->
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Detail Parcel</h1>
-            <div class="flex space-x-2">
-                <a href="parcel.php?action=edit&id=<?= $id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
-                    <i class="fas fa-edit mr-2"></i> Edit
-                </a>
-                <a href="parcel.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
-                    <i class="fas fa-arrow-left mr-2"></i> Kembali
-                </a>
-            </div>
-        </div>
-
-        <!-- View Container -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
-            <div class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Column 1 - Informasi Petani -->
-                    <div>
-                        <h4 class="font-medium text-gray-700 mb-3 border-b pb-2">Informasi Petani</h4>
-
-                        <div class="grid grid-cols-1 gap-4">
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div>
-                                <p class="text-sm text-gray-500">Parcel ID</p>
-                                <p class="font-medium"><?= $current_parcel['parcel_id'] ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Nama Petani</p>
-                                <p class="font-medium"><?= $current_parcel['nama_petani'] ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">NIK</p>
-                                <p class="font-medium"><?= $current_parcel['nik'] ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">RSPO</p>
-                                <p class="font-medium">
-                                    <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs"><?= $current_parcel['rspo'] ?></span>
+                                <p class="text-sm text-gray-700">
+                                    Menampilkan <span class="font-medium"><?= $startIndex + 1 ?></span> sampai <span class="font-medium"><?= min($startIndex + $itemsPerPage, $totalItems) ?></span> dari <span class="font-medium"><?= $totalItems ?></span> hasil
                                 </p>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-500">NPWP</p>
-                                <p class="font-medium"><?= $current_parcel['npwp'] ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Jenis Kelamin</p>
-                                <p class="font-medium"><?= $current_parcel['jenis_kelamin'] == 'L' ? 'Laki-laki' : 'Perempuan' ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Tempat/Tanggal Lahir</p>
-                                <p class="font-medium"><?= $current_parcel['tempat_lahir'] ?>, <?= date('d/m/Y', strtotime($current_parcel['tanggal_lahir'])) ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Alamat Domisili</p>
-                                <p class="font-medium"><?= $current_parcel['alamat_domisili'] ?></p>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                    <!-- Previous Page Link -->
+                                    <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                        <span class="sr-only">Previous</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+
+                                    <!-- Page Numbers -->
+                                    <?php 
+                                    $startPage = max(1, $currentPage - 2);
+                                    $endPage = min($totalPages, $currentPage + 2);
+                                    
+                                    if ($currentPage <= 3) {
+                                        $endPage = min(5, $totalPages);
+                                    }
+                                    
+                                    if ($currentPage >= $totalPages - 2) {
+                                        $startPage = max(1, $totalPages - 4);
+                                    }
+                                    
+                                    if ($startPage > 1) {
+                                        ?>
+                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                            1
+                                        </a>
+                                        <?php if ($startPage > 2): ?>
+                                            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                                ...
+                                            </span>
+                                        <?php endif; ?>
+                                        <?php
+                                    }
+                                    
+                                    for ($i = $startPage; $i <= $endPage; $i++) {
+                                        ?>
+                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium <?= $i == $currentPage ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50' ?>">
+                                            <?= $i ?>
+                                        </a>
+                                        <?php
+                                    }
+                                    
+                                    if ($endPage < $totalPages) {
+                                        ?>
+                                        <?php if ($endPage < $totalPages - 1): ?>
+                                            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                                ...
+                                            </span>
+                                        <?php endif; ?>
+                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $totalPages])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                            <?= $totalPages ?>
+                                        </a>
+                                        <?php
+                                    }
+                                    ?>
+
+                                    <!-- Next Page Link -->
+                                    <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                        <span class="sr-only">Next</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </nav>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Column 2 - Informasi Lahan -->
-                    <div>
-                        <h4 class="font-medium text-gray-700 mb-3 border-b pb-2">Informasi Lahan</h4>
-
-                        <div class="grid grid-cols-1 gap-4">
-                            <div>
-                                <p class="text-sm text-gray-500">ID Lahan</p>
-                                <p class="font-medium"><?= $current_parcel['id_lahan'] ?></p>
+                </div>
+            <?php elseif ($action === 'add'): ?>
+                <!-- Add Form -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Tambah Parcel Baru</h2>
+                        <form method="post">
+                            <input type="hidden" name="save" value="1">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <div class="mb-4">
+                                        <label for="parcel_id" class="block text-sm font-medium text-gray-700 mb-1">Parcel ID*</label>
+                                        <input type="text" id="parcel_id" name="parcel_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: ID084d862d5" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="rspo" class="block text-sm font-medium text-gray-700 mb-1">Daftar RSPO*</label>
+                                        <select id="rspo" name="rspo" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                            <option value="Ya">Ya</option>
+                                            <option value="Tidak">Tidak</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="nama_petani" class="block text-sm font-medium text-gray-700 mb-1">Nama Petani*</label>
+                                        <input type="text" id="nama_petani" name="nama_petani" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Petani 1" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="nik" class="block text-sm font-medium text-gray-700 mb-1">NIK*</label>
+                                        <input type="text" id="nik" name="nik" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 1408060907930001" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="npwp" class="block text-sm font-medium text-gray-700 mb-1">No. NPWP</label>
+                                        <input type="text" id="npwp" name="npwp" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 123456789012345">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin*</label>
+                                        <select id="jenis_kelamin" name="jenis_kelamin" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                            <option value="L">Laki-laki</option>
+                                            <option value="P">Perempuan</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="tempat_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir*</label>
+                                        <input type="text" id="tempat_lahir" name="tempat_lahir" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Berumbung Baru" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-4">
+                                        <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir*</label>
+                                        <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="alamat_domisili" class="block text-sm font-medium text-gray-700 mb-1">Alamat Domisili*</label>
+                                        <textarea id="alamat_domisili" name="alamat_domisili" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required></textarea>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="id_lahan" class="block text-sm font-medium text-gray-700 mb-1">ID Lahan*</label>
+                                        <input type="text" id="id_lahan" name="id_lahan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 14.08.06.2006.KMJ.0001" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi*</label>
+                                        <input type="text" id="provinsi" name="provinsi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="Riau" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten*</label>
+                                        <input type="text" id="kabupaten" name="kabupaten" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="Siak" required>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Lokasi</p>
-                                <p class="font-medium"><?= $current_parcel['desa'] ?>, <?= $current_parcel['kecamatan'] ?>, <?= $current_parcel['kabupaten'] ?>, <?= $current_parcel['provinsi'] ?></p>
+                            
+                            <div class="mt-6 border-t pt-6">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Informasi Lahan</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan*</label>
+                                            <input type="text" id="kecamatan" name="kecamatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="Dayun" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa/Kelurahan*</label>
+                                            <input type="text" id="desa" name="desa" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="Berumbung Baru" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="kategori_kebun" class="block text-sm font-medium text-gray-700 mb-1">Kategori Kebun*</label>
+                                            <select id="kategori_kebun" name="kategori_kebun" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="Kebun">Kebun</option>
+                                                <option value="Lainnya">Lainnya</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="jenis_tanah" class="block text-sm font-medium text-gray-700 mb-1">Jenis Tanah*</label>
+                                            <select id="jenis_tanah" name="jenis_tanah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="Mineral">Mineral</option>
+                                                <option value="Gambut">Gambut</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="status_pengelola" class="block text-sm font-medium text-gray-700 mb-1">Status Pengelola*</label>
+                                            <select id="status_pengelola" name="status_pengelola" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="Pemilik">Pemilik</option>
+                                                <option value="Penggarap">Penggarap</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="kelompok_tani" class="block text-sm font-medium text-gray-700 mb-1">Kelompok Tani*</label>
+                                            <input type="text" id="kelompok_tani" name="kelompok_tani" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="Kelompok Tani" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="tanggal_masuk" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Masuk Anggota*</label>
+                                            <input type="date" id="tanggal_masuk" name="tanggal_masuk" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="tahun_tanam" class="block text-sm font-medium text-gray-700 mb-1">Tahun Tanam Perdana*</label>
+                                            <input type="number" id="tahun_tanam" name="tahun_tanam" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Kategori Kebun</p>
-                                <p class="font-medium"><?= $current_parcel['kategori_kebun'] ?></p>
+                            
+                            <div class="mt-6 border-t pt-6">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Informasi Tambahan</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="jml_pohon" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Pokok Tegakan Pohon*</label>
+                                            <input type="number" id="jml_pohon" name="jml_pohon" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="pola_tanam" class="block text-sm font-medium text-gray-700 mb-1">Pola Tanam*</label>
+                                            <select id="pola_tanam" name="pola_tanam" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="Monokultur">Monokultur</option>
+                                                <option value="Polikultur">Polikultur</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="luas_lahan" class="block text-sm font-medium text-gray-700 mb-1">Luas Lahan (Ha)*</label>
+                                            <input type="number" step="0.01" id="luas_lahan" name="luas_lahan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="status_lahan" class="block text-sm font-medium text-gray-700 mb-1">Status Lahan*</label>
+                                            <select id="status_lahan" name="status_lahan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="APL">APL</option>
+                                                <option value="HPK">HPK</option>
+                                                <option value="HL">HL</option>
+                                                <option value="HGU">HGU</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Jenis Tanah</p>
-                                <p class="font-medium"><?= $current_parcel['jenis_tanah'] ?></p>
+                            
+                            <div class="mt-6 border-t pt-6">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Batas Lahan</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="bl_utara_jenis" class="block text-sm font-medium text-gray-700 mb-1">Batas Utara*</label>
+                                            <input type="text" id="bl_utara_jenis" name="bl_utara_jenis" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Jalan Desa" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="bl_selatan_jenis" class="block text-sm font-medium text-gray-700 mb-1">Batas Selatan*</label>
+                                            <input type="text" id="bl_selatan_jenis" name="bl_selatan_jenis" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Sungai Kecil" required>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="bl_barat_jenis" class="block text-sm font-medium text-gray-700 mb-1">Batas Barat*</label>
+                                            <input type="text" id="bl_barat_jenis" name="bl_barat_jenis" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Lahan Kosong" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="bl_timur_jenis" class="block text-sm font-medium text-gray-700 mb-1">Batas Timur*</label>
+                                            <input type="text" id="bl_timur_jenis" name="bl_timur_jenis" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Kebun Tetangga" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="coordinates" class="block text-sm font-medium text-gray-700 mb-1">Koordinat (Format: Long,Lat;Long,Lat;...)*</label>
+                                    <textarea id="coordinates" name="coordinates" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 101.111111,0.222222;101.111100,0.222200" required></textarea>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Status Pengelola</p>
-                                <p class="font-medium"><?= $current_parcel['status_pengelola'] ?></p>
+                            
+                            <div class="mt-8 flex justify-end space-x-4">
+                                <button type="button" onclick="window.location.href='?action=list'" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
+                                    Batal
+                                </button>
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
+                                    Simpan Data Parcel
+                                </button>
                             </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Kelompok Tani</p>
-                                <p class="font-medium"><?= $current_parcel['kelompok_tani'] ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Tanggal Masuk Anggota</p>
-                                <p class="font-medium"><?= date('d/m/Y', strtotime($current_parcel['tanggal_masuk'])) ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Tahun Tanam Perdana</p>
-                                <p class="font-medium"><?= $current_parcel['tahun_tanam'] ?></p>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-
-                    <!-- Column 3 - Informasi Tambahan -->
-                    <div>
-                        <h4 class="font-medium text-gray-700 mb-3 border-b pb-2">Informasi Tambahan</h4>
-
-                        <div class="grid grid-cols-1 gap-4">
+                </div>
+            <?php elseif ($action === 'view' && $current_parcel): ?>
+                <!-- View Page -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-6">
                             <div>
-                                <p class="text-sm text-gray-500">Jumlah Pokok Tegakan Pohon</p>
-                                <p class="font-medium"><?= $current_parcel['jml_pohon'] ?></p>
+                                <h2 class="text-2xl font-bold text-gray-800">Detail Parcel</h2>
+                                <p class="text-gray-600">Parcel ID: <?= $current_parcel['parcel_id'] ?></p>
                             </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Pola Tanam</p>
-                                <p class="font-medium"><?= $current_parcel['pola_tanam'] ?></p>
+                            <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                <?= $current_parcel['status_lahan'] ?>
+                            </span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h3 class="font-medium text-gray-900 mb-2">Informasi Petani</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <span class="text-sm text-gray-500">Nama Petani:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['nama_petani'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">NIK:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['nik'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">RSPO:</span>
+                                        <p class="text-sm font-medium">
+                                            <span class="px-2 py-1 <?= $current_parcel['rspo'] == 'Ya' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' ?> rounded-full text-xs">
+                                                <?= $current_parcel['rspo'] ?>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">NPWP:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['npwp'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Jenis Kelamin:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['jenis_kelamin'] == 'L' ? 'Laki-laki' : 'Perempuan' ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Tempat/Tanggal Lahir:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['tempat_lahir'] ?>, <?= date('d/m/Y', strtotime($current_parcel['tanggal_lahir'])) ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Alamat Domisili:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['alamat_domisili'] ?></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Status Lahan</p>
-                                <p class="font-medium">
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs"><?= $current_parcel['status_lahan'] ?></span>
-                                </p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h3 class="font-medium text-gray-900 mb-2">Informasi Lahan</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <span class="text-sm text-gray-500">ID Lahan:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['id_lahan'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Lokasi:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['desa'] ?>, <?= $current_parcel['kecamatan'] ?>, <?= $current_parcel['kabupaten'] ?>, <?= $current_parcel['provinsi'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Kategori Kebun:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['kategori_kebun'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Jenis Tanah:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['jenis_tanah'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Status Pengelola:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['status_pengelola'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Kelompok Tani:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['kelompok_tani'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Tanggal Masuk Anggota:</span>
+                                        <p class="text-sm font-medium"><?= date('d/m/Y', strtotime($current_parcel['tanggal_masuk'])) ?></p>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Luas Lahan (Ha)</p>
-                                <p class="font-medium"><?= $current_parcel['luas_lahan'] ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Koordinat Lahan</p>
-                                <p class="font-medium text-xs"><?= $current_parcel['coordinates'] ?></p>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-500">Batas Lahan</p>
-                                <div class="text-xs">
-                                    <p>Timur: <?= $current_parcel['bl_timur_jenis'] ?></p>
-                                    <p>Barat: <?= $current_parcel['bl_barat_jenis'] ?></p>
-                                    <p>Utara: <?= $current_parcel['bl_utara_jenis'] ?></p>
-                                    <p>Selatan: <?= $current_parcel['bl_selatan_jenis'] ?></p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h3 class="font-medium text-gray-900 mb-2">Informasi Tambahan</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <span class="text-sm text-gray-500">Tahun Tanam Perdana:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['tahun_tanam'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Jumlah Pokok Tegakan Pohon:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['jml_pohon'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Pola Tanam:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['pola_tanam'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Luas Lahan (Ha):</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['luas_lahan'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Status Lahan:</span>
+                                        <p class="text-sm font-medium">
+                                            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
+                                                <?= $current_parcel['status_lahan'] ?>
+                                            </span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h3 class="font-medium text-gray-900 mb-2">Batas Lahan</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <span class="text-sm text-gray-500">Utara:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['bl_utara_jenis'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Selatan:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['bl_selatan_jenis'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Barat:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['bl_barat_jenis'] ?></p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-gray-500">Timur:</span>
+                                        <p class="text-sm font-medium"><?= $current_parcel['bl_timur_jenis'] ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h3 class="font-medium text-gray-900 mb-2">Koordinat Lahan</h3>
+                                <div class="space-y-2">
+                                    <div>
+                                        <span class="text-sm text-gray-500">Koordinat:</span>
+                                        <p class="text-sm font-medium break-all"><?= $current_parcel['coordinates'] ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Map placeholder -->
+                        <div class="bg-gray-50 p-4 rounded-lg mb-8">
+                            <h3 class="font-medium text-gray-900 mb-2">Peta Lahan</h3>
+                            <div id="map" class="h-64 w-full bg-gray-200 rounded-lg flex items-center justify-center">
+                                <p class="text-gray-500">Peta akan ditampilkan di sini</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            <?php elseif ($action === 'edit' && $current_parcel): ?>
+                <!-- Edit Form -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Edit Data Parcel</h2>
+                        <form method="post">
+                            <input type="hidden" name="save" value="1">
+                            <input type="hidden" name="parcel_id" value="<?= $current_parcel['parcel_id'] ?>">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <div class="mb-4">
+                                        <label for="parcel_id_display" class="block text-sm font-medium text-gray-700 mb-1">Parcel ID</label>
+                                        <input type="text" id="parcel_id_display" class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100" value="<?= $current_parcel['parcel_id'] ?>" readonly>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="rspo" class="block text-sm font-medium text-gray-700 mb-1">Daftar RSPO*</label>
+                                        <select id="rspo" name="rspo" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                            <option value="Ya" <?= $current_parcel['rspo'] == 'Ya' ? 'selected' : '' ?>>Ya</option>
+                                            <option value="Tidak" <?= $current_parcel['rspo'] == 'Tidak' ? 'selected' : '' ?>>Tidak</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="nama_petani" class="block text-sm font-medium text-gray-700 mb-1">Nama Petani*</label>
+                                        <input type="text" id="nama_petani" name="nama_petani" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['nama_petani'] ?>" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="nik" class="block text-sm font-medium text-gray-700 mb-1">NIK*</label>
+                                        <input type="text" id="nik" name="nik" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['nik'] ?>" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="npwp" class="block text-sm font-medium text-gray-700 mb-1">No. NPWP</label>
+                                        <input type="text" id="npwp" name="npwp" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['npwp'] ?>">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="jenis_kelamin" class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin*</label>
+                                        <select id="jenis_kelamin" name="jenis_kelamin" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                            <option value="L" <?= $current_parcel['jenis_kelamin'] == 'L' ? 'selected' : '' ?>>Laki-laki</option>
+                                            <option value="P" <?= $current_parcel['jenis_kelamin'] == 'P' ? 'selected' : '' ?>>Perempuan</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="tempat_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir*</label>
+                                        <input type="text" id="tempat_lahir" name="tempat_lahir" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['tempat_lahir'] ?>" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-4">
+                                        <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir*</label>
+                                        <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['tanggal_lahir'] ?>" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="alamat_domisili" class="block text-sm font-medium text-gray-700 mb-1">Alamat Domisili*</label>
+                                        <textarea id="alamat_domisili" name="alamat_domisili" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required><?= $current_parcel['alamat_domisili'] ?></textarea>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="id_lahan" class="block text-sm font-medium text-gray-700 mb-1">ID Lahan*</label>
+                                        <input type="text" id="id_lahan" name="id_lahan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['id_lahan'] ?>" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi*</label>
+                                        <input type="text" id="provinsi" name="provinsi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['provinsi'] ?>" required>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten*</label>
+                                        <input type="text" id="kabupaten" name="kabupaten" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['kabupaten'] ?>" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 border-t pt-6">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Informasi Lahan</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan*</label>
+                                            <input type="text" id="kecamatan" name="kecamatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['kecamatan'] ?>" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa/Kelurahan*</label>
+                                            <input type="text" id="desa" name="desa" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['desa'] ?>" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="kategori_kebun" class="block text-sm font-medium text-gray-700 mb-1">Kategori Kebun*</label>
+                                            <select id="kategori_kebun" name="kategori_kebun" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="Kebun" <?= $current_parcel['kategori_kebun'] == 'Kebun' ? 'selected' : '' ?>>Kebun</option>
+                                                <option value="Lainnya" <?= $current_parcel['kategori_kebun'] == 'Lainnya' ? 'selected' : '' ?>>Lainnya</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="jenis_tanah" class="block text-sm font-medium text-gray-700 mb-1">Jenis Tanah*</label>
+                                            <select id="jenis_tanah" name="jenis_tanah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="Mineral" <?= $current_parcel['jenis_tanah'] == 'Mineral' ? 'selected' : '' ?>>Mineral</option>
+                                                <option value="Gambut" <?= $current_parcel['jenis_tanah'] == 'Gambut' ? 'selected' : '' ?>>Gambut</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="status_pengelola" class="block text-sm font-medium text-gray-700 mb-1">Status Pengelola*</label>
+                                            <select id="status_pengelola" name="status_pengelola" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="Pemilik" <?= $current_parcel['status_pengelola'] == 'Pemilik' ? 'selected' : '' ?>>Pemilik</option>
+                                                <option value="Penggarap" <?= $current_parcel['status_pengelola'] == 'Penggarap' ? 'selected' : '' ?>>Penggarap</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="kelompok_tani" class="block text-sm font-medium text-gray-700 mb-1">Kelompok Tani*</label>
+                                            <input type="text" id="kelompok_tani" name="kelompok_tani" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['kelompok_tani'] ?>" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="tanggal_masuk" class="block text-sm font-medium text-gray-700 mb-1">Tanggal Masuk Anggota*</label>
+                                            <input type="date" id="tanggal_masuk" name="tanggal_masuk" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['tanggal_masuk'] ?>" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="tahun_tanam" class="block text-sm font-medium text-gray-700 mb-1">Tahun Tanam Perdana*</label>
+                                            <input type="number" id="tahun_tanam" name="tahun_tanam" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['tahun_tanam'] ?>" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 border-t pt-6">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Informasi Tambahan</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="jml_pohon" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Pokok Tegakan Pohon*</label>
+                                            <input type="number" id="jml_pohon" name="jml_pohon" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['jml_pohon'] ?>" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="pola_tanam" class="block text-sm font-medium text-gray-700 mb-1">Pola Tanam*</label>
+                                            <select id="pola_tanam" name="pola_tanam" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="Monokultur" <?= $current_parcel['pola_tanam'] == 'Monokultur' ? 'selected' : '' ?>>Monokultur</option>
+                                                <option value="Polikultur" <?= $current_parcel['pola_tanam'] == 'Polikultur' ? 'selected' : '' ?>>Polikultur</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="luas_lahan" class="block text-sm font-medium text-gray-700 mb-1">Luas Lahan (Ha)*</label>
+                                            <input type="number" step="0.01" id="luas_lahan" name="luas_lahan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['luas_lahan'] ?>" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="status_lahan" class="block text-sm font-medium text-gray-700 mb-1">Status Lahan*</label>
+                                            <select id="status_lahan" name="status_lahan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                                                <option value="APL" <?= $current_parcel['status_lahan'] == 'APL' ? 'selected' : '' ?>>APL</option>
+                                                <option value="HPK" <?= $current_parcel['status_lahan'] == 'HPK' ? 'selected' : '' ?>>HPK</option>
+                                                <option value="HL" <?= $current_parcel['status_lahan'] == 'HL' ? 'selected' : '' ?>>HL</option>
+                                                <option value="HGU" <?= $current_parcel['status_lahan'] == 'HGU' ? 'selected' : '' ?>>HGU</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 border-t pt-6">
+                                <h3 class="text-lg font-medium text-gray-900 mb-4">Batas Lahan</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="bl_utara_jenis" class="block text-sm font-medium text-gray-700 mb-1">Batas Utara*</label>
+                                            <input type="text" id="bl_utara_jenis" name="bl_utara_jenis" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['bl_utara_jenis'] ?>" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="bl_selatan_jenis" class="block text-sm font-medium text-gray-700 mb-1">Batas Selatan*</label>
+                                            <input type="text" id="bl_selatan_jenis" name="bl_selatan_jenis" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['bl_selatan_jenis'] ?>" required>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="mb-4">
+                                            <label for="bl_barat_jenis" class="block text-sm font-medium text-gray-700 mb-1">Batas Barat*</label>
+                                            <input type="text" id="bl_barat_jenis" name="bl_barat_jenis" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['bl_barat_jenis'] ?>" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="bl_timur_jenis" class="block text-sm font-medium text-gray-700 mb-1">Batas Timur*</label>
+                                            <input type="text" id="bl_timur_jenis" name="bl_timur_jenis" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $current_parcel['bl_timur_jenis'] ?>" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="coordinates" class="block text-sm font-medium text-gray-700 mb-1">Koordinat (Format: Long,Lat;Long,Lat;...)*</label>
+                                    <textarea id="coordinates" name="coordinates" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required><?= $current_parcel['coordinates'] ?></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 flex justify-end space-x-4">
+                                <button type="button" onclick="window.location.href='?action=view&id=<?= $id ?>'" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
+                                    Batal
+                                </button>
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg">
+                                    Simpan Perubahan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            <?php else: ?>
+                <!-- Default Page (If action not recognized) -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Data Parcel</h2>
+                        <p class="text-gray-600">Silakan pilih menu yang tersedia.</p>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </section>
+    </main>
 
-                <!-- Additional information sections can be added here -->
-            </div>
-        </div>
-    <?php endif; ?>
-</section>
-
-<?php include 'footer.php'; ?>
+    <?php include 'footer.php'; ?>

@@ -1,152 +1,420 @@
 <?php
-// --- PURELY VISUAL / PRESENTATIONAL VERSION ---
-// No database connection or CRUD operations.
-// Uses dummy data for display purposes only.
+// --- VERSI VISUAL / PRESENTASI SEMATA ---
+// Tidak ada koneksi database atau operasi CRUD
+// Menggunakan data dummy hanya untuk tujuan tampilan
 
-include 'header.php'; // Include your standard header/navigation
+include 'header.php'; // Include header/navigasi standar
 
-// --- SIMULATED DUMMY DATA (Purely for display) ---
-// Workers List Data
+// --- DATA DUMMY SIMULASI (Hanya untuk tampilan) ---
+// Data Daftar Pekerja (10 data lengkap)
 $workers = [
     [
-        'pekerja_id' => 1,
+        'pekerja_id' => 'KMJ-001',
         'nik' => '1408062006890001',
-        'name' => 'Pekerja 3',
+        'name' => 'Agus Susanto',
         'position' => 'Mandor',
-        'alamat' => 'Alamat',
+        'alamat' => 'Jl. Kenangan No. 45',
         'tgl_mulai' => '05/02/2024',
         'status' => 'Active',
         'upah' => 4500000,
         'foto' => 'img/image.png',
         'village_name' => 'Berumbung Baru',
-        'lahan_id' => '14.08.06.2006.KMJ.0002', // Link to lahan
+        'lahan_id' => '14.08.06.2006.KMJ.0002',
         'farmer_id' => 'KMJ.14.08.06.2006.0002',
-        // --- Data untuk Tabel Utama ---
-        'farmer_name' => 'Petani 3',
-        'lahan_name' => 'Lahan C'
+        'farmer_name' => 'Argo Kiswanto',
+        'lahan_name' => 'Lahan A',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '12.345.678.9-123.0005',
+        'gender' => 'Male',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1989-06-20',
+        'agama' => 'Islam',
+        'status_perkawinan' => 'Menikah'
     ],
     [
-        'pekerja_id' => 2,
+        'pekerja_id' => 'KMJ-002',
         'nik' => '1408060402870001',
-        'name' => 'Pekerja 4',
+        'name' => 'Ari Kuswoyo',
         'position' => 'Pekerja Harian',
-        'alamat' => 'Alamat',
-        'tgl_mulai' => '05/02/2024',
+        'alamat' => 'Jl. Mawar No. 12',
+        'tgl_mulai' => '15/03/2024',
         'status' => 'Active',
         'upah' => 2500000,
         'foto' => 'img/image.png',
         'village_name' => 'Berumbung Baru',
         'lahan_id' => '14.08.06.2006.KMJ.0003',
         'farmer_id' => 'KMJ.14.08.06.2006.0003',
-        // --- Data untuk Tabel Utama ---
-        'farmer_name' => 'Petani 4',
-        'lahan_name' => 'Lahan D'
+        'farmer_name' => 'Supratman',
+        'lahan_name' => 'Lahan B',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '98.765.432.1-987.000',
+        'gender' => 'Female',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1987-02-04',
+        'agama' => 'Kristen',
+        'status_perkawinan' => 'Belum Menikah'
     ],
     [
-        'pekerja_id' => 3,
+        'pekerja_id' => 'KMJ-003',
         'nik' => '1408061301620002',
-        'name' => 'Pekerja 5',
+        'name' => 'Bambang Sujatmoko',
         'position' => 'Operator Alat Berat',
-        'alamat' => 'Alamat',
-        'tgl_mulai' => '05/02/2024',
+        'alamat' => 'Jl. Melati No. 8',
+        'tgl_mulai' => '10/01/2024',
         'status' => 'Inactive',
         'upah' => 3500000,
         'foto' => 'img/image.png',
         'village_name' => 'Berumbung Baru',
         'lahan_id' => '14.08.06.2006.KMJ.0003',
         'farmer_id' => 'KMJ.14.08.06.2006.0004',
-        // --- Data untuk Tabel Utama ---
-        'farmer_name' => 'Petani 5',
-        'lahan_name' => 'Lahan E'
+        'farmer_name' => 'Bayu Sanjoyo',
+        'lahan_name' => 'Lahan C',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '11.222.333.4-555.000',
+        'gender' => 'Male',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1962-01-13',
+        'agama' => 'Katolik',
+        'status_perkawinan' => 'Cerai'
+    ],
+    [
+        'pekerja_id' => 'KMJ-004',
+        'nik' => '1408061505910001',
+        'name' => 'Citra Dewi',
+        'position' => 'Admin Kebun',
+        'alamat' => 'Jl. Anggrek No. 5',
+        'tgl_mulai' => '01/04/2024',
+        'status' => 'Active',
+        'upah' => 3000000,
+        'foto' => 'img/image.png',
+        'village_name' => 'Berumbung Baru',
+        'lahan_id' => '14.08.06.2006.KMJ.0005',
+        'farmer_id' => 'KMJ.14.08.06.2006.0005',
+        'farmer_name' => 'Dewi Sartika',
+        'lahan_name' => 'Lahan D',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '33.444.555.6-777.000',
+        'gender' => 'Female',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1991-05-15',
+        'agama' => 'Islam',
+        'status_perkawinan' => 'Belum Menikah'
+    ],
+    [
+        'pekerja_id' => 'KMJ-005',
+        'nik' => '1408062207840002',
+        'name' => 'Dodi Pratama',
+        'position' => 'Supervisor',
+        'alamat' => 'Jl. Dahlia No. 22',
+        'tgl_mulai' => '20/03/2024',
+        'status' => 'Active',
+        'upah' => 5000000,
+        'foto' => 'img/image.png',
+        'village_name' => 'Berumbung Baru',
+        'lahan_id' => '14.08.06.2006.KMJ.0006',
+        'farmer_id' => 'KMJ.14.08.06.2006.0006',
+        'farmer_name' => 'Eko Prasetyo',
+        'lahan_name' => 'Lahan E',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '55.666.777.8-999.000',
+        'gender' => 'Male',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1984-07-22',
+        'agama' => 'Islam',
+        'status_perkawinan' => 'Menikah'
+    ],
+    [
+        'pekerja_id' => 'KMJ-006',
+        'nik' => '1408063009930001',
+        'name' => 'Eva Marlina',
+        'position' => 'Pekerja Harian',
+        'alamat' => 'Jl. Kamboja No. 10',
+        'tgl_mulai' => '05/05/2024',
+        'status' => 'Active',
+        'upah' => 2500000,
+        'foto' => 'img/image.png',
+        'village_name' => 'Berumbung Baru',
+        'lahan_id' => '14.08.06.2006.KMJ.0007',
+        'farmer_id' => 'KMJ.14.08.06.2006.0007',
+        'farmer_name' => 'Fajar Setiawan',
+        'lahan_name' => 'Lahan F',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '77.888.999.0-111.000',
+        'gender' => 'Female',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1993-09-30',
+        'agama' => 'Kristen',
+        'status_perkawinan' => 'Belum Menikah'
+    ],
+    [
+        'pekerja_id' => 'KMJ-007',
+        'nik' => '1408061204650002',
+        'name' => 'Faisal Rahman',
+        'position' => 'Mandor',
+        'alamat' => 'Jl. Teratai No. 15',
+        'tgl_mulai' => '15/01/2024',
+        'status' => 'Inactive',
+        'upah' => 4500000,
+        'foto' => 'img/image.png',
+        'village_name' => 'Berumbung Baru',
+        'lahan_id' => '14.08.06.2006.KMJ.0008',
+        'farmer_id' => 'KMJ.14.08.06.2006.0008',
+        'farmer_name' => 'Gunawan Susilo',
+        'lahan_name' => 'Lahan G',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '99.000.111.2-333.000',
+        'gender' => 'Male',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1965-04-12',
+        'agama' => 'Islam',
+        'status_perkawinan' => 'Menikah'
+    ],
+    [
+        'pekerja_id' => 'KMJ-008',
+        'nik' => '1408060808870001',
+        'name' => 'Gita Wulandari',
+        'position' => 'Operator Alat Berat',
+        'alamat' => 'Jl. Flamboyan No. 7',
+        'tgl_mulai' => '10/02/2024',
+        'status' => 'Active',
+        'upah' => 3500000,
+        'foto' => 'img/image.png',
+        'village_name' => 'Berumbung Baru',
+        'lahan_id' => '14.08.06.2006.KMJ.0009',
+        'farmer_id' => 'KMJ.14.08.06.2006.0009',
+        'farmer_name' => 'Hendra Kurniawan',
+        'lahan_name' => 'Lahan H',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '22.333.444.5-666.000',
+        'gender' => 'Female',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1987-08-08',
+        'agama' => 'Islam',
+        'status_perkawinan' => 'Menikah'
+    ],
+    [
+        'pekerja_id' => 'KMJ-009',
+        'nik' => '1408062503960001',
+        'name' => 'Hadi Prasetyo',
+        'position' => 'Pekerja Harian',
+        'alamat' => 'Jl. Manggis No. 3',
+        'tgl_mulai' => '01/06/2024',
+        'status' => 'Active',
+        'upah' => 2500000,
+        'foto' => 'img/image.png',
+        'village_name' => 'Berumbung Baru',
+        'lahan_id' => '14.08.06.2006.KMJ.0010',
+        'farmer_id' => 'KMJ.14.08.06.2006.0010',
+        'farmer_name' => 'Indra Gunawan',
+        'lahan_name' => 'Lahan I',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '44.555.666.7-888.000',
+        'gender' => 'Male',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1996-03-25',
+        'agama' => 'Islam',
+        'status_perkawinan' => 'Belum Menikah'
+    ],
+    [
+        'pekerja_id' => 'KMJ-010',
+        'nik' => '1408061007740002',
+        'name' => 'Indah Permata',
+        'position' => 'Supervisor',
+        'alamat' => 'Jl. Nangka No. 18',
+        'tgl_mulai' => '15/04/2024',
+        'status' => 'Active',
+        'upah' => 5000000,
+        'foto' => 'img/image.png',
+        'village_name' => 'Berumbung Baru',
+        'lahan_id' => '14.08.06.2006.KMJ.0011',
+        'farmer_id' => 'KMJ.14.08.06.2006.0011',
+        'farmer_name' => 'Joko Santoso',
+        'lahan_name' => 'Lahan J',
+        'kabupaten' => 'Siak',
+        'kecamatan' => 'Dayun',
+        'desa' => 'Berumbung Baru',
+        'npwp' => '66.777.888.9-000.000',
+        'gender' => 'Female',
+        'tempat_lahir' => 'Siak',
+        'tgl_lahir' => '1974-07-10',
+        'agama' => 'Kristen',
+        'status_perkawinan' => 'Menikah'
     ]
 ];
 
-// Profile Detail Data (for view action)
-$workerProfile = [
-    'pekerja_id' => 1,
-    'nik' => '1234567890123456',
-    'name' => 'Rudi Hartono',
-    'npwp' => '01.234.567.8-912.345',
-    'gender' => 'Male',
-    'tempat_lahir' => 'Surabaya',
-    'tgl_lahir' => '1985-07-20',
-    'alamat' => 'Jl. Kenangan No. 45',
-    'village_name' => 'Desa Makmur',
-    'position' => 'Mandor',
-    'tgl_mulai' => '2019-03-15',
-    'status' => 'Active',
-    'upah' => 4500000,
-    'foto' => 'assets/default-avatar.jpg',
-    'lahan_id' => 101,
-    'farmer_id' => 201,
-    // --- Data untuk View ---
-    'farmer_name' => 'Petani Andi',
-    'lahan_name' => 'Lahan A'
-];
-
-// Additional Profile Info (for view tab)
-$dummyProfile = [
-    'worker_id' => 1,
-    'pendidikan_terakhir' => 'SMA',
-    'pengalaman_kerja' => '5 tahun di perkebunan kelapa sawit',
-    'status_pernikahan' => 'Menikah',
-    'jumlah_tanggungan' => 2,
-    'keterampilan_khusus' => 'Operasional alat berat, manajemen tim',
-    'catatan_kesehatan' => 'Tekanan darah normal, alergi debu'
-];
-
-// Documents Data (for view tab)
-$dummyDocuments = [
+// Data Kontrak Pekerja (5 data lengkap)
+$workerContracts = [
     [
-        'document_id' => 1,
-        'document_type' => 'KTP',
-        'document_name' => 'Kartu Tanda Penduduk',
-        'file_path' => 'assets/sample-ktp.jpg',
-        'issue_date' => '2015-05-20',
-        'expiry_date' => null,
+        'contract_id' => 1,
+        'pekerja_id' => 'KMJ-001',
+        'contract_number' => 'KONT/2024/001',
+        'start_date' => '2024-02-05',
+        'end_date' => '2025-02-04',
+        'contract_type' => 'Tahunan',
+        'salary' => 4500000,
+        'status' => 'Active',
+        'created_at' => '2024-02-01 10:00:00'
+    ],
+    [
+        'contract_id' => 2,
+        'pekerja_id' => 'KMJ-002',
+        'contract_number' => 'KONT/2024/002',
+        'start_date' => '2024-03-15',
+        'end_date' => '2024-12-31',
+        'contract_type' => 'Musiman',
+        'salary' => 2500000,
+        'status' => 'Active',
+        'created_at' => '2024-03-10 14:30:00'
+    ],
+    [
+        'contract_id' => 3,
+        'pekerja_id' => 'KMJ-003',
+        'contract_number' => 'KONT/2024/003',
+        'start_date' => '2024-01-10',
+        'end_date' => '2024-06-30',
+        'contract_type' => 'Percobaan',
+        'salary' => 3500000,
+        'status' => 'Expired',
+        'created_at' => '2024-01-05 09:15:00'
+    ],
+    [
+        'contract_id' => 4,
+        'pekerja_id' => 'KMJ-004',
+        'contract_number' => 'KONT/2024/004',
+        'start_date' => '2024-04-01',
+        'end_date' => '2025-03-31',
+        'contract_type' => 'Tahunan',
+        'salary' => 3000000,
+        'status' => 'Active',
+        'created_at' => '2024-03-25 11:20:00'
+    ],
+    [
+        'contract_id' => 5,
+        'pekerja_id' => 'KMJ-005',
+        'contract_number' => 'KONT/2024/005',
+        'start_date' => '2024-03-20',
+        'end_date' => '2024-12-31',
+        'contract_type' => 'Musiman',
+        'salary' => 5000000,
+        'status' => 'Active',
+        'created_at' => '2024-03-15 09:45:00'
+    ]
+];
+
+// Data Jenis Fasilitas (4 data lengkap)
+$facilityTypes = [
+    ['type_id' => 1, 'type_name' => 'Perumahan', 'description' => 'Tempat tinggal pekerja'],
+    ['type_id' => 2, 'type_name' => 'Transportasi', 'description' => 'Kendaraan operasional'],
+    ['type_id' => 3, 'type_name' => 'Kesehatan', 'description' => 'Fasilitas kesehatan'],
+    ['type_id' => 4, 'type_name' => 'Makanan', 'description' => 'Makanan dan minuman']
+];
+
+// Data Fasilitas Pekerja (5 data lengkap)
+$workerFacilities = [
+    [
+        'facility_id' => 1,
+        'pekerja_id' => 'KMJ-001',
+        'type_id' => 1,
+        'facility_name' => 'Rumah 01',
+        'description' => 'Rumah tinggal di komplek A',
+        'start_date' => '2024-02-05',
+        'end_date' => '2025-02-04',
         'status' => 'Active'
     ],
     [
-        'document_id' => 2,
-        'document_type' => 'Sertifikat',
-        'document_name' => 'Sertifikat Operator Alat Berat',
-        'file_path' => 'assets/sample-sertifikat.pdf',
-        'issue_date' => '2018-08-15',
-        'expiry_date' => '2023-08-15',
+        'facility_id' => 2,
+        'pekerja_id' => 'KMJ-001',
+        'type_id' => 2,
+        'facility_name' => 'Motor Operasional',
+        'description' => 'Sepeda motor untuk operasional',
+        'start_date' => '2024-02-05',
+        'end_date' => '2025-02-04',
+        'status' => 'Active'
+    ],
+    [
+        'facility_id' => 3,
+        'pekerja_id' => 'KMJ-002',
+        'type_id' => 4,
+        'facility_name' => 'Makan Siang',
+        'description' => 'Makan siang harian',
+        'start_date' => '2024-03-15',
+        'end_date' => '2024-12-31',
+        'status' => 'Active'
+    ],
+    [
+        'facility_id' => 4,
+        'pekerja_id' => 'KMJ-004',
+        'type_id' => 3,
+        'facility_name' => 'Asuransi Kesehatan',
+        'description' => 'Asuransi kesehatan tahunan',
+        'start_date' => '2024-04-01',
+        'end_date' => '2025-03-31',
+        'status' => 'Active'
+    ],
+    [
+        'facility_id' => 5,
+        'pekerja_id' => 'KMJ-005',
+        'type_id' => 1,
+        'facility_name' => 'Rumah 02',
+        'description' => 'Rumah tinggal di komplek B',
+        'start_date' => '2024-03-20',
+        'end_date' => '2024-12-31',
         'status' => 'Active'
     ]
 ];
 
-// History Data (for view tab)
-$dummyHistories = [
-    [
-        'history_id' => 1,
-        'history_type' => 'Pelatihan',
-        'description' => 'Mengikuti pelatihan keselamatan kerja',
-        'event_date' => '2021-03-15',
-        'recorded_by' => 1,
-        'recorded_by_name' => 'Admin',
-        'recorded_at' => '2021-03-15 14:30:00'
-    ],
-    [
-        'history_id' => 2,
-        'history_type' => 'Penghargaan',
-        'description' => 'Pekerja terbaik bulan April 2022',
-        'event_date' => '2022-05-01',
-        'recorded_by' => 1,
-        'recorded_by_name' => 'Admin',
-        'recorded_at' => '2022-05-01 10:15:00'
-    ]
-];
+// Simulasikan aksi
+$action = isset($_GET['action']) ? $_GET['action'] : 'list';
+$worker_id = isset($_GET['id']) ? $_GET['id'] : 'KMJ-001'; // Default ke worker 1 untuk view/edit
+$subaction = isset($_GET['subaction']) ? $_GET['subaction'] : '';
 
-// Villages Data (for dropdown)
+// Simulasikan pekerja yang dipilih untuk view/edit
+$worker = null;
+if ($worker_id) {
+    foreach ($workers as $w) {
+        if ($w['pekerja_id'] == $worker_id) {
+            $worker = $w;
+            break;
+        }
+    }
+}
+
+// Dapatkan kontrak pekerja
+$workerContractsList = array_filter($workerContracts, function($c) use ($worker_id) {
+    return $c['pekerja_id'] == $worker_id;
+});
+
+// Dapatkan fasilitas pekerja
+$workerFacilitiesList = array_filter($workerFacilities, function($f) use ($worker_id) {
+    return $f['pekerja_id'] == $worker_id;
+});
+
+// Data Desa (untuk dropdown)
 $villages = [
     ['village_id' => 1, 'village' => 'Desa Makmur'],
     ['village_id' => 2, 'village' => 'Desa Sejahtera'],
     ['village_id' => 3, 'village' => 'Desa Maju']
 ];
 
-// Positions Data (for dropdown)
+// Data Jabatan (untuk dropdown)
 $positions = [
     'Mandor',
     'Pekerja Harian',
@@ -155,49 +423,106 @@ $positions = [
     'Admin Kebun'
 ];
 
-// Lahans and Petanis Data (for dropdown and auto-fill)
-$lahans = [
-    101 => ['lahan_name' => 'Lahan A', 'farmer_id' => 201],
-    102 => ['lahan_name' => 'Lahan B', 'farmer_id' => 202],
-    103 => ['lahan_name' => 'Lahan C', 'farmer_id' => 203]
+// Jenis Kontrak (untuk dropdown)
+$contractTypes = [
+    'Tahunan',
+    'Musiman',
+    'Percobaan',
+    'Harian'
 ];
 
-$petanis = [
-    201 => 'Petani Andi',
-    202 => 'Petani Budi',
-    203 => 'Petani Cici'
+// Data Agama (untuk dropdown)
+$religions = [
+    'Islam',
+    'Kristen',
+    'Katolik',
+    'Hindu',
+    'Buddha',
+    'Konghucu'
 ];
 
-// Simulate action
-$action = isset($_GET['action']) ? $_GET['action'] : 'list';
-$worker_id = isset($_GET['id']) ? intval($_GET['id']) : 1; // Default to worker 1 for view/edit
+// Data Status Perkawinan (untuk dropdown)
+$maritalStatuses = [
+    'Belum Menikah',
+    'Menikah',
+    'Cerai'
+];
 
-// Simulate selected worker for view/edit
-$worker = null;
-if ($worker_id > 0) {
-    foreach ($workers as $w) {
-        if ($w['pekerja_id'] == $worker_id) {
-            $worker = $w;
-            break;
-        }
-    }
-    // Also populate for profile view if not found in list
-    if (!$worker && $action === 'view') {
-         $worker = $workerProfile;
-    }
+// Filter data
+$filterStatus = isset($_GET['filter_status']) ? $_GET['filter_status'] : '';
+$filterPosition = isset($_GET['filter_position']) ? $_GET['filter_position'] : '';
+$filterKecamatan = isset($_GET['filter_kecamatan']) ? $_GET['filter_kecamatan'] : '';
+$filterFacility = isset($_GET['filter_facility']) ? $_GET['filter_facility'] : '';
+
+// Daftar kecamatan unik untuk filter
+$kecamatans = array_unique(array_column($workers, 'kecamatan'));
+
+$filteredWorkers = $workers;
+
+if ($filterStatus) {
+    $filteredWorkers = array_filter($filteredWorkers, function($w) use ($filterStatus) {
+        return $w['status'] == $filterStatus;
+    });
 }
+
+if ($filterPosition) {
+    $filteredWorkers = array_filter($filteredWorkers, function($w) use ($filterPosition) {
+        return $w['position'] == $filterPosition;
+    });
+}
+
+if ($filterKecamatan) {
+    $filteredWorkers = array_filter($filteredWorkers, function($w) use ($filterKecamatan) {
+        return $w['kecamatan'] == $filterKecamatan;
+    });
+}
+
+if ($filterFacility) {
+    $workerIdsWithFacility = array_map(function($f) {
+        return $f['pekerja_id'];
+    }, array_filter($workerFacilities, function($f) use ($filterFacility) {
+        return $f['type_id'] == $filterFacility;
+    }));
+    
+    $filteredWorkers = array_filter($filteredWorkers, function($w) use ($workerIdsWithFacility) {
+        return in_array($w['pekerja_id'], $workerIdsWithFacility);
+    });
+}
+if (isset($_GET['search']) && $_GET['search'] != '') {
+                  $search = strtolower($_GET['search']);
+                  $filteredWorkers = array_filter($filteredWorkers, function($f) use ($search) {
+                      return strpos(strtolower($f['name']), $search) !== false;
+                  });
+              }
+
+// --- KONFIGURASI PAGINATION ---
+$itemsPerPage = 5; // Jumlah item per halaman
+$currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1; // Halaman saat ini
+$totalItems = count($filteredWorkers); // Total item setelah filter
+$totalPages = ceil($totalItems / $itemsPerPage); // Total halaman
+
+// Batasi currentPage agar tidak melebihi totalPages
+$currentPage = min($currentPage, $totalPages);
+
+// Ambil data untuk halaman saat ini
+$startIndex = ($currentPage - 1) * $itemsPerPage;
+$paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
 ?>
 
-<!-- Main Content Area -->
+<!-- Area Konten Utama -->
 <main class="flex-1 flex flex-col overflow-hidden">
-    <header class="h-20 bg-white border-b shadow-sm flex items-center justify-between px-8">
+    <header class="h-20 shadow-sm flex items-center justify-between px-8">
         <div class="flex items-center space-x-4">
             <h1 class="text-2xl font-bold text-gray-800">
                 <?php
                 if ($action == 'add') echo "Tambah Pekerja Baru";
-                elseif ($action == 'view') echo "Profil Pekerja: " . ($worker ? htmlspecialchars($worker['name']) : '');
+                elseif ($action == 'view') {
+                    if ($subaction == 'contract') echo "Kontrak Pekerja";
+                    elseif ($subaction == 'facility') echo "Fasilitas Pekerja";
+                    else echo "Profil Pekerja: " . ($worker ? htmlspecialchars($worker['name']) : '');
+                }
                 elseif ($action == 'edit') echo "Edit Pekerja: " . ($worker ? htmlspecialchars($worker['name']) : '');
-                else echo "Data Pekerja";
+                else echo "Manajemen Data Pekerja";
                 ?>
             </h1>
         </div>
@@ -210,9 +535,11 @@ if ($worker_id > 0) {
                 <a href="pekerja.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-arrow-left mr-2"></i> Kembali
                 </a>
-                <a href="pekerja.php?action=edit&id=<?= $worker_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
-                    <i class="fas fa-edit mr-2"></i> Edit
-                </a>
+                <?php if ($subaction == ''): ?>
+                    <a href="pekerja.php?action=edit&id=<?= $worker_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <i class="fas fa-edit mr-2"></i> Edit
+                    </a>
+                <?php endif; ?>
             <?php elseif ($action == 'edit'): ?>
                 <a href="pekerja.php?action=view&id=<?= $worker_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-times mr-2"></i> Batal
@@ -221,41 +548,75 @@ if ($worker_id > 0) {
         </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Konten Utama -->
     <section class="flex-1 overflow-y-auto p-8 bg-gray-50">
-        <!-- Notifikasi -->
-        <?php if (isset($_GET['notif']) && $_GET['notif'] == 'success'): ?>
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <span class="block sm:inline">Operasi berhasil dilakukan!</span>
-                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                    <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <title>Close</title>
-                        <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-                    </svg>
-                </span>
-            </div>
-        <?php elseif (isset($_GET['notif']) && $_GET['notif'] == 'error'): ?>
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                <span class="block sm:inline">Terjadi kesalahan dalam operasi!</span>
-                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                    <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <title>Close</title>
-                        <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
-                    </svg>
-                </span>
-            </div>
-        <?php endif; ?>
-
         <?php if ($action == 'list'): ?>
             <!-- Daftar Pekerja -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
                 <div class="p-4 bg-gray-50 border-b">
-                    <form method="get" class="flex">
+                    <form method="get" class="space-y-4">
                         <input type="hidden" name="action" value="list">
-                        <input type="text" name="search" class="flex-grow px-4 py-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Cari nama pekerja...">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r-lg flex items-center">
-                            <i class="fas fa-search mr-2"></i> Cari
-                        </button>
+                        <div class="mb-4">
+                            <div class="relative">
+                                <input type="text" id="search" name="search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" 
+                                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                                       placeholder="Cari nama..">
+                                <button type="submit" class="absolute right-2 top-2 text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <!-- Filter Status -->
+                            <div>
+                                <select id="filter_status" name="filter_status" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Semua Status</option>
+                                    <option value="Active" <?= $filterStatus == 'Active' ? 'selected' : '' ?>>Active</option>
+                                    <option value="Inactive" <?= $filterStatus == 'Inactive' ? 'selected' : '' ?>>Inactive</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Filter Jabatan -->
+                            <div>
+                                <select id="filter_position" name="filter_position" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Semua Jabatan</option>
+                                    <?php foreach ($positions as $pos): ?>
+                                        <option value="<?= $pos ?>" <?= $filterPosition == $pos ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($pos) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <!-- Filter Kecamatan -->
+                            <div>
+                                <select id="filter_kecamatan" name="filter_kecamatan" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Semua Kecamatan</option>
+                                    <?php foreach ($kecamatans as $kec): ?>
+                                        <option value="<?= $kec ?>" <?= $filterKecamatan == $kec ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($kec) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            
+                            <!-- Filter Jenis Fasilitas -->
+                            <div>
+                                <select id="filter_facility" name="filter_facility" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Semua Fasilitas</option>
+                                    <?php foreach ($facilityTypes as $type): ?>
+                                        <option value="<?= $type['type_id'] ?>" <?= $filterFacility == $type['type_id'] ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($type['type_name']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-filter mr-2"></i> Filter
+                            </button>
+                        </div>
                     </form>
                 </div>
                 <div class="overflow-x-auto">
@@ -263,34 +624,51 @@ if ($worker_id > 0) {
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
-                                <!-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NIK</th> <!-- Kolom NIK dihapus -->
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Pekerja</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pekerja</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Petani</th> <!-- Kolom Nama Petani ditambahkan -->
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lahan</th> <!-- Kolom Nama Lahan ditambahkan -->
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jabatan</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alamat</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Mulai</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kecamatan</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fasilitas</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <?php if (empty($workers)): ?>
+                            <?php if (empty($paginatedWorkers)): ?>
                                 <tr>
-                                    <td colspan="9" class="px-6 py-4 text-center text-gray-500">Tidak ada data pekerja</td> <!-- Update colspan to 9 -->
+                                    <td colspan="8" class="px-6 py-4 text-center text-gray-500">Tidak ada data pekerja</td>
                                 </tr>
                             <?php else: ?>
-                                <?php foreach ($workers as $index => $w): ?>
+                                <?php foreach ($paginatedWorkers as $index => $w): 
+                                    // Hitung nomor urut berdasarkan halaman
+                                    $rowNumber = $startIndex + $index + 1;
+                                    // Dapatkan fasilitas pekerja
+                                    $workerFacilities = array_filter($workerFacilities, function($f) use ($w) {
+                                        return $f['pekerja_id'] == $w['pekerja_id'];
+                                    });
+                                ?>
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap"><?= $index + 1 ?></td>
-                                        <!-- <td class="px-6 py-4 whitespace-nowrap><?#= htmlspecialchars($w['nik']) ?></td> <!-- Data NIK dihapus -->
+                                        <td class="px-6 py-4 whitespace-nowrap"><?= $rowNumber ?></td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($w['pekerja_id']) ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($w['name']) ?></td>
-                                        <!-- Menampilkan Nama Petani dan Nama Lahan dari data dummy/array -->
-                                        <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($w['farmer_name'] ?? 'Belum Ada Kontrak') ?></td>
-                                        <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($w['lahan_name'] ?? 'Belum Ada Kontrak') ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($w['position']) ?></td>
-                                        <td class="px-6 py-4"><?= htmlspecialchars($w['alamat']) ?></td>
-                                        <td class="px-6 py-4 whitespace-nowrap"><?= date('d/m/Y', strtotime($w['tgl_mulai'])) ?></td>
+                                        <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($w['kecamatan']) ?></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <?php if (!empty($workerFacilities)): ?>
+                                                <?php foreach ($workerFacilities as $f): 
+                                                    $facilityType = array_filter($facilityTypes, function($t) use ($f) {
+                                                        return $t['type_id'] == $f['type_id'];
+                                                    });
+                                                    $typeName = !empty($facilityType) ? reset($facilityType)['type_name'] : 'Unknown';
+                                                ?>
+                                                    <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mb-1">
+                                                        <?= htmlspecialchars($typeName) ?>
+                                                    </span><br>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <span class="text-gray-500 text-sm">-</span>
+                                            <?php endif; ?>
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $w['status'] == 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
                                                 <?= $w['status'] ?>
@@ -303,10 +681,9 @@ if ($worker_id > 0) {
                                             <a href="pekerja.php?action=edit&id=<?= $w['pekerja_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <!-- Action button for delete (non-functional in this version) -->
-                                            <button class="text-red-600 hover:text-red-900" title="Nonaktifkan" onclick="alert('Fitur nonaktifkan hanya untuk tampilan.')">
+                                            <a href="#" class="text-red-600 hover:text-red-900" title="Hapus" onclick="alert('Fitur hapus hanya untuk demonstrasi. Data tidak akan benar-benar dihapus.'); return false;">
                                                 <i class="fas fa-trash"></i>
-                                            </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -314,473 +691,500 @@ if ($worker_id > 0) {
                         </tbody>
                     </table>
                 </div>
+              <!-- Pagination -->
+        <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+          <div class="flex-1 flex justify-between sm:hidden">
+            <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+              Sebelumnya
+            </a>
+            <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+              Selanjutnya
+            </a>
+          </div>
+          <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+              <p class="text-sm text-gray-700">
+                Menampilkan <span class="font-medium"><?= $offset + 1 ?></span> sampai <span class="font-medium"><?= min($offset + $perPage, $totalFarmers) ?></span> dari <span class="font-medium"><?= $totalFarmers ?></span> petani
+              </p>
             </div>
-        <?php elseif ($action == 'add' || $action == 'edit'): ?>
-            <!-- Form Tambah/Edit Pekerja -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                <div class="p-6">
-                    <form method="post" enctype="multipart/form-data" class="space-y-6">
-                        <!-- Hidden inputs for form logic (non-functional) -->
-                        <input type="hidden" name="<?= $action == 'add' ? 'add_worker' : 'update_worker' ?>" value="1">
-                        <?php if ($action == 'edit'): ?>
-                            <input type="hidden" name="worker_id" value="<?= $worker_id ?>">
-                        <?php endif; ?>
+            <div>
+              <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                  <span class="sr-only">Sebelumnya</span>
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+                
+                <?php 
+                // Show page numbers
+                $startPage = max(1, $currentPage - 2);
+                $endPage = min($totalPages, $currentPage + 2);
+                
+                if ($startPage > 1) {
+                    echo '<a href="pekerja.php?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
+                    if ($startPage > 2) {
+                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                    }
+                }
+                
+                for ($i = $startPage; $i <= $endPage; $i++) {
+                    $active = $i == $currentPage ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50';
+                    echo '<a href="pekerja.php?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
+                }
+                
+                if ($endPage < $totalPages) {
+                    if ($endPage < $totalPages - 1) {
+                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                    }
+                    echo '<a href="pekerja.php?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
+                }
+                ?>
+                
+                <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                  <span class="sr-only">Selanjutnya</span>
+                  <i class="fas fa-chevron-right"></i>
+                </a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Kolom Kiri -->
-                            <div class="space-y-4">
-                                <div>
-                                    <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
-                                    <input type="text" id="nik" name="nik" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" value="<?= $action == 'edit' ? htmlspecialchars($worker['nik']) : '' ?>">
+        <?php elseif ($action == 'view' && $worker): ?>
+            <!-- View Pekerja -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                <div class="p-6">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Foto Profil -->
+                        <div class="w-full md:w-1/4 flex flex-col items-center">
+                            <div class="w-48 h-48 rounded-full bg-gray-200 mb-4 overflow-hidden border-4 border-gray-300">
+                                <img src="<?= $worker['foto'] ?>" alt="Foto Profil" class="w-full h-full object-cover" onerror="this.src='img/default-profile.png'">
+                            </div>
+                            <h2 class="text-xl font-bold text-gray-800 text-center"><?= htmlspecialchars($worker['name']) ?></h2>
+                            <p class="text-gray-600 text-center"><?= htmlspecialchars($worker['position']) ?></p>
+                            <div class="mt-2">
+                                <span class="px-3 py-1 text-sm font-semibold rounded-full <?= $worker['status'] == 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
+                                    <?= $worker['status'] ?>
+                                </span>
+                            </div>
+                            
+                            <!-- Tab Navigasi -->
+                            <div class="mt-6 w-full">
+                                <nav class="flex flex-col space-y-2">
+                                    <a href="pekerja.php?action=view&id=<?= $worker_id ?>" class="px-4 py-2 rounded-lg <?= $subaction == '' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
+                                        <i class="fas fa-user mr-2"></i> Profil
+                                    </a>
+                                    <a href="pekerja.php?action=view&id=<?= $worker_id ?>&subaction=contract" class="px-4 py-2 rounded-lg <?= $subaction == 'contract' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
+                                        <i class="fas fa-file-contract mr-2"></i> Kontrak
+                                    </a>
+                                    <a href="pekerja.php?action=view&id=<?= $worker_id ?>&subaction=facility" class="px-4 py-2 rounded-lg <?= $subaction == 'facility' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
+                                        <i class="fas fa-home mr-2"></i> Fasilitas
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                        
+                        <!-- Detail Profil -->
+                        <div class="w-full md:w-3/4">
+                            <?php if ($subaction == ''): ?>
+                                <!-- Tab Profil -->
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Informasi Pribadi</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500">NIK</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['nik']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">NPWP</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['npwp']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Jenis Kelamin</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['gender']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Tempat, Tanggal Lahir</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['tempat_lahir']) ?>, <?= date('d/m/Y', strtotime($worker['tgl_lahir'])) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Agama</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['agama']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Status Perkawinan</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['status_perkawinan']) ?></p>
+                                        </div>
+                                    </div>
                                 </div>
+                                
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Informasi Pekerjaan</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500">ID Pekerja</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['pekerja_id']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Tanggal Mulai Bekerja</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['tgl_mulai']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Jabatan</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['position']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Upah</p>
+                                            <p class="font-medium">Rp <?= number_format($worker['upah'], 0, ',', '.') ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Alamat</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500">Alamat</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['alamat']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Desa</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['desa']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Kecamatan</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['kecamatan']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Kabupaten</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['kabupaten']) ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Informasi Lahan</h3>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500">ID Lahan</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['lahan_id']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Nama Lahan</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['lahan_name']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">ID Petani</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['farmer_id']) ?></p>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Nama Petani</p>
+                                            <p class="font-medium"><?= htmlspecialchars($worker['farmer_name']) ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            <?php elseif ($subaction == 'contract'): ?>
+                                <!-- Tab Kontrak -->
+                                <div class="mb-4 flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800">Riwayat Kontrak</h3>
+                                    <button class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center" onclick="alert('Fitur tambah kontrak hanya untuk demonstrasi.');">
+                                        <i class="fas fa-plus mr-2"></i> Tambah Kontrak
+                                    </button>
+                                </div>
+                                
+                                <?php if (empty($workerContractsList)): ?>
+                                    <div class="bg-gray-50 p-4 rounded-lg text-center text-gray-500">
+                                        Tidak ada data kontrak untuk pekerja ini
+                                    </div>
+                                <?php else: ?>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No. Kontrak</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mulai</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Selesai</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Upah</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <?php foreach ($workerContractsList as $c): ?>
+                                                    <tr>
+                                                        <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($c['contract_number']) ?></td>
+                                                        <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($c['contract_type']) ?></td>
+                                                        <td class="px-6 py-4 whitespace-nowrap"><?= date('d/m/Y', strtotime($c['start_date'])) ?></td>
+                                                        <td class="px-6 py-4 whitespace-nowrap"><?= date('d/m/Y', strtotime($c['end_date'])) ?></td>
+                                                        <td class="px-6 py-4 whitespace-nowrap">Rp <?= number_format($c['salary'], 0, ',', '.') ?></td>
+                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $c['status'] == 'Active' ? 'bg-green-100 text-green-800' : ($c['status'] == 'Expired' ? 'bg-gray-100 text-gray-800' : 'bg-red-100 text-red-800') ?>">
+                                                                <?= $c['status'] ?>
+                                                            </span>
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-3" onclick="alert('Fitur lihat detail kontrak hanya untuk demonstrasi.'); return false;">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-3" onclick="alert('Fitur edit kontrak hanya untuk demonstrasi.'); return false;">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <a href="#" class="text-red-600 hover:text-red-900" onclick="alert('Fitur hapus kontrak hanya untuk demonstrasi.'); return false;">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <?php endif; ?>
+                            
+                            <?php elseif ($subaction == 'facility'): ?>
+                                <!-- Tab Fasilitas -->
+                                <div class="mb-4 flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold text-gray-800">Fasilitas yang Diterima</h3>
+                                    <button class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center" onclick="alert('Fitur tambah fasilitas hanya untuk demonstrasi.');">
+                                        <i class="fas fa-plus mr-2"></i> Tambah Fasilitas
+                                    </button>
+                                </div>
+                                
+                                <?php if (empty($workerFacilitiesList)): ?>
+                                    <div class="bg-gray-50 p-4 rounded-lg text-center text-gray-500">
+                                        Tidak ada data fasilitas untuk pekerja ini
+                                    </div>
+                                <?php else: ?>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Fasilitas</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Periode</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <?php foreach ($workerFacilitiesList as $f): 
+                                                    $type = array_filter($facilityTypes, function($t) use ($f) {
+                                                        return $t['type_id'] == $f['type_id'];
+                                                    });
+                                                    $typeName = !empty($type) ? reset($type)['type_name'] : 'Unknown';
+                                                ?>
+                                                    <tr>
+                                                        <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($typeName) ?></td>
+                                                        <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($f['facility_name']) ?></td>
+                                                        <td class="px-6 py-4"><?= htmlspecialchars($f['description']) ?></td>
+                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                            <?= date('d/m/Y', strtotime($f['start_date'])) ?> - <?= date('d/m/Y', strtotime($f['end_date'])) ?>
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $f['status'] == 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' ?>">
+                                                                <?= $f['status'] ?>
+                                                            </span>
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                            <a href="#" class="text-blue-600 hover:text-blue-900 mr-3" onclick="alert('Fitur lihat detail fasilitas hanya untuk demonstrasi.'); return false;">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                            <a href="#" class="text-yellow-600 hover:text-yellow-900 mr-3" onclick="alert('Fitur edit fasilitas hanya untuk demonstrasi.'); return false;">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <a href="#" class="text-red-600 hover:text-red-900" onclick="alert('Fitur hapus fasilitas hanya untuk demonstrasi.'); return false;">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <?php elseif (($action == 'add' || $action == 'edit') && ($action != 'edit' || $worker)): ?>
+            <!-- Form Tambah/Edit Pekerja -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                <div class="p-6">
+                    <form>
+                        <div class="space-y-6">
+                            <div class="border-b border-gray-200 pb-4">
+                                <h3 class="text-lg font-medium text-gray-900">Informasi Pribadi</h3>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                        value="<?= $action == 'edit' ? htmlspecialchars($worker['name']) : '' ?>">
+                                    <input type="text" id="name" name="name" value="<?= $action == 'edit' ? htmlspecialchars($worker['name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
+                                
+                                <div>
+                                    <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
+                                    <input type="text" id="nik" name="nik" value="<?= $action == 'edit' ? htmlspecialchars($worker['nik']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                
                                 <div>
                                     <label for="npwp" class="block text-sm font-medium text-gray-700">NPWP</label>
-                                    <input type="text" id="npwp" name="npwp" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" value="<?= $action == 'edit' ? htmlspecialchars($worker['npwp'] ?? '') : '' ?>">
+                                    <input type="text" id="npwp" name="npwp" value="<?= $action == 'edit' ? htmlspecialchars($worker['npwp']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
+                                
                                 <div>
                                     <label for="gender" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                                    <select id="gender" name="gender" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih Jenis Kelamin</option>
-                                        <option value="Male" <?= $action == 'edit' && ($worker['gender'] ?? '') == 'Male' ? 'selected' : '' ?>>Laki-laki</option>
-                                        <option value="Female" <?= $action == 'edit' && ($worker['gender'] ?? '') == 'Female' ? 'selected' : '' ?>>Perempuan</option>
-                                        <option value="Other" <?= $action == 'edit' && ($worker['gender'] ?? '') == 'Other' ? 'selected' : '' ?>>Lainnya</option>
+                                    <select id="gender" name="gender" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="Male" <?= $action == 'edit' && $worker['gender'] == 'Male' ? 'selected' : '' ?>>Laki-laki</option>
+                                        <option value="Female" <?= $action == 'edit' && $worker['gender'] == 'Female' ? 'selected' : '' ?>>Perempuan</option>
                                     </select>
                                 </div>
-                                <div>
-                                    <label for="foto" class="block text-sm font-medium text-gray-700">Foto</label>
-                                    <input type="file" id="foto" name="foto" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                                    <?php if ($action == 'edit' && !empty($worker['foto'])): ?>
-                                        <div class="mt-2 flex items-center">
-                                            <img src="<?= htmlspecialchars($worker['foto']) ?>" alt="Foto Pekerja" class="h-16 w-16 rounded-full object-cover">
-                                            <span class="ml-2 text-sm text-gray-500">Foto saat ini</span>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            <!-- Kolom Kanan -->
-                            <div class="space-y-4">
+                                
                                 <div>
                                     <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
-                                    <input type="text" id="tempat_lahir" name="tempat_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" value="<?= $action == 'edit' ? htmlspecialchars($worker['tempat_lahir'] ?? '') : '' ?>">
+                                    <input type="text" id="tempat_lahir" name="tempat_lahir" value="<?= $action == 'edit' ? htmlspecialchars($worker['tempat_lahir']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
+                                
                                 <div>
                                     <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                                    <input type="date" id="tgl_lahir" name="tgl_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_lahir'] ?? '') : '' ?>">
+                                    <input type="date" id="tgl_lahir" name="tgl_lahir" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_lahir']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
+                                
                                 <div>
-                                    <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
-                                    <textarea id="alamat" name="alamat" rows="2" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"><?= $action == 'edit' ? htmlspecialchars($worker['alamat']) : '' ?></textarea>
-                                </div>
-                                <div>
-                                    <label for="village_id" class="block text-sm font-medium text-gray-700">Desa</label>
-                                    <select id="village_id" name="village_id" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih Desa</option>
-                                        <?php foreach ($villages as $v): ?>
-                                            <option value="<?= $v['village_id'] ?>" <?= $action == 'edit' && ($worker['village_id'] ?? 0) == $v['village_id'] ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($v['village']) ?>
-                                            </option>
+                                    <label for="agama" class="block text-sm font-medium text-gray-700">Agama</label>
+                                    <select id="agama" name="agama" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <?php foreach ($religions as $religion): ?>
+                                            <option value="<?= $religion ?>" <?= $action == 'edit' && $worker['agama'] == $religion ? 'selected' : '' ?>><?= $religion ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+                                
+                                <div>
+                                    <label for="status_perkawinan" class="block text-sm font-medium text-gray-700">Status Perkawinan</label>
+                                    <select id="status_perkawinan" name="status_perkawinan" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <?php foreach ($maritalStatuses as $status): ?>
+                                            <option value="<?= $status ?>" <?= $action == 'edit' && $worker['status_perkawinan'] == $status ? 'selected' : '' ?>><?= $status ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="border-b border-gray-200 pb-4 mt-6">
+                                <h3 class="text-lg font-medium text-gray-900">Informasi Pekerjaan</h3>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="pekerja_id" class="block text-sm font-medium text-gray-700">ID Pekerja</label>
+                                    <input type="text" id="pekerja_id" name="pekerja_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['pekerja_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                
                                 <div>
                                     <label for="position" class="block text-sm font-medium text-gray-700">Jabatan</label>
-                                    <select id="position" name="position" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih Jabatan</option>
+                                    <select id="position" name="position" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                         <?php foreach ($positions as $pos): ?>
-                                            <option value="<?= $pos ?>" <?= $action == 'edit' && ($worker['position'] ?? '') == $pos ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($pos) ?>
-                                            </option>
+                                            <option value="<?= $pos ?>" <?= $action == 'edit' && $worker['position'] == $pos ? 'selected' : '' ?>><?= $pos ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <!-- NAMA LAHAN DROPDOWN -->
+                                
                                 <div>
-                                    <label for="lahan_id" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
-                                    <select id="lahan_id" name="lahan_id" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih Nama Lahan</option>
-                                        <?php foreach ($lahans as $id => $l): ?>
-                                            <option value="<?= $id ?>" <?= $action == 'edit' && ($worker['lahan_id'] ?? 0) == $id ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($l['lahan_name']) ?>
-                                            </option>
+                                    <label for="tgl_mulai" class="block text-sm font-medium text-gray-700">Tanggal Mulai Bekerja</label>
+                                    <input type="text" id="tgl_mulai" name="tgl_mulai" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_mulai']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                
+                                <div>
+                                    <label for="upah" class="block text-sm font-medium text-gray-700">Upah</label>
+                                    <input type="text" id="upah" name="upah" value="<?= $action == 'edit' ? number_format($worker['upah'], 0, ',', '.') : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                
+                                <div>
+                                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                                    <select id="status" name="status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="Active" <?= $action == 'edit' && $worker['status'] == 'Active' ? 'selected' : '' ?>>Active</option>
+                                        <option value="Inactive" <?= $action == 'edit' && $worker['status'] == 'Inactive' ? 'selected' : '' ?>>Inactive</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label for="foto" class="block text-sm font-medium text-gray-700">Foto Profil</label>
+                                    <input type="file" id="foto" name="foto" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                </div>
+                            </div>
+                            
+                            <div class="border-b border-gray-200 pb-4 mt-6">
+                                <h3 class="text-lg font-medium text-gray-900">Alamat</h3>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
+                                    <textarea id="alamat" name="alamat" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"><?= $action == 'edit' ? htmlspecialchars($worker['alamat']) : '' ?></textarea>
+                                </div>
+                                
+                                <div>
+                                    <label for="village_name" class="block text-sm font-medium text-gray-700">Desa</label>
+                                    <select id="village_name" name="village_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <?php foreach ($villages as $v): ?>
+                                            <option value="<?= $v['village'] ?>" <?= $action == 'edit' && $worker['desa'] == $v['village'] ? 'selected' : '' ?>><?= $v['village'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <!-- NAMA PETANI READ-ONLY -->
+                                
                                 <div>
-                                    <label for="farmer_name_display" class="block text-sm font-medium text-gray-700">Nama Petani</label>
-                                    <input type="text" id="farmer_name_display" name="farmer_name_display" readonly class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-gray-100" value="<?= $action == 'edit' ? htmlspecialchars($petanis[$worker['farmer_id']] ?? '') : '' ?>">
-                                    <!-- Hidden input to potentially send farmer_id if needed -->
-                                    <input type="hidden" id="farmer_id" name="farmer_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['farmer_id'] ?? '') : '' ?>">
+                                    <label for="kecamatan" class="block text-sm font-medium text-gray-700">Kecamatan</label>
+                                    <input type="text" id="kecamatan" name="kecamatan" value="<?= $action == 'edit' ? htmlspecialchars($worker['kecamatan']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                
+                                <div>
+                                    <label for="kabupaten" class="block text-sm font-medium text-gray-700">Kabupaten</label>
+                                    <input type="text" id="kabupaten" name="kabupaten" value="<?= $action == 'edit' ? htmlspecialchars($worker['kabupaten']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="tgl_mulai" class="block text-sm font-medium text-gray-700">Tanggal Mulai Bekerja</label>
-                                <input type="date" id="tgl_mulai" name="tgl_mulai" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_mulai']) : '' ?>">
+                            
+                            <div class="border-b border-gray-200 pb-4 mt-6">
+                                <h3 class="text-lg font-medium text-gray-900">Informasi Lahan</h3>
                             </div>
-                            <div>
-                                <label for="upah" class="block text-sm font-medium text-gray-700">Gaji Pokok</label>
-                                <input type="number" id="upah" name="upah" min="0" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" value="<?= $action == 'edit' ? $worker['upah'] : '' ?>">
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="lahan_id" class="block text-sm font-medium text-gray-700">ID Lahan</label>
+                                    <input type="text" id="lahan_id" name="lahan_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['lahan_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                
+                                <div>
+                                    <label for="lahan_name" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
+                                    <input type="text" id="lahan_name" name="lahan_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['lahan_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                
+                                <div>
+                                    <label for="farmer_id" class="block text-sm font-medium text-gray-700">ID Petani</label>
+                                    <input type="text" id="farmer_id" name="farmer_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['farmer_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                
+                                <div>
+                                    <label for="farmer_name" class="block text-sm font-medium text-gray-700">Nama Petani</label>
+                                    <input type="text" id="farmer_name" name="farmer_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['farmer_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
                             </div>
-                        </div>
-
-                        <?php if ($action == 'edit'): ?>
-                            <div>
-                                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                                <select id="status" name="status" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    <option value="Active" <?= $worker['status'] == 'Active' ? 'selected' : '' ?>>Active</option>
-                                    <option value="Inactive" <?= $worker['status'] == 'Inactive' ? 'selected' : '' ?>>Inactive</option>
-                                </select>
+                            
+                            <div class="flex justify-end pt-6">
+                                <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mr-3" onclick="window.location.href='pekerja.php'">
+                                    Batal
+                                </button>
+                                <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">
+                                    <?= $action == 'add' ? 'Tambah Pekerja' : 'Simpan Perubahan' ?>
+                                </button>
                             </div>
-                        <?php endif; ?>
-
-                        <div class="flex justify-end space-x-3">
-                            <a href="<?= $action == 'add' ? 'pekerja.php' : 'pekerja.php?action=view&id=' . $worker_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
-                                Batal
-                            </a>
-                            <button type="button" onclick="alert('Form simpan hanya untuk tampilan. Data tidak akan disimpan.')" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">
-                                Simpan
-                            </button>
                         </div>
                     </form>
-                </div>
-            </div>
-        <?php elseif ($action == 'view' && $worker): ?>
-            <!-- Tampilan Profil Pekerja -->
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <!-- Kolom Kiri - Profil -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <div class="p-6 bg-gray-50 border-b">
-                            <h3 class="text-lg font-medium text-gray-900">Profil Pekerja</h3>
-                        </div>
-                        <div class="p-6 text-center">
-                            <?php if (!empty($worker['foto'])): ?>
-                                <img src="<?= htmlspecialchars($worker['foto']) ?>" alt="Foto Pekerja" class="mx-auto h-32 w-32 rounded-full object-cover mb-4">
-                            <?php else: ?>
-                                <div class="mx-auto h-32 w-32 rounded-full bg-gray-200 flex items-center justify-center mb-4">
-                                    <i class="fas fa-user text-4xl text-gray-400"></i>
-                                </div>
-                            <?php endif; ?>
-                            <h3 class="text-lg font-medium text-gray-900"><?= htmlspecialchars($worker['name']) ?></h3>
-                            <p class="text-sm text-gray-500">NIK: <?= htmlspecialchars($worker['nik']) ?></p>
-                            <p class="text-sm font-medium text-[#f0ab00] mt-1"><?= htmlspecialchars($worker['position']) ?></p>
-                            <div class="mt-6 space-y-4 text-left">
-                                <div>
-                                    <p class="text-sm text-gray-500">NPWP</p>
-                                    <!-- Perbaikan: Tampilkan data jika ada -->
-                                    <p class="text-sm font-medium"><?= !empty($worker['npwp']) ? htmlspecialchars($worker['npwp']) : '-' ?></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Jenis Kelamin</p>
-                                    <p class="text-sm font-medium">
-                                        <?= ($worker['gender'] ?? '') == 'Male' ? 'Laki-laki' : (($worker['gender'] ?? '') == 'Female' ? 'Perempuan' : 'Lainnya') ?>
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Tempat/Tgl Lahir</p>
-                                    <p class="text-sm font-medium">
-                                        <?php
-                                        $tempat = !empty($worker['tempat_lahir']) ? htmlspecialchars($worker['tempat_lahir']) : '';
-                                        $tgl = !empty($worker['tgl_lahir']) ? date('d/m/Y', strtotime($worker['tgl_lahir'])) : '';
-                                        if ($tempat === '' && $tgl === '') {
-                                            echo '-';
-                                        } else {
-                                            echo $tempat . ($tempat && $tgl ? ', ' : '') . $tgl;
-                                        }
-                                        ?>
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Alamat</p>
-                                    <p class="text-sm font-medium"><?= htmlspecialchars($worker['alamat']) ?></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Desa</p>
-                                    <p class="text-sm font-medium"><?= htmlspecialchars($worker['village_name']) ?></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Tanggal Mulai Bekerja</p>
-                                    <p class="text-sm font-medium"><?= date('d/m/Y', strtotime($worker['tgl_mulai'])) ?></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Gaji Pokok</p>
-                                    <p class="text-sm font-medium">Rp <?= number_format($worker['upah'], 0, ',', '.') ?></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Status</p>
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $worker['status'] == 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
-                                        <?= $worker['status'] ?>
-                                    </span>
-                                </div>
-                                <!-- NAMA LAHAN & PETANI DI PROFILE -->
-                                <div>
-                                    <p class="text-sm text-gray-500">Nama Lahan</p>
-                                    <p class="text-sm font-medium"><?= htmlspecialchars($worker['lahan_name'] ?? 'Tidak Diketahui') ?></p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Nama Petani</p>
-                                    <p class="text-sm font-medium"><?= htmlspecialchars($worker['farmer_name'] ?? 'Tidak Diketahui') ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Kolom Kanan - Tab -->
-                <div class="lg:col-span-3">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <div class="border-b border-gray-200">
-                            <nav class="flex -mb-px">
-                                <a href="#profile" class="tab-link py-4 px-6 text-center border-b-2 font-medium text-sm border-[#f0ab00] text-[#f0ab00]">
-                                    Profil
-                                </a>
-                                <a href="#documents" class="tab-link py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                                    Dokumen
-                                </a>
-                                <a href="#history" class="tab-link py-4 px-6 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                                    Riwayat
-                                </a>
-                            </nav>
-                        </div>
-                        <div class="p-6">
-                            <!-- Tab Profil -->
-                            <div id="profile-content" class="tab-content active">
-                                <?php if (!$dummyProfile): ?>
-                                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
-                                        <div class="flex">
-                                            <div class="flex-shrink-0">
-                                                <i class="fas fa-info-circle text-blue-400"></i>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm text-blue-700">
-                                                    Belum ada informasi profil tambahan untuk pekerja ini.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php else: ?>
-                                    <!-- Tampilkan Informasi Tambahan dalam format tabel/grid di tab Profil -->
-                                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                                        <div class="p-6">
-                                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Pendidikan Terakhir</p>
-                                                    <p class="text-sm font-medium"><?= htmlspecialchars($dummyProfile['pendidikan_terakhir']) ?></p>
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Status Pernikahan</p>
-                                                    <p class="text-sm font-medium"><?= htmlspecialchars($dummyProfile['status_pernikahan']) ?></p>
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Jumlah Tanggungan</p>
-                                                    <p class="text-sm font-medium"><?= htmlspecialchars($dummyProfile['jumlah_tanggungan']) ?></p>
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Pengalaman Kerja</p>
-                                                    <p class="text-sm font-medium"><?= htmlspecialchars($dummyProfile['pengalaman_kerja']) ?></p>
-                                                </div>
-                                                <div class="md:col-span-2">
-                                                    <p class="text-sm text-gray-500">Keterampilan Khusus</p>
-                                                    <p class="text-sm font-medium"><?= htmlspecialchars($dummyProfile['keterampilan_khusus']) ?></p>
-                                                </div>
-                                                <div class="md:col-span-2">
-                                                    <p class="text-sm text-gray-500">Catatan Kesehatan</p>
-                                                    <p class="text-sm font-medium"><?= htmlspecialchars($dummyProfile['catatan_kesehatan']) ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            <!-- Tab Dokumen -->
-                            <div id="documents-content" class="tab-content hidden">
-                                <div class="flex justify-between items-center mb-6">
-                                    <h3 class="text-lg font-medium text-gray-900">Dokumen Pekerja</h3>
-                                    <button onclick="alert('Modal tambah dokumen hanya untuk tampilan.')" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
-                                        <i class="fas fa-plus mr-2"></i> Tambah Dokumen
-                                    </button>
-                                </div>
-                                <?php if (empty($dummyDocuments)): ?>
-                                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
-                                        <div class="flex">
-                                            <div class="flex-shrink-0">
-                                                <i class="fas fa-info-circle text-blue-400"></i>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm text-blue-700">
-                                                    Belum ada dokumen untuk pekerja ini.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php else: ?>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        <?php foreach ($dummyDocuments as $doc): ?>
-                                            <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                                                <div class="p-4 text-center">
-                                                    <?php
-                                                    $file_ext = pathinfo($doc['file_path'], PATHINFO_EXTENSION);
-                                                    $icon = 'fa-file-alt';
-                                                    $color = 'text-blue-500';
-                                                    if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif'])) {
-                                                        $icon = 'fa-file-image';
-                                                        $color = 'text-green-500';
-                                                    } elseif (in_array($file_ext, ['pdf'])) {
-                                                        $icon = 'fa-file-pdf';
-                                                        $color = 'text-red-500';
-                                                    } elseif (in_array($file_ext, ['doc', 'docx'])) {
-                                                        $icon = 'fa-file-word';
-                                                        $color = 'text-blue-600';
-                                                    } elseif (in_array($file_ext, ['xls', 'xlsx'])) {
-                                                        $icon = 'fa-file-excel';
-                                                        $color = 'text-green-600';
-                                                    }
-                                                    ?>
-                                                    <i class="fas <?= $icon ?> text-4xl <?= $color ?> mb-3"></i>
-                                                    <h4 class="text-md font-medium text-gray-900"><?= htmlspecialchars($doc['document_name']) ?></h4>
-                                                    <p class="text-sm text-gray-500 mt-1">
-                                                        <?= strtoupper($doc['document_type']) ?>
-                                                        <?php if ($doc['expiry_date']): ?>
-                                                            <br>Kadaluarsa: <?= date('d/m/Y', strtotime($doc['expiry_date'])) ?>
-                                                        <?php endif; ?>
-                                                    </p>
-                                                </div>
-                                                <div class="bg-gray-50 px-4 py-3 flex justify-between items-center">
-                                                    <a href="<?= htmlspecialchars($doc['file_path']) ?>" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                                                        <i class="fas fa-download mr-1"></i> Unduh
-                                                    </a>
-                                                    <button type="button" class="text-red-600 hover:text-red-800 text-sm font-medium" onclick="alert('Fitur hapus dokumen hanya untuk tampilan.')">
-                                                        <i class="fas fa-trash mr-1"></i> Hapus
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            <!-- Tab Riwayat -->
-                            <div id="history-content" class="tab-content hidden">
-                                <div class="flex justify-between items-center mb-6">
-                                    <h3 class="text-lg font-medium text-gray-900">Riwayat Pekerja</h3>
-                                    <button onclick="alert('Modal tambah riwayat hanya untuk tampilan.')" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
-                                        <i class="fas fa-plus mr-2"></i> Tambah Riwayat
-                                    </button>
-                                </div>
-                                <?php if (empty($dummyHistories)): ?>
-                                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4">
-                                        <div class="flex">
-                                            <div class="flex-shrink-0">
-                                                <i class="fas fa-info-circle text-blue-400"></i>
-                                            </div>
-                                            <div class="ml-3">
-                                                <p class="text-sm text-blue-700">
-                                                    Belum ada riwayat untuk pekerja ini.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php else: ?>
-                                    <div class="space-y-4">
-                                        <?php foreach ($dummyHistories as $h): ?>
-                                            <div class="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-                                                <div class="flex justify-between items-start">
-                                                    <div>
-                                                        <h4 class="text-md font-medium text-gray-900"><?= htmlspecialchars($h['history_type']) ?></h4>
-                                                        <p class="text-sm text-gray-600 mt-1"><?= htmlspecialchars($h['description']) ?></p>
-                                                        <p class="text-xs text-gray-500 mt-2">
-                                                            <i class="far fa-calendar-alt mr-1"></i> <?= date('d/m/Y', strtotime($h['event_date'])) ?>
-                                                        </p>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <p class="text-xs text-gray-500">
-                                                            Dicatat oleh: <?= htmlspecialchars($h['recorded_by_name']) ?><br>
-                                                            <?= date('d/m/Y H:i', strtotime($h['recorded_at'])) ?>
-                                                        </p>
-                                                        <button type="button" class="mt-2 text-red-600 hover:text-red-800 text-xs font-medium" onclick="alert('Fitur hapus riwayat hanya untuk tampilan.')">
-                                                            <i class="fas fa-trash mr-1"></i> Hapus
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         <?php endif; ?>
     </section>
 </main>
 
-<!-- Modals would go here if needed for pure display -->
-
-<script>
-    // Fungsi untuk tab
-    document.querySelectorAll('.tab-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-            // Update tab aktif
-            document.querySelectorAll('.tab-link').forEach(t => {
-                t.classList.remove('border-[#f0ab00]', 'text-[#f0ab00]');
-                t.classList.add('border-transparent', 'text-gray-500');
-            });
-            this.classList.remove('border-transparent', 'text-gray-500');
-            this.classList.add('border-[#f0ab00]', 'text-[#f0ab00]');
-            // Update konten aktif
-            const target = this.getAttribute('href').substring(1);
-            document.querySelectorAll('.tab-content').forEach(c => {
-                c.classList.remove('active');
-                c.classList.add('hidden');
-            });
-            document.getElementById(target + '-content').classList.remove('hidden');
-            document.getElementById(target + '-content').classList.add('active');
-        });
-    });
-
-    // Auto-fill Nama Petani based on Nama Lahan selection (Purely client-side for display)
-    document.addEventListener('DOMContentLoaded', function () {
-        const lahanSelect = document.getElementById('lahan_id');
-        const farmerNameInput = document.getElementById('farmer_name_display');
-        const farmerIdInput = document.getElementById('farmer_id');
-
-        // Data for auto-fill (mimics database relationship)
-        const lahanToFarmerMap = {
-            <?php foreach ($lahans as $id => $l): ?>
-                <?= $id ?>: { name: "<?= addslashes($petanis[$l['farmer_id']] ?? 'Tidak Diketahui') ?>", id: <?= $l['farmer_id'] ?> },
-            <?php endforeach; ?>
-        };
-
-        if (lahanSelect && farmerNameInput && farmerIdInput) {
-            lahanSelect.addEventListener('change', function () {
-                const selectedLahanId = this.value;
-                if (selectedLahanId && lahanToFarmerMap[selectedLahanId]) {
-                    farmerNameInput.value = lahanToFarmerMap[selectedLahanId].name;
-                    farmerIdInput.value = lahanToFarmerMap[selectedLahanId].id;
-                } else {
-                    farmerNameInput.value = '';
-                    farmerIdInput.value = '';
-                }
-            });
-
-            // Trigger change on page load if editing to populate initial value
-            if (document.querySelector('input[name="update_worker"]')) {
-                 const initialLahanId = lahanSelect.value;
-                 if (initialLahanId && lahanToFarmerMap[initialLahanId]) {
-                    farmerNameInput.value = lahanToFarmerMap[initialLahanId].name;
-                    farmerIdInput.value = lahanToFarmerMap[initialLahanId].id;
-                 }
-            }
-        }
-    });
-</script>
-
-<?php include 'footer.php'; // Include your standard footer ?>
+<?php include 'footer.php'; ?>
