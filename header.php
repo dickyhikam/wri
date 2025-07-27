@@ -38,6 +38,8 @@ $name_menu = [
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title><?= $name_menu[$modified_uri] ?> | MIS</title>
+  <!-- icon -->
+  <link rel="icon" href="img/logo2.png" />
   <!-- Load Adobe Fonts -->
   <link rel="stylesheet" href="https://use.typekit.net/erz2zrt.css">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -65,7 +67,7 @@ $name_menu = [
       <div class="h-20 flex items-center px-6 font-bold text-xl tracking-wide border-b border-yellow-500">
         <div class="flex items-center space-x-2">
           <a href="index">
-            <img src="img/logo.png" alt="MIS Admin Logo" class="h-10 w-auto" />
+            <img src="img/logo-text.png" alt="MIS Admin Logo" class="h-10 w-auto" />
           </a>
         </div>
       </div>
@@ -209,7 +211,7 @@ $name_menu = [
     <main class="flex-1 flex flex-col overflow-hidden">
       <header class="h-20 bg-white border-b shadow-sm flex items-center justify-between px-8">
         <div class="flex items-center space-x-4">
-          <h1 class="text-2xl font-bold text-gray-800"><?= $name_menu[$modified_uri] ?></h1>
+          <h1 class="text-2xl font-bold text-gray-800" hidden><?= $name_menu[$modified_uri] ?></h1>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 flex items-center pl-3">
               <i class="fas fa-search text-gray-400"></i>
