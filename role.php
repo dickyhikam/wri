@@ -82,16 +82,6 @@ if ($farmer_id) {
         <?php if ($action == 'list'): ?>
             <!-- Daftar Petani -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
-                <div class="p-4 bg-gray-50 border-b">
-                    <form method="get" class="flex flex-col gap-4">
-                        <input type="hidden" name="action" value="list">
-
-                        <!-- Pencarian dipindah ke atas -->
-                        <div class="flex-1">
-                            <input type="text" name="search" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Cari nama role..." value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
-                        </div>
-                    </form>
-                </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">

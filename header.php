@@ -111,8 +111,77 @@ $name_menu = [
           </div>
         </div>
 
+        <div>
+          <a href="workplan" @click="currentMenu = 'workplan'" :class="{'sidebar-item active': currentMenu === 'workplan', 'sidebar-item': currentMenu !== 'workplan'}" class="flex items-center px-6 py-3">
+            <i class="fas fa-project-diagram w-5 mr-3 text-[#f0ab00]"></i>
+            WorkPlan
+          </a>
+        </div>
+        <div>
+          <a href="sertifikasi" @click="currentMenu = 'sertifikasi'" :class="{'sidebar-item active': currentMenu === 'sertifikasi', 'sidebar-item': currentMenu !== 'sertifikasi'}" class="flex items-center px-6 py-3">
+            <i class="fas fa-user-secret w-5 mr-3 text-[#f0ab00]"></i>
+            Audit
+          </a>
+        </div>
+        <div>
+          <a href="nkt" @click="currentMenu = 'nkt'" :class="{'sidebar-item active': currentMenu === 'nkt', 'sidebar-item': currentMenu !== 'nkt'}" class="flex items-center px-6 py-3">
+            <i class="fas fa-chart-line w-5 mr-3 text-[#f0ab00]"></i>
+            HCV
+          </a>
+        </div>
+
+        <!-- BMP -->
+        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.bmp}">
+          <div @click="menuCollapse.bmp = !menuCollapse.bmp" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
+            <div class="flex items-center">
+              <i class="fas fa-warehouse w-5 mr-3 text-[#f0ab00]"></i>
+              BMP
+            </div>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.bmp}"></i>
+          </div>
+          <div class="submenu pl-14 pr-6 py-2 space-y-1">
+            <a href="perawatan" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Perawatan</a>
+            <a href="produksi" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Produksi</a>
+          </div>
+        </div>
+
+        <!-- K3 -->
+        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.k3}">
+          <div @click="menuCollapse.k3 = !menuCollapse.k3" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
+            <div class="flex items-center">
+              <i class="fas fa-user-shield w-5 mr-3 text-[#f0ab00]"></i>
+              K3
+            </div>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.k3}"></i>
+          </div>
+          <div class="submenu pl-14 pr-6 py-2 space-y-1">
+            <a href="limbah" @click="currentMenu = 'limbah'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Limbah</a>
+            <a href="keselamatan" @click="currentMenu = 'keselamatan'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Kecelakaan Kerja</a>
+            <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Safety Awareness</a>
+          </div>
+        </div>
+
+        <!-- ICS -->
+        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.ics}">
+          <div @click="menuCollapse.ics = !menuCollapse.ics" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
+            <div class="flex items-center">
+              <i class="fas fa-users w-5 mr-3 text-[#f0ab00]"></i>
+              ICS
+            </div>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.ics}"></i>
+          </div>
+          <div class="submenu pl-14 pr-6 py-2 space-y-1">
+            <a href="#" @click="currentMenu = 'queryBuilder'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">List Data</a>
+            <a href="analitik" @click="currentMenu = 'analyticsDashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Galery</a>
+            <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Fasilitas</a>
+            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Organisasi</a>
+            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Training</a>
+            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Aktivity</a>
+          </div>
+        </div>
+
         <!-- Project Management -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.projectManagement}">
+        <!-- <div class="menu-collapse" :class="{'collapsed': !menuCollapse.projectManagement}">
           <div @click="menuCollapse.projectManagement = !menuCollapse.projectManagement" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-project-diagram w-5 mr-3 text-[#f0ab00]"></i>
@@ -123,14 +192,14 @@ $name_menu = [
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
             <a href="workplan" @click="currentMenu = 'workplan'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Workplan Tracker</a>
             <a href="#" @click="currentMenu = 'fieldLogs'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Log Aktivitas Lapangan</a>
-            <!-- <a href="#" @click="currentMenu = 'activityReports'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Laporan Kegiatan</a> -->
+            <a href="#" @click="currentMenu = 'activityReports'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Laporan Kegiatan</a>
             <a href="#" @click="currentMenu = 'weeklyReports'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Laporan Mingguan</a>
             <a href="#" @click="currentMenu = 'finalReports'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Final & Intermediate Report</a>
           </div>
-        </div>
+        </div> -->
 
         <!-- Analytics & Visualization -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.analytics}">
+        <!-- <div class="menu-collapse" :class="{'collapsed': !menuCollapse.analytics}">
           <div @click="menuCollapse.analytics = !menuCollapse.analytics" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-chart-bar w-5 mr-3 text-[#f0ab00]"></i>
@@ -144,10 +213,10 @@ $name_menu = [
             <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Rangkuman Produksi</a>
             <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Export Data</a>
           </div>
-        </div>
+        </div> -->
 
         <!-- CMS -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.cms}">
+        <!-- <div class="menu-collapse" :class="{'collapsed': !menuCollapse.cms}">
           <div @click="menuCollapse.cms = !menuCollapse.cms" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-newspaper w-5 mr-3 text-[#f0ab00]"></i>
@@ -160,7 +229,7 @@ $name_menu = [
             <a href="#" @click="currentMenu = 'articles'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Artikel & Dokumentasi</a>
             <a href="#" @click="currentMenu = 'gallery'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Galeri Foto/Video</a>
           </div>
-        </div>
+        </div> -->
 
         <!-- User Management -->
         <div class="menu-collapse" :class="{'collapsed': !menuCollapse.userManagement}">
