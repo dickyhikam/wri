@@ -69,8 +69,8 @@ $json_data = file_get_contents('new_user.json');
     <div class="relative z-10 bg-white/90 backdrop-blur-md border border-white/30 shadow-xl rounded-xl w-full max-w-md p-8">
         <div class="text-center mb-6">
             <img src="img/logo_text.png" alt="WRI Indonesia" class="h-12 mx-auto mb-4" />
-            <h2 class="text-2xl font-bold text-wri-black">Create your MIS Account</h2>
-            <p class="text-sm text-wri-black">Join our platform for collaboration & reporting</p>
+            <h2 class="text-2xl font-bold text-wri-black">Buat Akun MIS Anda</h2>
+            <p class="text-sm text-wri-black">Bergabunglah untuk kolaborasi & pelaporan</p>
         </div>
 
         <form class="space-y-5" id="registerForm">
@@ -83,12 +83,16 @@ $json_data = file_get_contents('new_user.json');
             <input type="radio" id="wri" name="organization" value="wri" required>
 
             <div>
-                <label for="name" class="block text-sm text-wri-black mb-1">Full Name <span class="text-red-500">*</span></label>
-                <input type="text" id="name" name="name" placeholder="Your full name" class="w-full px-4 py-2 rounded-md border border-gray-300 focus-ring-wri-yellow" required />
+                <label for="name" class="block text-sm text-wri-black mb-1">Nama Lengkap <span class="text-red-500">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Nama lengkap anda" class="w-full px-4 py-2 rounded-md border border-gray-300 focus-ring-wri-yellow" required />
+            </div>
+            <div>
+                <label for="phone_number" class="block text-sm text-wri-black mb-1">Nomor Telp <span class="text-red-500">*</span></label>
+                <input type="text" id="phone_number" name="phone_number" placeholder="Nomor telp anda" class="w-full px-4 py-2 rounded-md border border-gray-300 focus-ring-wri-yellow" required />
             </div>
             <div>
                 <label for="email" class="block text-sm text-wri-black mb-1">Email <span class="text-red-500">*</span></label>
-                <input type="email" id="email" name="email" placeholder="name@wri-indonesia.org" class="w-full px-4 py-2 rounded-md border border-gray-300 focus-ring-wri-yellow" required />
+                <input type="email" id="email" name="email" placeholder="nama@wri-indonesia.org" class="w-full px-4 py-2 rounded-md border border-gray-300 focus-ring-wri-yellow" required />
             </div>
             <!-- Password -->
             <div>
@@ -103,7 +107,7 @@ $json_data = file_get_contents('new_user.json');
 
             <!-- Confirm Password -->
             <div>
-                <label for="confirm_password" class="block text-sm text-wri-black mb-1">Confirm Password <span class="text-red-500">*</span></label>
+                <label for="confirm_password" class="block text-sm text-wri-black mb-1">Konfirmasi Password <span class="text-red-500">*</span></label>
                 <div class="relative">
                     <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" class="w-full px-4 py-2 rounded-md border border-gray-300 focus-ring-wri-yellow pr-10" required />
                     <button type="button" onclick="togglePassword('confirm_password', this)" class="absolute right-3 top-2.5 text-gray-500 hover:text-wri-yellow text-sm focus:outline-none">
@@ -119,12 +123,12 @@ $json_data = file_get_contents('new_user.json');
         </form>
 
         <p class="text-center text-sm text-gray-600 mt-6">
-            Already have an account?
-            <a href="auth-login" class="text-wri-yellow font-medium hover:underline">Sign in here</a>
+            Sudah punya akun?
+            <a href="auth-login" class="text-wri-yellow font-medium hover:underline">Masuk di sini</a>
         </p>
     </div>
     <div class="relative z-10 text-center mt-8 text-xs text-white">
-        &copy; <span id="year"></span> MIS Portal. Built by
+        &copy; <span id="year"></span> Portal MIS. Dibuat oleh
         <a class="text-wri-yellow font-medium" href="https://wri-indonesia.org/id" target="_blank">WRI Indonesia</a>.
     </div>
 
@@ -181,6 +185,7 @@ $json_data = file_get_contents('new_user.json');
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const phone_number = document.getElementById('phone_number').value;
             const type_user = document.querySelector('input[name="organization"]:checked').value;
 
             // Prepare data as an object
@@ -188,6 +193,7 @@ $json_data = file_get_contents('new_user.json');
                 name: name,
                 email: email,
                 password: password,
+                phone_number: phone_number,
                 type_user: type_user
             };
 

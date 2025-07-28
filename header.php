@@ -76,7 +76,7 @@ $name_menu = [
       <nav class="flex-1 overflow-y-auto py-4 space-y-1 text-sm">
         <!-- Dashboard -->
         <div>
-          <a href="index.php" @click="currentMenu = 'dashboard'" :class="{'sidebar-item active': currentMenu === 'dashboard', 'sidebar-item': currentMenu !== 'dashboard'}" class="flex items-center px-6 py-3">
+          <a href="index" @click="currentMenu = 'dashboard'" :class="{'sidebar-item active': currentMenu === 'dashboard', 'sidebar-item': currentMenu !== 'dashboard'}" class="flex items-center px-6 py-3">
             <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
             Dashboard
           </a>
@@ -92,21 +92,21 @@ $name_menu = [
             <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.masterData}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="petani.php" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Petani</a>
-            <a href="lahan.php" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Lahan/Persil</a>
-            <a href="parcel.php" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Parcel Data</a>
-            <a href="ics.php" @click="currentMenu = 'ics'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">ICS & Fasilitator</a>
-            <a href="pelatihan.php" @click="currentMenu = 'trainings'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pelatihan</a>
-            <a href="sertifikasi.php" @click="currentMenu = 'certifications'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Sertifikasi & Audit</a>
-            <a href="pekerja.php" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pekerja</a>
-            <a href="transaksi.php" @click="currentMenu = 'transactions'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Transaksi</a>
-            <a href="mitra.php" @click="currentMenu = 'partners'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Mitra & Organisasi</a>
-            <a href="nkt.php" @click="currentMenu = 'hcv'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">HCV/NKT</a>
-            <a href="kelompok_tani.php" @click="currentMenu = 'farmers_gt'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Kelompok Tani</a>
-            <a href="produksi.php" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Produksi</a>
-            <a href="perawatan.php" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Perawatan</a>
-            <a href="limbah.php" @click="currentMenu = 'limbah'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Limbah B3</a>
-            <a href="keselamatan.php" @click="currentMenu = 'k3'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">K3</a>
+            <a href="petani" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Petani</a>
+            <a href="lahan" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Lahan/Persil</a>
+            <a href="parcel" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Parcel Data</a>
+            <a href="ics" @click="currentMenu = 'ics'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">ICS & Fasilitator</a>
+            <a href="pelatihan" @click="currentMenu = 'trainings'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pelatihan</a>
+            <a href="sertifikasi" @click="currentMenu = 'certifications'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Sertifikasi & Audit</a>
+            <a href="pekerja" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pekerja</a>
+            <a href="transaksi" @click="currentMenu = 'transactions'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Transaksi</a>
+            <a href="mitra" @click="currentMenu = 'partners'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Mitra & Organisasi</a>
+            <a href="nkt" @click="currentMenu = 'hcv'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">HCV/NKT</a>
+            <a href="kelompok_tani" @click="currentMenu = 'farmers_gt'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Kelompok Tani</a>
+            <a href="produksi" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Produksi</a>
+            <a href="perawatan" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Perawatan</a>
+            <a href="limbah" @click="currentMenu = 'limbah'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Limbah B3</a>
+            <a href="keselamatan" @click="currentMenu = 'k3'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">K3</a>
           </div>
         </div>
 
@@ -120,7 +120,7 @@ $name_menu = [
             <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.projectManagement}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="workplan.php" @click="currentMenu = 'workplan'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Workplan Tracker</a>
+            <a href="workplan" @click="currentMenu = 'workplan'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Workplan Tracker</a>
             <a href="#" @click="currentMenu = 'fieldLogs'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Log Aktivitas Lapangan</a>
             <a href="#" @click="currentMenu = 'activityReports'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Laporan Kegiatan</a>
             <a href="#" @click="currentMenu = 'weeklyReports'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Laporan Mingguan</a>
@@ -139,7 +139,7 @@ $name_menu = [
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
             <a href="#" @click="currentMenu = 'queryBuilder'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Query Builder</a>
-            <a href="analitik.php" @click="currentMenu = 'analyticsDashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Dashboard Analitik</a>
+            <a href="analitik" @click="currentMenu = 'analyticsDashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Dashboard Analitik</a>
             <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Rangkuman Produksi</a>
             <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Export Data</a>
           </div>
@@ -171,9 +171,9 @@ $name_menu = [
             <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.userManagement}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="UserRole.php" @click="currentMenu = 'userRoles'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">User & Role Management</a>
-            <a href="menuAccess.php" @click="currentMenu = 'menuAccess'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Hak Akses Menu</a>
-            <a href="ApprovalRole.php" @click="currentMenu = 'approvalRoles'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Approval Role</a>
+            <a href="UserRole" @click="currentMenu = 'userRoles'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">User & Role Management</a>
+            <a href="menuAccess" @click="currentMenu = 'menuAccess'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Hak Akses Menu</a>
+            <a href="ApprovalRole" @click="currentMenu = 'approvalRoles'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Approval Role</a>
             <a href="#" @click="currentMenu = 'activityLogs'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Riwayat Login & Aktivitas</a>
           </div>
         </div>

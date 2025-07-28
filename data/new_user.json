@@ -2,18 +2,20 @@
     {
         "user_cred": [
             {
-                "id": 1753504952,
+                "id": 1753673015,
                 "username": "dhikam",
                 "email": "dhikam@appen.com",
-                "password": "12"
+                "password": "12",
+                "status": ""
             }
         ],
         "user_profile": [
             {
-                "id": 1753504952,
+                "id": 1753673015,
                 "name": "Dicky Sirojul Hikam",
+                "phone_number": "081238697620",
                 "type_user": "ics",
-                "register_date": "2025-07-26 11:42:32"
+                "register_date": "2025-07-28 10:23:35"
             }
         ]
     }

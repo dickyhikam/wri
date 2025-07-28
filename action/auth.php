@@ -1,4 +1,6 @@
 <?php
+session_start(); // <- Tambahkan ini di awal agar session aktif
+
 // Get the raw POST data
 $data = file_get_contents("php://input");
 
@@ -24,23 +26,30 @@ if ($formData) {
         $existingData = [];
     }
 
-    // Check if the email already exists
+    // Check if the email, phone number, or name already exists
     $emailExists = false;
+
+    // Iterate through each user
     foreach ($existingData as $user) {
+        // Check if any user credential matches the form data
         foreach ($user['user_cred'] as $user_cred) {
-            if ($user_cred['email'] === $email) {
+            if (
+                $user_cred['email'] === $email ||
+                $user_cred['phone_number'] === $formData['phone_number'] ||
+                $user_cred['name'] === $formData['name']
+            ) {
                 $emailExists = true;
-                break;
+                break 2;  // Break out of both loops immediately
             }
-        }
-        if ($emailExists) {
-            break;
         }
     }
 
+    // If the email, phone number, or name exists, return an error
     if ($emailExists) {
-        // Return an error response if the email already exists
-        echo json_encode(['status' => 'error', 'message' => 'The email address is already registered. Please use a different email.']);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'The email address, phone number, or name is already registered. Please use a different one.'
+        ]);
     } else {
         // Generate a unique email by appending a random string
         $username = strstr($email, '@', true); // Get everything before '@' as the username
@@ -58,6 +67,7 @@ if ($formData) {
         $user_profile = [
             'id' => time(),  // Use time as a unique ID
             'name' => $formData['name'],
+            'phone_number' => $formData['phone_number'],
             'type_user' => $formData['type_user'],
             'register_date' => $formattedDate
         ];
@@ -68,6 +78,9 @@ if ($formData) {
 
         // Save the updated data back to the JSON file
         file_put_contents($jsonFile, json_encode($existingData, JSON_PRETTY_PRINT));
+
+        // Simpan email ke session
+        $_SESSION['email'] = $email;
 
         // Return a response indicating success
         echo json_encode(['status' => 'success', 'message' => 'Your registration has been successfully completed.']);
