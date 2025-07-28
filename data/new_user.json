@@ -1,22 +1,22 @@
 [
-    {
-        "user_cred": [
-            {
-                "id": 1753673015,
-                "username": "dhikam",
-                "email": "dhikam@appen.com",
-                "password": "12",
-                "status": ""
-            }
-        ],
-        "user_profile": [
-            {
-                "id": 1753673015,
-                "name": "Dicky Sirojul Hikam",
-                "phone_number": "081238697620",
-                "type_user": "ics",
-                "register_date": "2025-07-28 10:23:35"
-            }
-        ]
-    }
+  {
+    "user_cred": [
+      {
+        "id": 1753673015,
+        "username": "test_register",
+        "email": "test_register@example.com",
+        "password": "12",
+        "status": ""
+      }
+    ],
+    "user_profile": [
+      {
+        "id": 1753673015,
+        "name": "Test Register",
+        "phone_number": "081238697620",
+        "type_user": "ics",
+        "register_date": "2025-07-28 10:23:35"
+      }
+    ]
+  }
 ]

@@ -1,9 +1,61 @@
 [
   {
-    "roles": [
+    "user_cred": [
       {
-        "id": 1,
-        "username": "Super Admin"
+        "id": 1753673015,
+        "username": "test_inactive",
+        "email": "test_inactive@example.com",
+        "password": "12",
+        "is_active": 0
+      }
+    ],
+    "user_profile": [
+      {
+        "id": 1753673015,
+        "name": "Test InActive",
+        "phone_number": "081238697620",
+        "type_user": "ics",
+        "register_date": "2025-07-28 10:23:35"
+      }
+    ],
+    "akun_log": [
+      {
+        "id": 1753673015,
+        "role": "Admin",
+        "ics": null
+      }
+    ],
+
+    "ics_list": [
+      {
+        "ics_id": "1",
+        "code": "ABC",
+        "name": "Perusahaan ABC",
+        "no_badan_hukum": "123456789",
+        "tgl_berdiri": "2000-01-01",
+        "tgl_legalitas": "2001-01-01",
+        "dokumen": "Dokumen ABC.pdf",
+        "logo": "logo_abc.png",
+        "alamat": "Jl. Contoh No. 123, Jakarta",
+        "location": "Jakarta",
+        "area_wilayah": "DKI Jakarta",
+        "create_by": "admin",
+        "create_date": "2025-07-28"
+      },
+      {
+        "ics_id": "2",
+        "code": "XYZ",
+        "name": "Perusahaan XYZ",
+        "no_badan_hukum": "987654321",
+        "tgl_berdiri": "2010-05-15",
+        "tgl_legalitas": "2011-06-20",
+        "dokumen": "Dokumen XYZ.pdf",
+        "logo": "logo_xyz.png",
+        "alamat": "Jl. Contoh No. 456, Bandung",
+        "location": "Bandung",
+        "area_wilayah": "Jawa Barat",
+        "create_by": "admin",
+        "create_date": "2025-07-28"
       }
     ]
   }

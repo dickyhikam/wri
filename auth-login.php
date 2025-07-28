@@ -147,7 +147,8 @@ session_unset();      // Hapus semua variabel session
         $jsonFile = 'data/user_management.json';
         $jsonFileUser = 'data/new_user.json';
 
-        if (file_exists($jsonFileUser)) {
+        if (file_exists($jsonFile)) {
+        } elseif (file_exists($jsonFileUser)) {
             $data = json_decode(file_get_contents($jsonFileUser), true);
             $isValid = false;
             $userFound = null;
@@ -173,8 +174,6 @@ session_unset();      // Hapus semua variabel session
             } else {
                 echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false);</script>";
             }
-        } elseif (file_exists($jsonFile)) {
-            echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false);</script>";
         } else {
             echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false);</script>";
         }

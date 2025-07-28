@@ -1,282 +1,281 @@
-
-<?php 
+<?php
 // include 'config.php';
 include 'header.php';
 // Simulasi data dummy untuk contoh
 $dummyFarmers = [
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0001',
-        'name' => 'Petani 1',
-        'nik' => '1408060103450001',
-        'npwp' => '01.234.567.8-912.345',
-        'gender' => 'Male',
-        'tempat_lahir' => 'Berumbung Baru',
-        'tgl_lahir' => '01/03/1945',
-        'alamat' => 'Alamat',
-        'village_id' => 1,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 1,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 1,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '05/02/2024',
-        'status' => 'Active',
-        'ics_id' => 1,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 1,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok A-12',
-        'pelatihan' => 'Pengolahan Tanah Organik'
-    ],
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0002',
-        'name' => 'Petani 2',
-        'nik' => '1408062006890001',
-        'npwp' => '09.876.543.2-109.876',
-        'gender' => 'Male',
-        'tempat_lahir' => 'Indramayu',
-        'tgl_lahir' => '20/06/1989',
-        'alamat' => 'Alamat',
-        'village_id' => 2,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 2,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 2,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '05/02/2024',
-        'status' => 'Active',
-        'ics_id' => 2,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 2,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok B-05',
-        'pelatihan' => 'Pemupukan Berimbang'
-    ],
-    // Add more dummy data for pagination demonstration
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0003',
-        'name' => 'Petani 3',
-        'nik' => '1408061507890001',
-        'npwp' => '03.456.789.0-123.456',
-        'gender' => 'Female',
-        'tempat_lahir' => 'Dayun',
-        'tgl_lahir' => '15/07/1989',
-        'alamat' => 'Alamat',
-        'village_id' => 1,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 1,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 1,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '10/03/2024',
-        'status' => 'Active',
-        'ics_id' => 1,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 1,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok C-08',
-        'pelatihan' => 'Pengendalian Hama'
-    ],
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0004',
-        'name' => 'Petani 4',
-        'nik' => '1408061205670001',
-        'npwp' => '04.567.890.1-234.567',
-        'gender' => 'Male',
-        'tempat_lahir' => 'Berumbung Baru',
-        'tgl_lahir' => '12/05/1967',
-        'alamat' => 'Alamat',
-        'village_id' => 1,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 1,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 1,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '15/01/2024',
-        'status' => 'Inactive',
-        'ics_id' => 2,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 2,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok D-03',
-        'pelatihan' => 'Pasca Panen'
-    ],
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0005',
-        'name' => 'Petani 5',
-        'nik' => '1408062209910001',
-        'npwp' => '05.678.901.2-345.678',
-        'gender' => 'Female',
-        'tempat_lahir' => 'Indramayu',
-        'tgl_lahir' => '22/09/1991',
-        'alamat' => 'Alamat',
-        'village_id' => 2,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 2,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 2,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '20/02/2024',
-        'status' => 'Active',
-        'ics_id' => 1,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 1,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok E-07',
-        'pelatihan' => 'Pengolahan Tanah Organik'
-    ],
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0006',
-        'name' => 'Petani 6',
-        'nik' => '1408061804820001',
-        'npwp' => '06.789.012.3-456.789',
-        'gender' => 'Male',
-        'tempat_lahir' => 'Dayun',
-        'tgl_lahir' => '18/04/1982',
-        'alamat' => 'Alamat',
-        'village_id' => 1,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 1,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 1,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '05/03/2024',
-        'status' => 'Active',
-        'ics_id' => 2,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 2,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok F-09',
-        'pelatihan' => 'Pemupukan Berimbang'
-    ],
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0007',
-        'name' => 'Petani 7',
-        'nik' => '1408063006750001',
-        'npwp' => '07.890.123.4-567.890',
-        'gender' => 'Male',
-        'tempat_lahir' => 'Berumbung Baru',
-        'tgl_lahir' => '30/06/1975',
-        'alamat' => 'Alamat',
-        'village_id' => 1,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 1,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 1,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '10/01/2024',
-        'status' => 'Inactive',
-        'ics_id' => 1,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 1,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok G-11',
-        'pelatihan' => 'Pengendalian Hama'
-    ],
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0008',
-        'name' => 'Petani 8',
-        'nik' => '1408061109930001',
-        'npwp' => '08.901.234.5-678.901',
-        'gender' => 'Female',
-        'tempat_lahir' => 'Indramayu',
-        'tgl_lahir' => '11/09/1993',
-        'alamat' => 'Alamat',
-        'village_id' => 2,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 2,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 2,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '15/02/2024',
-        'status' => 'Active',
-        'ics_id' => 2,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 2,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok H-04',
-        'pelatihan' => 'Pasca Panen'
-    ],
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0009',
-        'name' => 'Petani 9',
-        'nik' => '1408060508870001',
-        'npwp' => '09.012.345.6-789.012',
-        'gender' => 'Male',
-        'tempat_lahir' => 'Dayun',
-        'tgl_lahir' => '05/08/1987',
-        'alamat' => 'Alamat',
-        'village_id' => 1,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 1,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 1,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '20/03/2024',
-        'status' => 'Active',
-        'ics_id' => 1,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 1,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok I-08',
-        'pelatihan' => 'Pengolahan Tanah Organik'
-    ],
-    [
-        'farmer_id' => 'KMJ.14.08.06.2006.0010',
-        'name' => 'Petani 10',
-        'nik' => '1408062504950001',
-        'npwp' => '10.123.456.7-890.123',
-        'gender' => 'Female',
-        'tempat_lahir' => 'Berumbung Baru',
-        'tgl_lahir' => '25/04/1995',
-        'alamat' => 'Alamat',
-        'village_id' => 1,
-        'village_name' => 'Berumbung Baru',
-        'kecamatan_id' => 1,
-        'kecamatan_name' => 'Dayun',
-        'kabupaten_id' => 1,
-        'kabupaten_name' => 'Siak',
-        'kode_wilayah' => '1408062006',
-        'tgl_masuk_gr' => '05/04/2024',
-        'status' => 'Active',
-        'ics_id' => 2,
-        'ics_name' => 'ICS Tani',
-        'group_id' => 2,
-        'group_name' => 'Kelompok Tani',
-        'foto' => 'assets/default-avatar.jpg',
-        'plot_kebun' => 'Blok J-12',
-        'pelatihan' => 'Pemupukan Berimbang'
-    ]
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0001',
+    'name' => 'Petani 1',
+    'nik' => '1408060103450001',
+    'npwp' => '01.234.567.8-912.345',
+    'gender' => 'Male',
+    'tempat_lahir' => 'Berumbung Baru',
+    'tgl_lahir' => '01/03/1945',
+    'alamat' => 'Alamat',
+    'village_id' => 1,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 1,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 1,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '05/02/2024',
+    'status' => 'Active',
+    'ics_id' => 1,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 1,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok A-12',
+    'pelatihan' => 'Pengolahan Tanah Organik'
+  ],
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0002',
+    'name' => 'Petani 2',
+    'nik' => '1408062006890001',
+    'npwp' => '09.876.543.2-109.876',
+    'gender' => 'Male',
+    'tempat_lahir' => 'Indramayu',
+    'tgl_lahir' => '20/06/1989',
+    'alamat' => 'Alamat',
+    'village_id' => 2,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 2,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 2,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '05/02/2024',
+    'status' => 'Active',
+    'ics_id' => 2,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 2,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok B-05',
+    'pelatihan' => 'Pemupukan Berimbang'
+  ],
+  // Add more dummy data for pagination demonstration
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0003',
+    'name' => 'Petani 3',
+    'nik' => '1408061507890001',
+    'npwp' => '03.456.789.0-123.456',
+    'gender' => 'Female',
+    'tempat_lahir' => 'Dayun',
+    'tgl_lahir' => '15/07/1989',
+    'alamat' => 'Alamat',
+    'village_id' => 1,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 1,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 1,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '10/03/2024',
+    'status' => 'Active',
+    'ics_id' => 1,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 1,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok C-08',
+    'pelatihan' => 'Pengendalian Hama'
+  ],
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0004',
+    'name' => 'Petani 4',
+    'nik' => '1408061205670001',
+    'npwp' => '04.567.890.1-234.567',
+    'gender' => 'Male',
+    'tempat_lahir' => 'Berumbung Baru',
+    'tgl_lahir' => '12/05/1967',
+    'alamat' => 'Alamat',
+    'village_id' => 1,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 1,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 1,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '15/01/2024',
+    'status' => 'Inactive',
+    'ics_id' => 2,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 2,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok D-03',
+    'pelatihan' => 'Pasca Panen'
+  ],
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0005',
+    'name' => 'Petani 5',
+    'nik' => '1408062209910001',
+    'npwp' => '05.678.901.2-345.678',
+    'gender' => 'Female',
+    'tempat_lahir' => 'Indramayu',
+    'tgl_lahir' => '22/09/1991',
+    'alamat' => 'Alamat',
+    'village_id' => 2,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 2,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 2,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '20/02/2024',
+    'status' => 'Active',
+    'ics_id' => 1,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 1,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok E-07',
+    'pelatihan' => 'Pengolahan Tanah Organik'
+  ],
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0006',
+    'name' => 'Petani 6',
+    'nik' => '1408061804820001',
+    'npwp' => '06.789.012.3-456.789',
+    'gender' => 'Male',
+    'tempat_lahir' => 'Dayun',
+    'tgl_lahir' => '18/04/1982',
+    'alamat' => 'Alamat',
+    'village_id' => 1,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 1,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 1,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '05/03/2024',
+    'status' => 'Active',
+    'ics_id' => 2,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 2,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok F-09',
+    'pelatihan' => 'Pemupukan Berimbang'
+  ],
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0007',
+    'name' => 'Petani 7',
+    'nik' => '1408063006750001',
+    'npwp' => '07.890.123.4-567.890',
+    'gender' => 'Male',
+    'tempat_lahir' => 'Berumbung Baru',
+    'tgl_lahir' => '30/06/1975',
+    'alamat' => 'Alamat',
+    'village_id' => 1,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 1,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 1,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '10/01/2024',
+    'status' => 'Inactive',
+    'ics_id' => 1,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 1,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok G-11',
+    'pelatihan' => 'Pengendalian Hama'
+  ],
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0008',
+    'name' => 'Petani 8',
+    'nik' => '1408061109930001',
+    'npwp' => '08.901.234.5-678.901',
+    'gender' => 'Female',
+    'tempat_lahir' => 'Indramayu',
+    'tgl_lahir' => '11/09/1993',
+    'alamat' => 'Alamat',
+    'village_id' => 2,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 2,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 2,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '15/02/2024',
+    'status' => 'Active',
+    'ics_id' => 2,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 2,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok H-04',
+    'pelatihan' => 'Pasca Panen'
+  ],
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0009',
+    'name' => 'Petani 9',
+    'nik' => '1408060508870001',
+    'npwp' => '09.012.345.6-789.012',
+    'gender' => 'Male',
+    'tempat_lahir' => 'Dayun',
+    'tgl_lahir' => '05/08/1987',
+    'alamat' => 'Alamat',
+    'village_id' => 1,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 1,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 1,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '20/03/2024',
+    'status' => 'Active',
+    'ics_id' => 1,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 1,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok I-08',
+    'pelatihan' => 'Pengolahan Tanah Organik'
+  ],
+  [
+    'farmer_id' => 'KMJ.14.08.06.2006.0010',
+    'name' => 'Petani 10',
+    'nik' => '1408062504950001',
+    'npwp' => '10.123.456.7-890.123',
+    'gender' => 'Female',
+    'tempat_lahir' => 'Berumbung Baru',
+    'tgl_lahir' => '25/04/1995',
+    'alamat' => 'Alamat',
+    'village_id' => 1,
+    'village_name' => 'Berumbung Baru',
+    'kecamatan_id' => 1,
+    'kecamatan_name' => 'Dayun',
+    'kabupaten_id' => 1,
+    'kabupaten_name' => 'Siak',
+    'kode_wilayah' => '1408062006',
+    'tgl_masuk_gr' => '05/04/2024',
+    'status' => 'Active',
+    'ics_id' => 2,
+    'ics_name' => 'ICS Tani',
+    'group_id' => 2,
+    'group_name' => 'Kelompok Tani',
+    'foto' => 'assets/default-avatar.jpg',
+    'plot_kebun' => 'Blok J-12',
+    'pelatihan' => 'Pemupukan Berimbang'
+  ]
 ];
 
 // Data dummy untuk dropdown
 $dummyPlots = ['Blok A-12', 'Blok B-05', 'Blok C-08', 'Blok D-03', 'Blok E-07', 'Blok F-09', 'Blok G-11', 'Blok H-04', 'Blok I-08', 'Blok J-12'];
 $dummyTrainings = ['Pengolahan Tanah Organik', 'Pemupukan Berimbang', 'Pengendalian Hama', 'Pasca Panen'];
 $dummyIcsList = [
-    ['ics_id' => 1, 'name' => 'ICS Tani'],
-    ['ics_id' => 2, 'name' => 'ICS Maju']
+  ['ics_id' => 1, 'name' => 'ICS Tani'],
+  ['ics_id' => 2, 'name' => 'ICS Maju']
 ];
 $dummyGroups = [
-    ['farmer_gr_id' => 1, 'name' => 'Kelompok Tani'],
-    ['farmer_gr_id' => 2, 'name' => 'Kelompok Maju']
+  ['farmer_gr_id' => 1, 'name' => 'Kelompok Tani'],
+  ['farmer_gr_id' => 2, 'name' => 'Kelompok Maju']
 ];
 
 // Simulasi action
@@ -286,17 +285,18 @@ $farmer_id = isset($_GET['id']) ? $_GET['id'] : '';
 // Simulasi data farmer yang dipilih
 $farmer = null;
 if ($farmer_id) {
-    foreach ($dummyFarmers as $f) {
-        if ($f['farmer_id'] == $farmer_id) {
-            $farmer = $f;
-            break;
-        }
+  foreach ($dummyFarmers as $f) {
+    if ($f['farmer_id'] == $farmer_id) {
+      $farmer = $f;
+      break;
     }
+  }
 }
 
 // Fungsi untuk generate ID petani baru (simulasi)
-function generateNewFarmerId() {
-    return 'KMJ.' . date('d.m.Y') . '.' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+function generateNewFarmerId()
+{
+  return 'KMJ.' . date('d.m.Y') . '.' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
 }
 
 // Pagination configuration
@@ -310,7 +310,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
   <header class="h-20   shadow-sm flex items-center justify-between px-8">
     <div class="flex items-center space-x-4">
       <h1 class="text-2xl font-bold text-gray-800">
-        <?php 
+        <?php
         if ($action == 'add') echo "Tambah Petani Baru";
         elseif ($action == 'view') echo "Profil Petani: " . ($farmer ? htmlspecialchars($farmer['name']) : '');
         elseif ($action == 'edit') echo "Edit Petani: " . ($farmer ? htmlspecialchars($farmer['name']) : '');
@@ -340,7 +340,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
       <?php endif; ?>
     </div>
   </header>
-  
+
   <!-- Main Content -->
   <section class="flex-1 overflow-y-auto p-8 bg-gray-50">
     <?php if ($action == 'list'): ?>
@@ -349,12 +349,12 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
         <div class="p-4 bg-gray-50 border-b">
           <form method="get" class="flex flex-col gap-4">
             <input type="hidden" name="action" value="list">
-            
+
             <!-- Pencarian dipindah ke atas -->
             <div class="flex-1">
               <input type="text" name="search" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Cari nama petani..." value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
                 <select name="ics_filter" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -411,41 +411,41 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <?php 
+              <?php
               // Filter data berdasarkan dropdown
               $filteredFarmers = $dummyFarmers;
               if (isset($_GET['ics_filter']) && $_GET['ics_filter'] != '') {
-                  $filteredFarmers = array_filter($filteredFarmers, function($f) {
-                      return $f['ics_id'] == $_GET['ics_filter'];
-                  });
+                $filteredFarmers = array_filter($filteredFarmers, function ($f) {
+                  return $f['ics_id'] == $_GET['ics_filter'];
+                });
               }
               if (isset($_GET['group_filter']) && $_GET['group_filter'] != '') {
-                  $filteredFarmers = array_filter($filteredFarmers, function($f) {
-                      return $f['group_id'] == $_GET['group_filter'];
-                  });
+                $filteredFarmers = array_filter($filteredFarmers, function ($f) {
+                  return $f['group_id'] == $_GET['group_filter'];
+                });
               }
               if (isset($_GET['status_filter']) && $_GET['status_filter'] != '') {
-                  $filteredFarmers = array_filter($filteredFarmers, function($f) {
-                      return $f['status'] == $_GET['status_filter'];
-                  });
+                $filteredFarmers = array_filter($filteredFarmers, function ($f) {
+                  return $f['status'] == $_GET['status_filter'];
+                });
               }
               if (isset($_GET['gender_filter']) && $_GET['gender_filter'] != '') {
-                  $filteredFarmers = array_filter($filteredFarmers, function($f) {
-                      return $f['gender'] == $_GET['gender_filter'];
-                  });
+                $filteredFarmers = array_filter($filteredFarmers, function ($f) {
+                  return $f['gender'] == $_GET['gender_filter'];
+                });
               }
               if (isset($_GET['search']) && $_GET['search'] != '') {
-                  $search = strtolower($_GET['search']);
-                  $filteredFarmers = array_filter($filteredFarmers, function($f) use ($search) {
-                      return strpos(strtolower($f['name']), $search) !== false;
-                  });
+                $search = strtolower($_GET['search']);
+                $filteredFarmers = array_filter($filteredFarmers, function ($f) use ($search) {
+                  return strpos(strtolower($f['name']), $search) !== false;
+                });
               }
-              
+
               // Pagination logic
               $totalFarmers = count($filteredFarmers);
               $totalPages = ceil($totalFarmers / $perPage);
               $currentPage = min($currentPage, $totalPages); // Ensure we don't go past the last page
-              
+
               // Get current page's farmers
               $offset = ($currentPage - 1) * $perPage;
               $currentPageFarmers = array_slice($filteredFarmers, $offset, $perPage);
@@ -461,7 +461,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                     <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($f['farmer_id']) ?></td>
                     <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($f['name']) ?></td>
                     <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($f['plot_kebun']) ?></td>
-                    
+
                     <td class="px-6 py-4 whitespace-nowrap">
                       <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $f['status'] == 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
                         <?= $f['status'] ?>
@@ -484,7 +484,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
             </tbody>
           </table>
         </div>
-        
+
         <!-- Pagination -->
         <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
           <div class="flex-1 flex justify-between sm:hidden">
@@ -507,32 +507,32 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                   <span class="sr-only">Sebelumnya</span>
                   <i class="fas fa-chevron-left"></i>
                 </a>
-                
-                <?php 
+
+                <?php
                 // Show page numbers
                 $startPage = max(1, $currentPage - 2);
                 $endPage = min($totalPages, $currentPage + 2);
-                
+
                 if ($startPage > 1) {
-                    echo '<a href="petani.php?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
-                    if ($startPage > 2) {
-                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
-                    }
+                  echo '<a href="petani.php?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
+                  if ($startPage > 2) {
+                    echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                  }
                 }
-                
+
                 for ($i = $startPage; $i <= $endPage; $i++) {
-                    $active = $i == $currentPage ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50';
-                    echo '<a href="petani.php?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
+                  $active = $i == $currentPage ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50';
+                  echo '<a href="petani.php?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
                 }
-                
+
                 if ($endPage < $totalPages) {
-                    if ($endPage < $totalPages - 1) {
-                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
-                    }
-                    echo '<a href="petani.php?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
+                  if ($endPage < $totalPages - 1) {
+                    echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                  }
+                  echo '<a href="petani.php?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
                 }
                 ?>
-                
+
                 <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
                   <span class="sr-only">Selanjutnya</span>
                   <i class="fas fa-chevron-right"></i>
@@ -542,7 +542,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
           </div>
         </div>
       </div>
-      
+
     <?php elseif ($action == 'add' || $action == 'edit'): ?>
       <!-- Form Tambah/Edit Petani -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden">
@@ -552,24 +552,24 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
             <?php if ($action == 'edit'): ?>
               <input type="hidden" name="farmer_id" value="<?= $farmer_id ?>">
             <?php endif; ?>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <!-- Kolom Kiri -->
               <div class="space-y-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700">ID Petani</label>
-                  <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100" 
-                         value="<?= $action == 'edit' ? htmlspecialchars($farmer['farmer_id']) : generateNewFarmerId() ?>" readonly>
+                  <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100"
+                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['farmer_id']) : generateNewFarmerId() ?>" readonly>
                 </div>
                 <div>
                   <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                  <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                         value="<?= $action == 'edit' ? htmlspecialchars($farmer['name']) : '' ?>">
+                  <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['name']) : '' ?>">
                 </div>
                 <div>
                   <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
-                  <input type="text" id="nik" name="nik" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                         value="<?= $action == 'edit' ? htmlspecialchars($farmer['nik']) : '' ?>">
+                  <input type="text" id="nik" name="nik" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['nik']) : '' ?>">
                 </div>
                 <div>
                   <label for="plot_kebun" class="block text-sm font-medium text-gray-700">Plot Kebun</label>
@@ -594,7 +594,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                   </select>
                 </div>
               </div>
-              
+
               <!-- Kolom Kanan -->
               <div class="space-y-4">
                 <div>
@@ -607,13 +607,13 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                 </div>
                 <div>
                   <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
-                  <input type="text" id="tempat_lahir" name="tempat_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                         value="<?= $action == 'edit' ? htmlspecialchars($farmer['tempat_lahir']) : '' ?>">
+                  <input type="text" id="tempat_lahir" name="tempat_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['tempat_lahir']) : '' ?>">
                 </div>
                 <div>
                   <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                  <input type="date" id="tgl_lahir" name="tgl_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" 
-                         value="<?= $action == 'edit' ? htmlspecialchars($farmer['tgl_lahir']) : '' ?>">
+                  <input type="date" id="tgl_lahir" name="tgl_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['tgl_lahir']) : '' ?>">
                 </div>
                 <div>
                   <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
@@ -631,9 +631,9 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                 </div>
               </div>
             </div>
-            
+
             <div class="flex justify-end space-x-3">
-              <a href="<?= $action == 'add' ? 'petani.php' : 'petani.php?action=view&id='.$farmer_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
+              <a href="<?= $action == 'add' ? 'petani.php' : 'petani.php?action=view&id=' . $farmer_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
                 Batal
               </a>
               <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">
@@ -643,7 +643,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
           </form>
         </div>
       </div>
-      
+
     <?php elseif ($action == 'view' && $farmer): ?>
       <!-- Tampilan Profil Petani -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -663,7 +663,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
               <?php endif; ?>
               <h3 class="text-lg font-medium text-gray-900"><?= htmlspecialchars($farmer['name']) ?></h3>
               <p class="text-sm text-gray-500">ID: <?= htmlspecialchars($farmer['farmer_id']) ?></p>
-              
+
               <div class="mt-6 space-y-4 text-left">
                 <div>
                   <p class="text-sm text-gray-500">Plot Kebun</p>
@@ -703,7 +703,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
             </div>
           </div>
         </div>
-        
+
         <!-- Kolom Kanan - Informasi Tambahan -->
         <div class="lg:col-span-2">
           <div class="bg-white rounded-xl shadow-md overflow-hidden">
@@ -750,7 +750,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                   <p class="text-sm font-medium">Tanaman dalam kondisi baik, pemupukan teratur dilakukan setiap 6 bulan sekali.</p>
                 </div>
               </div>
-              
+
               <!-- Tab Riwayat Pelatihan -->
               <div id="pelatihan-content" class="tab-content hidden">
                 <div class="space-y-4">
@@ -773,7 +773,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                   </div>
                 </div>
               </div>
-              
+
               <!-- Tab Riwayat Aktivitas -->
               <div id="riwayat-content" class="tab-content hidden">
                 <div class="space-y-4">
@@ -836,7 +836,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
               </div>
             </div>
           </div>
-          
+
           <!-- Dokumen -->
           <div class="bg-white rounded-xl shadow-md overflow-hidden mt-6">
             <div class="p-6 bg-gray-50 border-b">
