@@ -10,12 +10,14 @@ if (strpos($request_uri, '/wri/') !== false) {
   // If '/wri' exists, remove it from the URI path
   $modified_uri = str_replace('/wri/', '', $request_uri);
 } else {
-  // If '/wri' doesn't exist, keep the original URI
-  if (strpos($modified_uri, '/') !== false) {
-    $modified_uri = str_replace('/', '', $request_uri);
-  } else {
-    $modified_uri = $request_uri;
-  }
+  $modified_uri = $request_uri;
+}
+
+// If '/' doesn't exist, keep the original URI
+if (strpos($modified_uri, '/') !== false) {
+  $modified_uri = str_replace('/', '', $request_uri);
+} else {
+  $modified_uri = $request_uri;
 }
 
 // Check if there's a '?' in the URI (indicating query parameters)
