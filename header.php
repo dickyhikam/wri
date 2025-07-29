@@ -49,8 +49,6 @@ $name_menu = [
   'role' => 'Role',
   'keselamatan' => 'Kecelakaan Kerja'
 ];
-
-echo $modified_uri;
 ?>
 
 <head>
