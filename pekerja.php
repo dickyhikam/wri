@@ -2,7 +2,6 @@
 // --- VERSI VISUAL / PRESENTASI SEMATA ---
 // Tidak ada koneksi database atau operasi CRUD
 // Menggunakan data dummy hanya untuk tujuan tampilan
-
 include 'header.php'; // Include header/navigasi standar
 
 // --- DATA DUMMY SIMULASI (Hanya untuk tampilan) ---
@@ -398,12 +397,12 @@ if ($worker_id) {
 }
 
 // Dapatkan kontrak pekerja
-$workerContractsList = array_filter($workerContracts, function($c) use ($worker_id) {
+$workerContractsList = array_filter($workerContracts, function ($c) use ($worker_id) {
     return $c['pekerja_id'] == $worker_id;
 });
 
 // Dapatkan fasilitas pekerja
-$workerFacilitiesList = array_filter($workerFacilities, function($f) use ($worker_id) {
+$workerFacilitiesList = array_filter($workerFacilities, function ($f) use ($worker_id) {
     return $f['pekerja_id'] == $worker_id;
 });
 
@@ -460,50 +459,48 @@ $kecamatans = array_unique(array_column($workers, 'kecamatan'));
 $filteredWorkers = $workers;
 
 if ($filterStatus) {
-    $filteredWorkers = array_filter($filteredWorkers, function($w) use ($filterStatus) {
+    $filteredWorkers = array_filter($filteredWorkers, function ($w) use ($filterStatus) {
         return $w['status'] == $filterStatus;
     });
 }
 
 if ($filterPosition) {
-    $filteredWorkers = array_filter($filteredWorkers, function($w) use ($filterPosition) {
+    $filteredWorkers = array_filter($filteredWorkers, function ($w) use ($filterPosition) {
         return $w['position'] == $filterPosition;
     });
 }
 
 if ($filterKecamatan) {
-    $filteredWorkers = array_filter($filteredWorkers, function($w) use ($filterKecamatan) {
+    $filteredWorkers = array_filter($filteredWorkers, function ($w) use ($filterKecamatan) {
         return $w['kecamatan'] == $filterKecamatan;
     });
 }
 
 if ($filterFacility) {
-    $workerIdsWithFacility = array_map(function($f) {
+    $workerIdsWithFacility = array_map(function ($f) {
         return $f['pekerja_id'];
-    }, array_filter($workerFacilities, function($f) use ($filterFacility) {
+    }, array_filter($workerFacilities, function ($f) use ($filterFacility) {
         return $f['type_id'] == $filterFacility;
     }));
-    
-    $filteredWorkers = array_filter($filteredWorkers, function($w) use ($workerIdsWithFacility) {
+    $filteredWorkers = array_filter($filteredWorkers, function ($w) use ($workerIdsWithFacility) {
         return in_array($w['pekerja_id'], $workerIdsWithFacility);
     });
 }
+
 if (isset($_GET['search']) && $_GET['search'] != '') {
-                  $search = strtolower($_GET['search']);
-                  $filteredWorkers = array_filter($filteredWorkers, function($f) use ($search) {
-                      return strpos(strtolower($f['name']), $search) !== false;
-                  });
-              }
+    $search = strtolower($_GET['search']);
+    $filteredWorkers = array_filter($filteredWorkers, function ($f) use ($search) {
+        return strpos(strtolower($f['name']), $search) !== false;
+    });
+}
 
 // --- KONFIGURASI PAGINATION ---
 $itemsPerPage = 5; // Jumlah item per halaman
 $currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1; // Halaman saat ini
 $totalItems = count($filteredWorkers); // Total item setelah filter
 $totalPages = ceil($totalItems / $itemsPerPage); // Total halaman
-
 // Batasi currentPage agar tidak melebihi totalPages
 $currentPage = min($currentPage, $totalPages);
-
 // Ambil data untuk halaman saat ini
 $startIndex = ($currentPage - 1) * $itemsPerPage;
 $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
@@ -517,11 +514,10 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                 <?php
                 if ($action == 'add') echo "Tambah Pekerja Baru";
                 elseif ($action == 'view') {
-                    if ($subaction == 'contract') echo "Kontrak Pekerja";
+                    if ($subaction == 'contract') echo "Kontrak Kerja";
                     elseif ($subaction == 'facility') echo "Fasilitas Pekerja";
                     else echo "Profil Pekerja: " . ($worker ? htmlspecialchars($worker['name']) : '');
-                }
-                elseif ($action == 'edit') echo "Edit Pekerja: " . ($worker ? htmlspecialchars($worker['name']) : '');
+                } elseif ($action == 'edit') echo "Edit Pekerja: " . ($worker ? htmlspecialchars($worker['name']) : '');
                 else echo "Manajemen Data Pekerja";
                 ?>
             </h1>
@@ -558,9 +554,9 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                         <input type="hidden" name="action" value="list">
                         <div class="mb-4">
                             <div class="relative">
-                                <input type="text" id="search" name="search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" 
-                                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                                       placeholder="Cari nama..">
+                                <input type="text" id="search" name="search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
+                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Cari nama..">
                                 <button type="submit" class="absolute right-2 top-2 text-gray-500 hover:text-gray-700">
                                     <i class="fas fa-search"></i>
                                 </button>
@@ -575,7 +571,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                     <option value="Inactive" <?= $filterStatus == 'Inactive' ? 'selected' : '' ?>>Inactive</option>
                                 </select>
                             </div>
-                            
                             <!-- Filter Jabatan -->
                             <div>
                                 <select id="filter_position" name="filter_position" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -587,7 +582,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            
                             <!-- Filter Kecamatan -->
                             <div>
                                 <select id="filter_kecamatan" name="filter_kecamatan" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -599,7 +593,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            
                             <!-- Filter Jenis Fasilitas -->
                             <div>
                                 <select id="filter_facility" name="filter_facility" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -639,11 +632,9 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                     <td colspan="8" class="px-6 py-4 text-center text-gray-500">Tidak ada data pekerja</td>
                                 </tr>
                             <?php else: ?>
-                                <?php foreach ($paginatedWorkers as $index => $w): 
-                                    // Hitung nomor urut berdasarkan halaman
+                                <?php foreach ($paginatedWorkers as $index => $w):
                                     $rowNumber = $startIndex + $index + 1;
-                                    // Dapatkan fasilitas pekerja
-                                    $workerFacilities = array_filter($workerFacilities, function($f) use ($w) {
+                                    $workerFacilities = array_filter($workerFacilities, function ($f) use ($w) {
                                         return $f['pekerja_id'] == $w['pekerja_id'];
                                     });
                                 ?>
@@ -655,8 +646,8 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($w['kecamatan']) ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <?php if (!empty($workerFacilities)): ?>
-                                                <?php foreach ($workerFacilities as $f): 
-                                                    $facilityType = array_filter($facilityTypes, function($t) use ($f) {
+                                                <?php foreach ($workerFacilities as $f):
+                                                    $facilityType = array_filter($facilityTypes, function ($t) use ($f) {
                                                         return $t['type_id'] == $f['type_id'];
                                                     });
                                                     $typeName = !empty($facilityType) ? reset($facilityType)['type_name'] : 'Unknown';
@@ -691,63 +682,58 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                         </tbody>
                     </table>
                 </div>
-              <!-- Pagination -->
-        <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
-          <div class="flex-1 flex justify-between sm:hidden">
-            <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
-              Sebelumnya
-            </a>
-            <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
-              Selanjutnya
-            </a>
-          </div>
-          <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-            <div>
-              <p class="text-sm text-gray-700">
-                Menampilkan <span class="font-medium"><?= $offset + 1 ?></span> sampai <span class="font-medium"><?= min($offset + $perPage, $totalFarmers) ?></span> dari <span class="font-medium"><?= $totalFarmers ?></span> petani
-              </p>
+
+                <!-- Pagination -->
+                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                            Sebelumnya
+                        </a>
+                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                            Selanjutnya
+                        </a>
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Menampilkan <span class="font-medium"><?= $startIndex + 1 ?></span> sampai <span class="font-medium"><?= min($startIndex + $itemsPerPage, $totalItems) ?></span> dari <span class="font-medium"><?= $totalItems ?></span> data
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                    <span class="sr-only">Sebelumnya</span>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                                <?php
+                                $startPage = max(1, $currentPage - 2);
+                                $endPage = min($totalPages, $currentPage + 2);
+                                if ($startPage > 1) {
+                                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
+                                    if ($startPage > 2) {
+                                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                                    }
+                                }
+                                for ($i = $startPage; $i <= $endPage; $i++) {
+                                    $active = $i == $currentPage ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50';
+                                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
+                                }
+                                if ($endPage < $totalPages) {
+                                    if ($endPage < $totalPages - 1) {
+                                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                                    }
+                                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
+                                }
+                                ?>
+                                <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                    <span class="sr-only">Selanjutnya</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-              <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
-                  <span class="sr-only">Sebelumnya</span>
-                  <i class="fas fa-chevron-left"></i>
-                </a>
-                
-                <?php 
-                // Show page numbers
-                $startPage = max(1, $currentPage - 2);
-                $endPage = min($totalPages, $currentPage + 2);
-                
-                if ($startPage > 1) {
-                    echo '<a href="pekerja.php?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
-                    if ($startPage > 2) {
-                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
-                    }
-                }
-                
-                for ($i = $startPage; $i <= $endPage; $i++) {
-                    $active = $i == $currentPage ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50';
-                    echo '<a href="pekerja.php?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
-                }
-                
-                if ($endPage < $totalPages) {
-                    if ($endPage < $totalPages - 1) {
-                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
-                    }
-                    echo '<a href="pekerja.php?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
-                }
-                ?>
-                
-                <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
-                  <span class="sr-only">Selanjutnya</span>
-                  <i class="fas fa-chevron-right"></i>
-                </a>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
 
         <?php elseif ($action == 'view' && $worker): ?>
             <!-- View Pekerja -->
@@ -766,7 +752,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                     <?= $worker['status'] ?>
                                 </span>
                             </div>
-                            
                             <!-- Tab Navigasi -->
                             <div class="mt-6 w-full">
                                 <nav class="flex flex-col space-y-2">
@@ -774,7 +759,7 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         <i class="fas fa-user mr-2"></i> Profil
                                     </a>
                                     <a href="pekerja.php?action=view&id=<?= $worker_id ?>&subaction=contract" class="px-4 py-2 rounded-lg <?= $subaction == 'contract' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
-                                        <i class="fas fa-file-contract mr-2"></i> Kontrak
+                                        <i class="fas fa-file-contract mr-2"></i> Kontrak Kerja
                                     </a>
                                     <a href="pekerja.php?action=view&id=<?= $worker_id ?>&subaction=facility" class="px-4 py-2 rounded-lg <?= $subaction == 'facility' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
                                         <i class="fas fa-home mr-2"></i> Fasilitas
@@ -782,7 +767,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                 </nav>
                             </div>
                         </div>
-                        
                         <!-- Detail Profil -->
                         <div class="w-full md:w-3/4">
                             <?php if ($subaction == ''): ?>
@@ -816,7 +800,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div class="mb-6">
                                     <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Informasi Pekerjaan</h3>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -838,7 +821,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div class="mb-6">
                                     <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Alamat</h3>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -860,7 +842,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Informasi Lahan</h3>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -882,16 +863,27 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         </div>
                                     </div>
                                 </div>
-                            
                             <?php elseif ($subaction == 'contract'): ?>
                                 <!-- Tab Kontrak -->
                                 <div class="mb-4 flex justify-between items-center">
-                                    <h3 class="text-lg font-semibold text-gray-800">Riwayat Kontrak</h3>
-                                    <button class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center" onclick="alert('Fitur tambah kontrak hanya untuk demonstrasi.');">
+                                    <h3 class="text-lg font-semibold text-gray-800">Kontrak Kerja</h3>
+                                    <!-- <button class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center" onclick="alert('Fitur tambah kontrak hanya untuk demonstrasi.');">
                                         <i class="fas fa-plus mr-2"></i> Tambah Kontrak
-                                    </button>
+                                    </button> -->
                                 </div>
-                                
+
+                                <!-- 🔴 CARD KONTRAK KERJA: Hubungan Pekerja-Lahan-Petani -->
+                                <div class="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                    <h4 class="font-semibold text-blue-800 mb-3">Alokasi Lahan dalam Kontrak Kerja</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                        <div><strong>ID Pekerja:</strong> <?= htmlspecialchars($worker['pekerja_id']) ?></div>
+                                        <div><strong>ID Lahan:</strong> <?= htmlspecialchars($worker['lahan_id']) ?></div>
+                                        <div><strong>Nama Lahan:</strong> <?= htmlspecialchars($worker['lahan_name']) ?></div>
+                                        <div><strong>ID Petani:</strong> <?= htmlspecialchars($worker['farmer_id']) ?></div>
+                                        <div><strong>Nama Petani:</strong> <?= htmlspecialchars($worker['farmer_name']) ?></div>
+                                    </div>
+                                </div>
+
                                 <?php if (empty($workerContractsList)): ?>
                                     <div class="bg-gray-50 p-4 rounded-lg text-center text-gray-500">
                                         Tidak ada data kontrak untuk pekerja ini
@@ -940,7 +932,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         </table>
                                     </div>
                                 <?php endif; ?>
-                            
                             <?php elseif ($subaction == 'facility'): ?>
                                 <!-- Tab Fasilitas -->
                                 <div class="mb-4 flex justify-between items-center">
@@ -949,7 +940,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         <i class="fas fa-plus mr-2"></i> Tambah Fasilitas
                                     </button>
                                 </div>
-                                
                                 <?php if (empty($workerFacilitiesList)): ?>
                                     <div class="bg-gray-50 p-4 rounded-lg text-center text-gray-500">
                                         Tidak ada data fasilitas untuk pekerja ini
@@ -968,8 +958,8 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-200">
-                                                <?php foreach ($workerFacilitiesList as $f): 
-                                                    $type = array_filter($facilityTypes, function($t) use ($f) {
+                                                <?php foreach ($workerFacilitiesList as $f):
+                                                    $type = array_filter($facilityTypes, function ($t) use ($f) {
                                                         return $t['type_id'] == $f['type_id'];
                                                     });
                                                     $typeName = !empty($type) ? reset($type)['type_name'] : 'Unknown';
@@ -1008,7 +998,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                     </div>
                 </div>
             </div>
-
         <?php elseif (($action == 'add' || $action == 'edit') && ($action != 'edit' || $worker)): ?>
             <!-- Form Tambah/Edit Pekerja -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
@@ -1018,23 +1007,19 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                             <div class="border-b border-gray-200 pb-4">
                                 <h3 class="text-lg font-medium text-gray-900">Informasi Pribadi</h3>
                             </div>
-                            
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
                                     <input type="text" id="name" name="name" value="<?= $action == 'edit' ? htmlspecialchars($worker['name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
                                     <input type="text" id="nik" name="nik" value="<?= $action == 'edit' ? htmlspecialchars($worker['nik']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="npwp" class="block text-sm font-medium text-gray-700">NPWP</label>
                                     <input type="text" id="npwp" name="npwp" value="<?= $action == 'edit' ? htmlspecialchars($worker['npwp']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="gender" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
                                     <select id="gender" name="gender" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -1042,17 +1027,14 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         <option value="Female" <?= $action == 'edit' && $worker['gender'] == 'Female' ? 'selected' : '' ?>>Perempuan</option>
                                     </select>
                                 </div>
-                                
                                 <div>
                                     <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
                                     <input type="text" id="tempat_lahir" name="tempat_lahir" value="<?= $action == 'edit' ? htmlspecialchars($worker['tempat_lahir']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
                                     <input type="date" id="tgl_lahir" name="tgl_lahir" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_lahir']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="agama" class="block text-sm font-medium text-gray-700">Agama</label>
                                     <select id="agama" name="agama" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -1061,7 +1043,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                
                                 <div>
                                     <label for="status_perkawinan" class="block text-sm font-medium text-gray-700">Status Perkawinan</label>
                                     <select id="status_perkawinan" name="status_perkawinan" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -1071,17 +1052,14 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                     </select>
                                 </div>
                             </div>
-                            
                             <div class="border-b border-gray-200 pb-4 mt-6">
                                 <h3 class="text-lg font-medium text-gray-900">Informasi Pekerjaan</h3>
                             </div>
-                            
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label for="pekerja_id" class="block text-sm font-medium text-gray-700">ID Pekerja</label>
                                     <input type="text" id="pekerja_id" name="pekerja_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['pekerja_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="position" class="block text-sm font-medium text-gray-700">Jabatan</label>
                                     <select id="position" name="position" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -1090,17 +1068,14 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                
                                 <div>
                                     <label for="tgl_mulai" class="block text-sm font-medium text-gray-700">Tanggal Mulai Bekerja</label>
                                     <input type="text" id="tgl_mulai" name="tgl_mulai" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_mulai']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="upah" class="block text-sm font-medium text-gray-700">Upah</label>
                                     <input type="text" id="upah" name="upah" value="<?= $action == 'edit' ? number_format($worker['upah'], 0, ',', '.') : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                                     <select id="status" name="status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -1108,23 +1083,19 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         <option value="Inactive" <?= $action == 'edit' && $worker['status'] == 'Inactive' ? 'selected' : '' ?>>Inactive</option>
                                     </select>
                                 </div>
-                                
                                 <div>
                                     <label for="foto" class="block text-sm font-medium text-gray-700">Foto Profil</label>
                                     <input type="file" id="foto" name="foto" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                                 </div>
                             </div>
-                            
                             <div class="border-b border-gray-200 pb-4 mt-6">
                                 <h3 class="text-lg font-medium text-gray-900">Alamat</h3>
                             </div>
-                            
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
                                     <textarea id="alamat" name="alamat" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"><?= $action == 'edit' ? htmlspecialchars($worker['alamat']) : '' ?></textarea>
                                 </div>
-                                
                                 <div>
                                     <label for="village_name" class="block text-sm font-medium text-gray-700">Desa</label>
                                     <select id="village_name" name="village_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -1133,44 +1104,36 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                
                                 <div>
                                     <label for="kecamatan" class="block text-sm font-medium text-gray-700">Kecamatan</label>
                                     <input type="text" id="kecamatan" name="kecamatan" value="<?= $action == 'edit' ? htmlspecialchars($worker['kecamatan']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="kabupaten" class="block text-sm font-medium text-gray-700">Kabupaten</label>
                                     <input type="text" id="kabupaten" name="kabupaten" value="<?= $action == 'edit' ? htmlspecialchars($worker['kabupaten']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
                             </div>
-                            
                             <div class="border-b border-gray-200 pb-4 mt-6">
                                 <h3 class="text-lg font-medium text-gray-900">Informasi Lahan</h3>
                             </div>
-                            
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label for="lahan_id" class="block text-sm font-medium text-gray-700">ID Lahan</label>
                                     <input type="text" id="lahan_id" name="lahan_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['lahan_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="lahan_name" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
                                     <input type="text" id="lahan_name" name="lahan_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['lahan_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="farmer_id" class="block text-sm font-medium text-gray-700">ID Petani</label>
                                     <input type="text" id="farmer_id" name="farmer_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['farmer_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                
                                 <div>
                                     <label for="farmer_name" class="block text-sm font-medium text-gray-700">Nama Petani</label>
                                     <input type="text" id="farmer_name" name="farmer_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['farmer_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
                             </div>
-                            
                             <div class="flex justify-end pt-6">
                                 <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mr-3" onclick="window.location.href='pekerja.php'">
                                     Batal

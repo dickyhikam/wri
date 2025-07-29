@@ -148,6 +148,59 @@ session_unset();      // Hapus semua variabel session
         $jsonFileUser = 'data/new_user.json';
 
         if (file_exists($jsonFile)) {
+            $data = json_decode(file_get_contents($jsonFile), true);
+            $isValid = false;
+            $userFound = null;
+
+            foreach ($data as $entry) {
+                foreach ($entry['user_cred'] as $user) {
+                    // Cek kecocokan email dan password
+                    if (($user['email'] === $email || $user['username'] === $email) && $user['password'] === $password) {
+                        $isValid = true;
+                        $userFound = $user; // Menyimpan data kredensial pengguna
+                        break;
+                    }
+                }
+
+                // Jika ditemukan data kredensial yang valid, gabungkan dengan profil pengguna
+                if ($isValid) {
+                    foreach ($entry['user_profile'] as $profile) {
+                        if ($profile['id'] == $userFound['id']) {
+                            // Gabungkan informasi profil dengan kredensial pengguna
+                            $userFound['profile'] = $profile;
+                            break;
+                        }
+                    }
+
+                    foreach ($entry['akun_log'] as $log) {
+                        if ($log['id'] == $userFound['id']) {
+                            // Gabungkan informasi profil dengan kredensial pengguna
+                            $userFound['akun'] = $log;
+                            break;
+                        }
+                    }
+                }
+
+                if ($isValid) break;
+            }
+
+            // Simpan email ke session
+            $_SESSION['email'] = $email;
+
+            if ($isValid) {
+                // Cek apakah akun aktif
+                if ($userFound['is_active'] == 1) {
+                    echo "<script>alert(" . $userFound['is_active'] . ");</script>";
+                    // Jika akun aktif
+                    echo "<script>showSweetAlert('success', 'Login Berhasil', 'Selamat datang, " . $userFound['profile']['name'] . ". Anda berhasil login.', true);</script>";
+                    echo "<script>setTimeout(function(){ window.location.href = 'index'; }, 2000);</script>";
+                } else {
+                    // Jika akun tidak aktif
+                    echo "<script>showSweetAlert('warning', 'Akun Tidak Aktif', 'Akun Anda tidak aktif. Silakan hubungi admin untuk informasi lebih lanjut.', false);</script>";
+                }
+            } else {
+                echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false);</script>";
+            }
         } elseif (file_exists($jsonFileUser)) {
             $data = json_decode(file_get_contents($jsonFileUser), true);
             $isValid = false;

@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 session_unset();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -16,7 +16,6 @@ if (!isset($_SESSION['parcels'])) {
             'tempat_lahir' => 'Berumbung Baru',
             'tanggal_lahir' => '1973-09-07',
             'alamat_domisili' => 'Alamat lengkap sesuai KTP',
-
             'parcel_id' => 'ID084d862d5',
             'id_lahan' => '14.08.06.2006.KMJ.0001',
             'provinsi' => 'Riau',
@@ -41,7 +40,7 @@ if (!isset($_SESSION['parcels'])) {
             'bl_selatan_jenis' => 'Sungai Kecil',
             'created_at' => '2024-02-05 10:00:00',
             'updated_at' => '2024-02-05 10:00:00',
-            'status' => 'Aktif'
+            'status' => 'Registered'
         ],
         'ID114da4c49' => [
             'parcel_id' => 'ID114da4c49',
@@ -75,7 +74,7 @@ if (!isset($_SESSION['parcels'])) {
             'bl_selatan_jenis' => 'Sungai Kecil',
             'created_at' => '2024-02-10 11:00:00',
             'updated_at' => '2024-02-10 11:00:00',
-            'status' => 'Aktif'
+            'status' => 'UnRegistered'
         ]
     ];
 }
@@ -117,7 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'bl_selatan_jenis' => $_POST['bl_selatan_jenis'] ?? '',
             'created_at' => $_POST['created_at'] ?? date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
-            'status' => 'Aktif'
         ];
 
         header('Location: parcel?action=view&id=' . $parcel_id);
@@ -213,6 +211,9 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
                 <a href="parcel?action=edit&id=<?= $id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-edit mr-2"></i> Edit
                 </a>
+                <button onclick="openVerifParcelModal()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center transition duration-300 ease-in-out transform hover:scale-105">
+                    <i class="fas fa-check-circle mr-2"></i> Verifikasi
+                </button>
             <?php elseif ($action === 'edit' || $action === 'add'): ?>
                 <a href="parcel?action=list" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-arrow-left mr-2"></i> Kembali
@@ -323,8 +324,8 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $parcel['kecamatan'] ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= $parcel['luas_lahan'] ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
-                                                <?= $parcel['status_lahan'] ?>
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $parcel['status'] == 'Registered' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
+                                                <?= $parcel['status'] ?>
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -622,8 +623,8 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
                             <h2 class="text-2xl font-bold text-gray-800">Detail Parcel</h2>
                             <p class="text-gray-600">Parcel ID: <?= $current_parcel['parcel_id'] ?></p>
                         </div>
-                        <span class="px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                            <?= $current_parcel['status_lahan'] ?>
+                        <span class="px-3 py-1 rounded-full text-sm font-medium <?= $current_parcel['status'] == 'Registered' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
+                            <?= $current_parcel['status'] ?>
                         </span>
                     </div>
 
@@ -999,7 +1000,7 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div class="col-span-2">
-                                        <label class="block text-sm font-medium text-gray-700 mb-1" for="parcelName">File Excel</label>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1" for="parcelName">File Excel <span class="text-red-500">*</span></label>
                                         <input type="file" id="parcelName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" accept=".xls, .xlsx" required>
 
                                         <!-- Informational text about required format -->
@@ -1019,8 +1020,12 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
                 </div>
             </div>
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button type="button" id="saveMillsBtn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#f0ab00] text-base font-medium text-white hover:bg-[#e09900] sm:ml-3 sm:w-auto sm:text-sm">
+                <button type="button" id="saveMillsBtn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#f0ab00] text-base font-medium text-white hover:bg-[#e09900] sm:ml-3 sm:w-auto sm:text-sm" onclick="uploadParcelData()">
                     Simpan
+                    <svg id="loadingSpinner" class="hidden w-5 h-5 animate-spin mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
+                    </svg>
                 </button>
                 <button type="button" onclick="closeParcelModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                     Batal
@@ -1029,6 +1034,47 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
         </div>
     </div>
 </div>
+
+<!-- Modal Verifikasi Parcel -->
+<div id="verifModal" class="modal hidden fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-[#f0ab00] sm:mx-0 sm:h-10 sm:w-10">
+                        <i class="fas fa-check-circle text-white"></i>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                        <h3 id="verifModalTitle" class="text-lg leading-6 font-medium text-gray-900">Konfirmasi Verifikasi Data</h3>
+                        <div class="mt-2">
+                            <p id="verifModalContent" class="text-sm text-gray-500">
+                                Apakah data tersebut sudah sesuai? Setelah Anda menekan "Verifikasi", data akan diproses menjadi Registered.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button type="button" id="verifyDataBtn" class="w-full inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#f0ab00] text-base font-medium text-white hover:bg-[#e09900] sm:ml-3 sm:w-auto sm:text-sm" onclick="verifyData()">
+                    <span id="btnText">Verifikasi</span> <!-- Teks tombol -->
+                    <svg id="loadingSpinner" class="hidden w-5 h-5 animate-spin mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
+                    </svg>
+                </button>
+
+                <button type="button" onclick="closeVerifParcelModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     function openParcelModal(id = null) {
@@ -1053,6 +1099,30 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
 
     function closeParcelModal() {
         document.getElementById('parcelModal').classList.add('hidden');
+    }
+
+    function openVerifParcelModal(id = null) {
+        if (id) {
+            const mitra = mitraMillsData.find(m => m.id === id);
+            if (mitra) {
+                document.getElementById('parcelModalTitle').textContent = 'Edit Data Parcel';
+                document.getElementById('parcelId').value = mitra.id;
+                document.getElementById('parcelName').value = mitra.name;
+                document.getElementById('parcelLocation').value = mitra.location;
+                document.getElementById('parcelParentCompany').value = mitra.parent_company;
+                document.getElementById('parcelCapacity').value = mitra.kapasitas;
+            }
+        } else {
+            document.getElementById('parcelModalTitle').textContent = 'Konfirmasi Data Parcel';
+            document.getElementById('parcelForm').reset();
+            document.getElementById('parcelId').value = '';
+        }
+
+        document.getElementById('verifModal').classList.remove('hidden');
+    }
+
+    function closeVerifParcelModal() {
+        document.getElementById('verifModal').classList.add('hidden');
     }
 
     // Initialize the first map (for the polygon)
@@ -1090,6 +1160,83 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
     var marker = L.marker([1.211, 100.306]).addTo(map2);
     // Optional: Add a popup to the marker
     marker.bindPopup("Lokasi Lahan");
+
+    // Fungsi untuk memulai verifikasi data
+    function verifyData() {
+        const verifyBtn = document.getElementById("verifyDataBtn");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        const btnText = document.getElementById("btnText");
+
+        // Menonaktifkan tombol dan menampilkan spinner
+        verifyBtn.disabled = true; // Menonaktifkan tombol
+        btnText.style.display = 'none'; // Menyembunyikan teks tombol
+        loadingSpinner.style.display = 'inline-block'; // Menampilkan spinner loading
+
+        // Proses verifikasi (contoh: validasi file)
+        setTimeout(() => {
+            // Simulasi verifikasi selesai
+            showSweetAlert('success', 'Verifikasi Berhasil', 'Data parcel yang dipilih sudah berhasil di verifikasi.', true, 'parcel');
+
+            // Menyembunyikan spinner dan mengaktifkan kembali tombol
+            loadingSpinner.style.display = 'none'; // Menyembunyikan spinner
+            btnText.style.display = 'inline'; // Menampilkan kembali teks tombol
+            verifyBtn.disabled = false; // Mengaktifkan kembali tombol
+
+            // Pindah halaman setelah delay
+            setTimeout(() => {
+                // Ganti dengan URL halaman yang sesuai
+                window.location.href = 'parcel'; // Misalnya, ke halaman dashboard
+            }, 2000); // Pindah halaman setelah 2 detik
+        }, 3000); // Waktu tunggu simulasi (3 detik)
+    }
+
+    // Fungsi untuk memulai upload data parcel
+    function uploadParcelData() {
+        const parcelNameInput = document.getElementById("parcelName");
+        const file = parcelNameInput.files[0];
+
+        // Menampilkan loading spinner dan menonaktifkan tombol
+        const saveBtn = document.getElementById("saveMillsBtn");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        const btnText = document.getElementById("btnText");
+
+        if (!file) {
+            showSweetAlert('error', 'Upload Gagal', 'Harap unggah file Excel terlebih dahulu.', false);
+            return;
+        }
+
+        const allowedExtensions = /(\.xls|\.xlsx)$/i;
+
+        // Validasi format file
+        if (!allowedExtensions.exec(file.name)) {
+            showSweetAlert('error', 'Format Salah', 'Harap unggah file dengan ekstensi .xls atau .xlsx', false);
+            return;
+        }
+
+        // Validasi ukuran file (maksimal 10MB)
+        if (file.size > 10 * 1024 * 1024) {
+            showSweetAlert('error', 'Ukuran File Terlalu Besar', 'Ukuran file terlalu besar. Maksimal 10MB.', false);
+            return;
+        }
+
+        // Menonaktifkan tombol dan menampilkan spinner saat proses upload
+        saveBtn.disabled = true;
+        btnText.style.display = 'none'; // Menyembunyikan teks tombol
+        loadingSpinner.style.display = 'inline-block'; // Menampilkan spinner
+
+        // Simulasi upload data (misalnya dengan setTimeout)
+        setTimeout(() => {
+            // Proses upload selesai
+            showSweetAlert('success', 'Upload Berhasil', 'Data parcel telah berhasil di-upload dan diverifikasi.', true);
+
+            // Menyembunyikan spinner dan mengaktifkan kembali tombol
+            loadingSpinner.style.display = 'none';
+            btnText.style.display = 'inline'; // Menampilkan kembali teks tombol
+            saveBtn.disabled = false; // Mengaktifkan tombol kembali
+
+            closeParcelModal();
+        }, 3000); // Waktu simulasi upload (3 detik)
+    }
 </script>
 
 <?php include 'footer.php'; ?>

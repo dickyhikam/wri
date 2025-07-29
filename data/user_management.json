@@ -3,10 +3,17 @@
     "user_cred": [
       {
         "id": 1753673015,
-        "username": "test_inactive",
-        "email": "test_inactive@example.com",
+        "username": "inactive",
+        "email": "inactive@example.com",
         "password": "12",
         "is_active": 0
+      },
+      {
+        "id": 1753673016,
+        "username": "super_admin",
+        "email": "super_admin@example.com",
+        "password": "12",
+        "is_active": 1
       }
     ],
     "user_profile": [
@@ -16,12 +23,24 @@
         "phone_number": "081238697620",
         "type_user": "ics",
         "register_date": "2025-07-28 10:23:35"
+      },
+      {
+        "id": 1753673016,
+        "name": "Test Super Admin",
+        "phone_number": "081238697621",
+        "type_user": null,
+        "register_date": "2025-07-29 10:23:35"
       }
     ],
     "akun_log": [
       {
         "id": 1753673015,
-        "role": "Admin",
+        "role": "User",
+        "ics": null
+      },
+      {
+        "id": 1753673016,
+        "role": "Super Admin",
         "ics": null
       }
     ],

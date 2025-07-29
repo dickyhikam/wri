@@ -2,27 +2,28 @@
 <html lang="en">
 
 <?php
+session_start();
+
 $host = $_SERVER['HTTP_HOST'];
 $request_uri = $_SERVER['REQUEST_URI'];
 
-// Check if '/wri' exists in the URI path
+// Cek apakah '/wri' ada dalam path URI
 if (strpos($request_uri, '/wri/') !== false) {
-  // If '/wri' exists, remove it from the URI path
+  // Jika '/wri' ada, hapus '/wri/' dari path URI
   $modified_uri = str_replace('/wri/', '', $request_uri);
 } else {
   $modified_uri = $request_uri;
 }
 
-// If '/' doesn't exist, keep the original URI
+// Cek apakah ada karakter '/' dalam modified_uri
+// Jika ada '/', hapus semua '/' dalam URI
 if (strpos($modified_uri, '/') !== false) {
-  $modified_uri = str_replace('/', '', $request_uri);
-} else {
-  $modified_uri = $request_uri;
+  $modified_uri = str_replace('/', '', $modified_uri);
 }
 
-// Check if there's a '?' in the URI (indicating query parameters)
+// Cek apakah ada tanda '?' dalam URI (menandakan ada parameter query)
 if (strpos($modified_uri, '?') !== false) {
-  // Remove everything after '?' including the '?'
+  // Hapus semua yang ada setelah '?' (termasuk tanda '?')
   $modified_uri = strtok($modified_uri, '?');
 }
 
@@ -71,6 +72,9 @@ $name_menu = [
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <!-- Include SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-50 text-gray-800" x-data="{ openModal: false,
@@ -355,3 +359,46 @@ $name_menu = [
 
         </div>
       </header>
+
+      <script>
+        // Reusable SweetAlert function
+        function showSweetAlert(icon, title, text, autoClose, menu) {
+          if (autoClose) {
+            // Auto-close alert after a set time (e.g., 3000 milliseconds or 3 seconds)
+            Swal.fire({
+              icon: icon, // 'success', 'error', etc.
+              title: title, // The title of the modal
+              text: text, // The message shown inside the modal
+              confirmButtonText: 'OK', // The button text
+              background: '#f3f4f6', // The background color of the modal
+              allowOutsideClick: false, // Disable clicking outside the modal
+              allowEscapeKey: false, // Disable closing with the Escape key
+              timer: 3000, // Auto-close after 3 seconds
+              timerProgressBar: true, // Show progress bar for the timer
+            }).then((result) => {
+              // Redirect to dashboard after auto-close or button click
+              if (result.isConfirmed) {
+                // Navigate to the dashboard when "OK" is clicked or after the auto-close timer
+                window.location.href = menu; // Replace with your actual dashboard URL
+              }
+            });
+          } else {
+            // Error alert that requires the user to click "OK" to close
+            Swal.fire({
+              icon: icon, // 'error' for invalid OTP
+              title: title, // The title of the modal
+              text: text, // The message shown inside the modal
+              confirmButtonText: 'OK', // The button text
+              background: '#f3f4f6', // The background color of the modal
+              allowOutsideClick: false, // Disable clicking outside the modal
+              allowEscapeKey: false, // Disable closing with the Escape key
+            }).then((result) => {
+              // No navigation needed for error, but we can handle any action if required
+              if (result.isConfirmed) {
+                // Handle the action after the user clicks "OK"
+                // For example, you could clear the OTP inputs or perform other actions
+              }
+            });
+          }
+        }
+      </script>
