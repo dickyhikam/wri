@@ -6,8 +6,8 @@
         <div class="flex items-center space-x-6">
             <img class="w-24 h-24 rounded-full object-cover border-4" src="https://ui-avatars.com/api/?name=WRI&background=4299e1&color=fff" alt="Avatar">
             <div>
-                <h2 class="text-2xl font-bold text-gray-800">Admin WRI</h2>
-                <p class="text-gray-500">admin@wri-indonesia.org</p>
+                <h2 class="text-2xl font-bold text-gray-800"><?= $user['profile']['name'] ?></h2>
+                <p class="text-gray-500"><?= $user['email'] ?></p>
                 <span class="text-xs text-green-600 font-medium">● Active</span>
             </div>
         </div>
@@ -38,10 +38,10 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <p class="text-sm text-gray-500">Nama Lengkap</p>
-                                <p class="text-base font-medium text-gray-800">Admin WRI</p>
+                                <p class="text-base font-medium text-gray-800"><?= $user['profile']['name'] ?></p>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-500">Peran</p>
+                                <p class="text-sm text-gray-500">Role</p>
                                 <p class="text-base font-medium text-gray-800">Administrator Sistem</p>
                             </div>
                         </div>

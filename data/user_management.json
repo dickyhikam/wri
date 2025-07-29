@@ -14,6 +14,20 @@
         "email": "super_admin@example.com",
         "password": "12",
         "is_active": 1
+      },
+      {
+        "id": 1753673017,
+        "username": "new_user",
+        "email": "new_user@example.com",
+        "password": "12",
+        "is_active": 1
+      },
+      {
+        "id": 1753673018,
+        "username": "user_ics",
+        "email": "user_ics@example.com",
+        "password": "12",
+        "is_active": 1
       }
     ],
     "user_profile": [
@@ -28,8 +42,22 @@
         "id": 1753673016,
         "name": "Test Super Admin",
         "phone_number": "081238697621",
-        "type_user": null,
+        "type_user": "WRI",
         "register_date": "2025-07-29 10:23:35"
+      },
+      {
+        "id": 1753673017,
+        "name": "Test New User",
+        "phone_number": "081238697622",
+        "type_user": "WRI",
+        "register_date": "2025-07-01 10:23:35"
+      },
+      {
+        "id": 1753673018,
+        "name": "Test User ICS",
+        "phone_number": "081238697623",
+        "type_user": "ICS",
+        "register_date": "2025-07-30 10:23:35"
       }
     ],
     "akun_log": [
@@ -42,6 +70,16 @@
         "id": 1753673016,
         "role": "Super Admin",
         "ics": null
+      },
+      {
+        "id": 1753673017,
+        "role": "User",
+        "ics": null
+      },
+      {
+        "id": 1753673018,
+        "role": "User ICS",
+        "ics": 1
       }
     ],
 

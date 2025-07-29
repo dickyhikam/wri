@@ -2,7 +2,8 @@
 <html lang="id">
 <?php
 session_start();
-session_unset();      // Hapus semua variabel session
+// Menghapus session jika akses ditolak
+// session_unset();      // Hapus semua variabel session
 // session_destroy();    // Hapus session dari server
 ?>
 
@@ -75,6 +76,11 @@ session_unset();      // Hapus semua variabel session
         <a class="text-wri-yellow font-medium" href="https://wri-indonesia.org/id" target="_blank">WRI Indonesia</a>.
     </div>
 
+    <!-- Icon Button di Kanan Bawah -->
+    <button class="fixed bottom-6 right-6 bg-[#f0ab00] text-white p-3 rounded-full shadow-lg hover:bg-[#e09900]" id="infoBtn">
+        <i class="fas fa-info-circle text-lg"></i>
+    </button>
+
     <!-- Include SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -98,14 +104,81 @@ session_unset();      // Hapus semua variabel session
             }
         }
 
+        document.getElementById('infoBtn').addEventListener('click', function() {
+            // Membuat tabel HTML untuk menampilkan email dan password dengan tombol Copy di samping email
+            const tableContent = `
+                <table class="min-w-full table-auto">
+                    <tbody>
+                        <tr class="border-t">
+                            <td class="px-4 py-2 flex items-center justify-between">
+                                <p>Email : <b id="email1">inactive@example.com</b> 
+                                    <button class="copy-btn text-white bg-blue-500 px-2 py-1 rounded ml-4" data-email="inactive@example.com">
+                                        <i class="fas fa-copy text-white"></i>
+                                    </button> 
+                                    <br> Pass : 12 <br>Akun test untuk inactive.
+                                </p>
+                            </td>
+                        </tr>
+                        <tr class="border-t">
+                            <td class="px-4 py-2 flex items-center justify-between">
+                                <p>Email : <b id="email2">super_admin@example.com</b>
+                                    <button class="copy-btn text-white bg-blue-500 px-2 py-1 rounded ml-4" data-email="super_admin@example.com">
+                                        <i class="fas fa-copy text-white"></i>
+                                    </button> 
+                                    <br> Pass : 12 <br>Akun test untuk super admin.
+                                </p>
+                            </td>
+                        </tr>
+                        <tr class="border-t">
+                            <td class="px-4 py-2 flex items-center justify-between">
+                                <p>Email : <b id="email3">new_user@example.com</b> 
+                                    <button class="copy-btn text-white bg-blue-500 px-2 py-1 rounded ml-4" data-email="new_user@example.com">
+                                        <i class="fas fa-copy text-white"></i>
+                                    </button> 
+                                    <br> Pass : 12 <br>Akun test untuk user baru daftar.
+                                </p>
+                            </td>
+                        </tr>
+                        <tr class="border-t">
+                            <td class="px-4 py-2 flex items-center justify-between">
+                                <p>Email : <b id="email3">user_ics@example.com</b> 
+                                    <button class="copy-btn text-white bg-blue-500 px-2 py-1 rounded ml-4" data-email="user_ics@example.com">
+                                        <i class="fas fa-copy text-white"></i>
+                                    </button> 
+                                    <br> Pass : 12 <br>Akun test untuk user ICS.
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+
+            // Menampilkan SweetAlert
+            showSweetAlert('info', 'Informasi Akun', tableContent, false);
+
+            // Menambahkan event listener untuk tombol copy setelah SweetAlert ditampilkan
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Mendapatkan email yang disimpan di atribut data-email
+                    const emailText = this.getAttribute('data-email');
+
+                    // Menyalin email ke clipboard
+                    navigator.clipboard.writeText(emailText).then(function() {
+                        showSweetAlert('success', 'Berhasil', 'Email telah disalin ke clipboard.', false, '');
+                    }).catch(function(err) {
+                        showSweetAlert('error', 'Gagal', 'Gagal menyalin email ke clipboard.', false, '');
+                    });
+                });
+            });
+        });
+
         // Reusable SweetAlert function
-        function showSweetAlert(icon, title, text, autoClose) {
+        function showSweetAlert(icon, title, text, autoClose, menu) {
             if (autoClose) {
-                // Auto-close alert after a set time (e.g., 3000 milliseconds or 3 seconds)
                 Swal.fire({
                     icon: icon, // 'success', 'error', etc.
                     title: title, // The title of the modal
-                    text: text, // The message shown inside the modal
+                    html: text, // The message shown inside the modal (supports HTML)
                     confirmButtonText: 'OK', // The button text
                     background: '#f3f4f6', // The background color of the modal
                     allowOutsideClick: false, // Disable clicking outside the modal
@@ -115,26 +188,18 @@ session_unset();      // Hapus semua variabel session
                 }).then((result) => {
                     // Redirect to dashboard after auto-close or button click
                     if (result.isConfirmed) {
-                        // Navigate to the dashboard when "OK" is clicked or after the auto-close timer
-                        window.location.href = "auth-register-verif"; // Replace with your actual dashboard URL
+                        window.location.href = menu; // Replace with your actual dashboard URL
                     }
                 });
             } else {
-                // Error alert that requires the user to click "OK" to close
                 Swal.fire({
                     icon: icon, // 'error' for invalid OTP
                     title: title, // The title of the modal
-                    text: text, // The message shown inside the modal
+                    html: text, // The message shown inside the modal (supports HTML)
                     confirmButtonText: 'OK', // The button text
                     background: '#f3f4f6', // The background color of the modal
                     allowOutsideClick: false, // Disable clicking outside the modal
                     allowEscapeKey: false, // Disable closing with the Escape key
-                }).then((result) => {
-                    // No navigation needed for error, but we can handle any action if required
-                    if (result.isConfirmed) {
-                        // Handle the action after the user clicks "OK"
-                        // For example, you could clear the OTP inputs or perform other actions
-                    }
                 });
             }
         }
@@ -190,16 +255,17 @@ session_unset();      // Hapus semua variabel session
             if ($isValid) {
                 // Cek apakah akun aktif
                 if ($userFound['is_active'] == 1) {
-                    echo "<script>alert(" . $userFound['is_active'] . ");</script>";
+                    $_SESSION['userFound'] = $userFound;
+                    $menu = $userFound['akun']['role'] == 'User' ? 'index-user' : 'index';
                     // Jika akun aktif
-                    echo "<script>showSweetAlert('success', 'Login Berhasil', 'Selamat datang, " . $userFound['profile']['name'] . ". Anda berhasil login.', true);</script>";
+                    echo "<script>showSweetAlert('success', 'Login Berhasil', 'Selamat datang, " . $userFound['profile']['name'] . ". Anda berhasil login.', true, '" . $menu . "');</script>";
                     echo "<script>setTimeout(function(){ window.location.href = 'index'; }, 2000);</script>";
                 } else {
                     // Jika akun tidak aktif
-                    echo "<script>showSweetAlert('warning', 'Akun Tidak Aktif', 'Akun Anda tidak aktif. Silakan hubungi admin untuk informasi lebih lanjut.', false);</script>";
+                    echo "<script>showSweetAlert('warning', 'Akun Tidak Aktif', 'Akun Anda tidak aktif. Silakan hubungi admin untuk informasi lebih lanjut.', false, '');</script>";
                 }
             } else {
-                echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false);</script>";
+                echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false, '');</script>";
             }
         } elseif (file_exists($jsonFileUser)) {
             $data = json_decode(file_get_contents($jsonFileUser), true);
@@ -221,14 +287,14 @@ session_unset();      // Hapus semua variabel session
             $_SESSION['email'] = $email;
 
             if ($isValid) {
-                echo "<script>showSweetAlert('success', 'Login Berhasil', 'Email Anda terdaftar, namun belum diverifikasi. Silakan cek kotak masuk Anda untuk menyelesaikan proses verifikasi.', true);</script>";
+                echo "<script>showSweetAlert('success', 'Login Berhasil', 'Email Anda terdaftar, namun belum diverifikasi. Silakan cek kotak masuk Anda untuk menyelesaikan proses verifikasi.', true, 'auth-register-verif');</script>";
                 // Mengalihkan pengguna ke halaman verifikasi email atau halaman lain setelah pemberitahuan
                 echo "<script>setTimeout(function(){ window.location.href = 'auth-register-verif'; }, 2000);</script>";
             } else {
-                echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false);</script>";
+                echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false, '');</script>";
             }
         } else {
-            echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false);</script>";
+            echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false, '');</script>";
         }
     }
     ?>

@@ -4,6 +4,11 @@
 <?php
 session_start();
 
+if (isset($_SESSION['userFound'])) {
+  // Pengguna sudah login
+  $user = $_SESSION['userFound'];
+}
+
 $host = $_SERVER['HTTP_HOST'];
 $request_uri = $_SERVER['REQUEST_URI'];
 
@@ -48,7 +53,8 @@ $name_menu = [
   'limbah' => 'Limbah B3 dan K3',
   'workplan' => 'WorkPlan',
   'role' => 'Role',
-  'keselamatan' => 'Kecelakaan Kerja'
+  'keselamatan' => 'Kecelakaan Kerja',
+  'profile' => 'Profile'
 ];
 ?>
 
@@ -103,20 +109,14 @@ $name_menu = [
       <nav class="flex-1 overflow-y-auto py-4 space-y-1 text-sm">
         <!-- Dashboard -->
         <div>
-          <a href="index" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == '' || $name_menu[$modified_uri] == 'Dashboard') ? 'sidebar-item active' : ''; ?>">
+          <a href="<?php echo ($user['akun']['role'] == 'User') ? 'index-user' : 'index'; ?>" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == '' || $name_menu[$modified_uri] == 'Dashboard' || $name_menu[$modified_uri] == 'Dashboard User') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
             Dashboard
           </a>
         </div>
-        <div>
-          <a href="index-user" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'Dashboard User') ? 'sidebar-item active' : ''; ?>">
-            <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
-            Dashboard User
-          </a>
-        </div>
 
         <!-- Master Data -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.masterData, 'sidebar-item active': currentMenu === 'Role' || currentMenu === 'Parcel Data' || currentMenu === 'Petani' || currentMenu === 'Lahan/Persil' || currentMenu === 'Pekerja' || currentMenu === 'Mitra & Organisasi' || currentMenu === 'Kelompok Tani'}">
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?> class="menu-collapse" :class="{'collapsed': !menuCollapse.masterData, 'sidebar-item active': currentMenu === 'Role' || currentMenu === 'Parcel Data' || currentMenu === 'Petani' || currentMenu === 'Lahan/Persil' || currentMenu === 'Pekerja' || currentMenu === 'Mitra & Organisasi' || currentMenu === 'Kelompok Tani'}">
           <div @click="menuCollapse.masterData = !menuCollapse.masterData" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-database w-5 mr-3 text-[#f0ab00]"></i>
@@ -125,8 +125,8 @@ $name_menu = [
             <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.masterData}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="role" @click="currentMenu = 'role'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Role') ? 'sidebar-item active' : ''; ?>">Role</a>
-            <a href="parcel" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Parcel Data') ? 'sidebar-item active' : ''; ?>">Parcel Data</a>
+            <a <?php echo ($user['akun']['role'] == 'Super Admin') ? '' : 'style="display:none;"'; ?> href="role" @click="currentMenu = 'role'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Role') ? 'sidebar-item active' : ''; ?>">Role</a>
+            <a <?php echo ($user['akun']['role'] == 'Super Admin') ? '' : 'style="display:none;"'; ?> href="parcel" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Parcel Data') ? 'sidebar-item active' : ''; ?>">Parcel Data</a>
             <a href="petani" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Petani') ? 'sidebar-item active' : ''; ?>">Petani</a>
             <a href="lahan" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Lahan/Persil') ? 'sidebar-item active' : ''; ?>">Lahan/Persil</a>
             <a href="pekerja" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Pekerja') ? 'sidebar-item active' : ''; ?>">Pekerja</a>
@@ -136,7 +136,7 @@ $name_menu = [
         </div>
 
         <!-- WorkPlan -->
-        <div>
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?>>
           <a href="workplan" @click="currentMenu = 'workplan'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'WorkPlan') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-project-diagram w-5 mr-3 text-[#f0ab00]"></i>
             WorkPlan
@@ -144,7 +144,7 @@ $name_menu = [
         </div>
 
         <!-- Audit -->
-        <div>
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?>>
           <a href="sertifikasi" @click="currentMenu = 'sertifikasi'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'Sertifikasi & Audit') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-user-secret w-5 mr-3 text-[#f0ab00]"></i>
             Audit
@@ -152,7 +152,7 @@ $name_menu = [
         </div>
 
         <!-- HCV -->
-        <div>
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?>>
           <a href="nkt" @click="currentMenu = 'nkt'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'HCV/NKT') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-chart-line w-5 mr-3 text-[#f0ab00]"></i>
             HCV
@@ -160,7 +160,7 @@ $name_menu = [
         </div>
 
         <!-- BMP -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.bmp, 'sidebar-item active': currentMenu === 'produksition'}">
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?> class="menu-collapse" :class="{'collapsed': !menuCollapse.bmp, 'sidebar-item active': currentMenu === 'produksition'}">
           <div @click="menuCollapse.bmp = !menuCollapse.bmp" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-warehouse w-5 mr-3 text-[#f0ab00]"></i>
@@ -175,7 +175,7 @@ $name_menu = [
         </div>
 
         <!-- K3 -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.k3, 'sidebar-item active': currentMenu === 'limbah' || currentMenu === 'keselamatan' || currentMenu === 'productionSummary'}">
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?> class="menu-collapse" :class="{'collapsed': !menuCollapse.k3, 'sidebar-item active': currentMenu === 'limbah' || currentMenu === 'keselamatan' || currentMenu === 'productionSummary'}">
           <div @click="menuCollapse.k3 = !menuCollapse.k3" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-user-shield w-5 mr-3 text-[#f0ab00]"></i>
@@ -191,7 +191,7 @@ $name_menu = [
         </div>
 
         <!-- ICS -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.ics, 'sidebar-item active': currentMenu === 'queryBuilder' || currentMenu === 'analyticsDashboard' || currentMenu === 'productionSummary' || currentMenu === 'dataExport'}">
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?> class="menu-collapse" :class="{'collapsed': !menuCollapse.ics, 'sidebar-item active': currentMenu === 'queryBuilder' || currentMenu === 'analyticsDashboard' || currentMenu === 'productionSummary' || currentMenu === 'dataExport'}">
           <div @click="menuCollapse.ics = !menuCollapse.ics" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-users w-5 mr-3 text-[#f0ab00]"></i>
@@ -210,7 +210,7 @@ $name_menu = [
         </div>
 
         <!-- User Management -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.userManagement}">
+        <div <?php echo ($user['akun']['role'] == 'Super Admin') ? '' : 'hidden'; ?> class="menu-collapse" :class="{'collapsed': !menuCollapse.userManagement}">
           <div @click="menuCollapse.userManagement = !menuCollapse.userManagement" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-users-cog w-5 mr-3 text-[#f0ab00]"></i>
@@ -225,7 +225,7 @@ $name_menu = [
         </div>
 
         <!-- System Admin -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.systemAdmin}">
+        <div <?php echo ($user['akun']['role'] == 'Super Admin') ? '' : 'hidden'; ?> class="menu-collapse" :class="{'collapsed': !menuCollapse.systemAdmin}">
           <div @click="menuCollapse.systemAdmin = !menuCollapse.systemAdmin" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-cog w-5 mr-3 text-[#f0ab00]"></i>
@@ -291,16 +291,6 @@ $name_menu = [
         </div> -->
 
       </nav>
-      <!-- Footer -->
-      <div class="p-4 border-t border-yellow-500">
-        <div class="flex items-center">
-          <img src="https://ui-avatars.com/api/?name=WRI&background=000000&color=fff" class="w-10 h-10 rounded-full" />
-          <div class="ml-3">
-            <p class="text-sm font-medium">Admin WRI</p>
-            <p class="text-xs text-white/70">Super Admin</p>
-          </div>
-        </div>
-      </div>
     </aside>
 
     <!-- Main Content Area -->
@@ -320,17 +310,31 @@ $name_menu = [
 
         <!-- Notifikasi + Profil -->
         <div class="flex items-center space-x-6">
-          <!-- Bell -->
-          <button class="relative text-gray-500 hover:text-gray-700">
-            <i class="fas fa-bell text-xl"></i>
-            <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
-          </button>
+          <!-- Bell Icon with Notification Badge -->
+          <div class="relative text-gray-500 hover:text-gray-700">
+            <button id="bellButton" class="relative text-gray-500 hover:text-gray-700">
+              <i class="fas fa-bell text-3xl"></i>
+              <span id="notificationBadge" class="absolute top-0 right-0 h-4 w-4 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">3</span>
+            </button>
 
-          <!-- Mail -->
-          <button class="relative text-gray-500 hover:text-gray-700">
-            <i class="fas fa-envelope text-xl"></i>
-            <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
-          </button>
+            <!-- Dropdown Notification Menu -->
+            <div id="notificationDropdown" class="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-md border border-gray-300 hidden">
+              <ul class="space-y-2 p-2">
+                <li class="flex items-center p-2 hover:bg-gray-100 rounded-md">
+                  <i class="fas fa-user text-gray-500 mr-2"></i>
+                  <span>Pengguna baru mendaftar: <strong id="newUserName">Jabir ibn Aflah</strong></span> <!-- Menampilkan nama pengguna -->
+                </li>
+                <li class="flex items-center p-2 hover:bg-gray-100 rounded-md">
+                  <i class="fas fa-user text-gray-500 mr-2"></i>
+                  <span>Pengguna baru mendaftar: <strong id="newUserName">Thomas Alva Edison</strong></span> <!-- Menampilkan nama pengguna -->
+                </li>
+                <li class="flex items-center p-2 hover:bg-gray-100 rounded-md">
+                  <i class="fas fa-user text-gray-500 mr-2"></i>
+                  <span>Pengguna baru mendaftar: <strong id="newUserName">Tesla Nikola</strong></span> <!-- Menampilkan nama pengguna -->
+                </li>
+              </ul>
+            </div>
+          </div>
 
           <!-- Profile Dropdown - Click Toggle with Alpine.js -->
           <div x-data="{ open: false }" class="relative">
@@ -339,8 +343,8 @@ $name_menu = [
               <img src="https://ui-avatars.com/api/?name=WRI&background=4299e1&color=fff"
                 class="w-10 h-10 rounded-full border border-gray-300" />
               <div class="text-left">
-                <p class="text-sm font-medium">Admin WRI</p>
-                <p class="text-xs text-gray-500">Administrator</p>
+                <p class="text-sm font-medium"><?= $user['profile']['name'] ?></p>
+                <p class="text-xs text-gray-500"><?= $user['akun']['role'] ?></p>
               </div>
               <i class="fas fa-chevron-down text-xs text-gray-500"></i>
             </button>
@@ -351,7 +355,7 @@ $name_menu = [
                 class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600">
                 <i class="fas fa-user mr-2 w-4"></i> Profile
               </a>
-              <a href="auth-login" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-red-600">
+              <a href="logout" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-red-600">
                 <i class="fas fa-sign-out-alt mr-2 w-4"></i> Logout
               </a>
             </div>
@@ -369,16 +373,14 @@ $name_menu = [
               icon: icon, // 'success', 'error', etc.
               title: title, // The title of the modal
               text: text, // The message shown inside the modal
-              confirmButtonText: 'OK', // The button text
               background: '#f3f4f6', // The background color of the modal
               allowOutsideClick: false, // Disable clicking outside the modal
               allowEscapeKey: false, // Disable closing with the Escape key
               timer: 3000, // Auto-close after 3 seconds
               timerProgressBar: true, // Show progress bar for the timer
-            }).then((result) => {
-              // Redirect to dashboard after auto-close or button click
-              if (result.isConfirmed) {
-                // Navigate to the dashboard when "OK" is clicked or after the auto-close timer
+            }).then(() => {
+              // Optional: If you want to redirect to a specific page after auto-close
+              if (menu !== '') {
                 window.location.href = menu; // Replace with your actual dashboard URL
               }
             });
@@ -401,4 +403,51 @@ $name_menu = [
             });
           }
         }
+
+        // Menampilkan dropdown ketika ikon bell diklik
+        document.getElementById('bellButton').addEventListener('click', function() {
+          const dropdown = document.getElementById('notificationDropdown');
+          const badge = document.getElementById('notificationBadge');
+
+          // Toggle dropdown visibility
+          dropdown.classList.toggle('hidden');
+
+          // Jika ada notifikasi, setel badge untuk menghilang
+          if (badge) {
+            badge.style.display = 'none'; // Menyembunyikan badge saat dropdown muncul
+          }
+        });
+
+        // Fungsi untuk menutup dropdown jika area di luar dropdown diklik
+        window.addEventListener('click', function(e) {
+          const dropdown = document.getElementById('notificationDropdown');
+          const bellButton = document.getElementById('bellButton');
+
+          if (!bellButton.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.add('hidden'); // Menyembunyikan dropdown jika klik di luar
+          }
+        });
       </script>
+
+      <?php
+      // Memeriksa apakah session email sudah ada
+      if (isset($_SESSION['userFound'])) {
+      } else {
+        // Menampilkan SweetAlert jika pengguna belum login
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Akses Ditolak',
+                text: 'Anda belum melakukan login. Silakan login terlebih dahulu.',
+                confirmButtonText: 'OK',
+                background: '#f3f4f6',
+                backdrop: 'rgba(0, 0, 0, 1)'
+            }).then(function() {
+                // Setelah alert ditutup, arahkan pengguna ke halaman login
+                window.location.href = 'auth-login'; // Arahkan ke halaman login
+            });
+          </script>";
+
+        // exit(); // Menghentikan eksekusi lebih lanjut setelah pengalihan
+      }
+      ?>
