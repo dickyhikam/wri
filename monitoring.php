@@ -1,4 +1,3 @@
-
 <?php
 // Include header
 include 'header.php';
@@ -101,15 +100,15 @@ include 'header.php';
                                         <div class="border border-gray-200 p-4 rounded-b-lg">
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Nama Lokasi/Blok *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Nama Lokasi/Blok <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.nama_lokasi" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Koordinat/Titik Monitoring *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Koordinat/Titik Monitoring <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.koordinat" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                                 <div class="md:col-span-2">
-                                                    <label class="block text-sm font-medium text-gray-700">Jenis NKT *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Jenis NKT <span class="text-red-500">*</span></label>
                                                     <div class="mt-2 space-y-2">
                                                         <div class="flex items-center">
                                                             <input x-model="formData.jenis_nkt" value="NKT 1" type="checkbox" class="h-4 w-4 text-[#f0ab00] focus:ring-[#f0ab00] border-gray-300 rounded">
@@ -122,15 +121,15 @@ include 'header.php';
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Tanggal Monitoring *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Tanggal Monitoring <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.tanggal_pemantauan" type="date" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Nama Petugas/Pemantau *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Nama Petugas/Pemantau <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.nama_petugas" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Pemilik Lahan *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Pemilik Lahan <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.pemilik_lahan" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                             </div>
@@ -462,7 +461,7 @@ include 'header.php';
                                                 </template>
                                             </div>
 
-                                                                                        <!-- Indicator 2 -->
+                                            <!-- Indicator 2 -->
                                             <div>
                                                 <label class="block text-sm font-medium text-gray-700">2. Jejak, sarang, atau bekas aktivitas satwa?</label>
                                                 <p class="mt-1 text-sm text-gray-900 font-semibold" x-text="viewData.nkt1_indikator2 || '-'"></p>
@@ -639,56 +638,55 @@ include 'header.php';
 </div>
 
 <script>
-function nktMonitoringApp() {
-    return {
-        openModal: false,
-        viewModal: false,
-        deleteModal: false,
-        currentForm: 'new',
-        currentItemId: null,
-        monitoringData: [],
-        formData: {
-            nama_lokasi: '',
-            koordinat: '',
-            jenis_nkt: [],
-            tanggal_pemantauan: '',
-            nama_petugas: '',
-            pemilik_lahan: '',
-            // NKT 1 Fields
-            nkt1_indikator1: '',
-            nkt1_catatan1: '',
-            nkt1_indikator2: '',
-            nkt1_catatan2: '',
-            nkt1_indikator3: '',
-            nkt1_catatan3: '',
-            nkt1_indikator4: '',
-            nkt1_catatan4: '',
-            nkt1_indikator5: '',
-            nkt1_catatan5: '',
-            // NKT 4 Fields
-            nkt4_indikator1: '',
-            nkt4_catatan1: '',
-            nkt4_indikator2: '',
-            nkt4_catatan2: '',
-            nkt4_indikator3: '',
-            nkt4_catatan3: '',
-            nkt4_indikator4: '',
-            nkt4_catatan4: '',
-            // Tindak Lanjut
-            tindak_lanjut1: '',
-            tindak_lanjut2: '',
-            tindak_lanjut3: ''
-        },
-        
-        // Initialize data from localStorage
-        init() {
-            const savedData = localStorage.getItem('nktMonitoringData');
-            if (savedData) {
-                this.monitoringData = JSON.parse(savedData);
-            } else {
-                // Sample data if localStorage is empty
-                this.monitoringData = [
-                    {
+    function nktMonitoringApp() {
+        return {
+            openModal: false,
+            viewModal: false,
+            deleteModal: false,
+            currentForm: 'new',
+            currentItemId: null,
+            monitoringData: [],
+            formData: {
+                nama_lokasi: '',
+                koordinat: '',
+                jenis_nkt: [],
+                tanggal_pemantauan: '',
+                nama_petugas: '',
+                pemilik_lahan: '',
+                // NKT 1 Fields
+                nkt1_indikator1: '',
+                nkt1_catatan1: '',
+                nkt1_indikator2: '',
+                nkt1_catatan2: '',
+                nkt1_indikator3: '',
+                nkt1_catatan3: '',
+                nkt1_indikator4: '',
+                nkt1_catatan4: '',
+                nkt1_indikator5: '',
+                nkt1_catatan5: '',
+                // NKT 4 Fields
+                nkt4_indikator1: '',
+                nkt4_catatan1: '',
+                nkt4_indikator2: '',
+                nkt4_catatan2: '',
+                nkt4_indikator3: '',
+                nkt4_catatan3: '',
+                nkt4_indikator4: '',
+                nkt4_catatan4: '',
+                // Tindak Lanjut
+                tindak_lanjut1: '',
+                tindak_lanjut2: '',
+                tindak_lanjut3: ''
+            },
+
+            // Initialize data from localStorage
+            init() {
+                const savedData = localStorage.getItem('nktMonitoringData');
+                if (savedData) {
+                    this.monitoringData = JSON.parse(savedData);
+                } else {
+                    // Sample data if localStorage is empty
+                    this.monitoringData = [{
                         id: 1,
                         nama_lokasi: 'Blok Konservasi A',
                         koordinat: '-6.12345, 106.78901',
@@ -720,196 +718,197 @@ function nktMonitoringApp() {
                         tindak_lanjut1: 'Ya',
                         tindak_lanjut2: 'Ya',
                         tindak_lanjut3: 'Perlu patroli rutin 2x seminggu'
-                    }
-                ];
-                this.saveToLocalStorage();
-            }
-        },
-        
-        // Save data to localStorage
-        saveToLocalStorage() {
-            localStorage.setItem('nktMonitoringData', JSON.stringify(this.monitoringData));
-        },
-        
-        formatDate(dateString) {
-            if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('id-ID');
-        },
-        
-        // Calculate overall status based on monitoring indicators
-        getOverallStatus(item) {
-            // Check NKT 1 indicators
-            const nkt1Issues = [
-                item.nkt1_indikator5 === 'Ya', // Ada gangguan
-                item.nkt1_indikator3 === 'Tidak' // Vegetasi tidak utuh
-            ].filter(Boolean).length;
-            
-            // Check NKT 4 indicators
-            const nkt4Issues = [
-                item.nkt4_indikator1 === 'Tidak', // Aliran tidak normal
-                item.nkt4_indikator2 === 'Tidak', // Air tidak jernih
-                item.nkt4_indikator3 === 'Tidak', // Ada sampah/limbah
-                item.nkt4_indikator4 === 'Tidak' // Vegetasi tidak utuh
-            ].filter(Boolean).length;
-            
-            // Check follow-up actions
-            const followUpActions = [
-                item.tindak_lanjut1 === 'Ya',
-                item.tindak_lanjut2 === 'Ya'
-            ].filter(Boolean).length;
-            
-            const totalIssues = nkt1Issues + nkt4Issues;
-            
-            if (totalIssues === 0 && followUpActions === 0) return 'Baik';
-            if (totalIssues <= 2 || followUpActions > 0) return 'Perlu Perhatian';
-            return 'Kritis';
-        },
-        
-        viewItem(item) {
-            this.viewData = JSON.parse(JSON.stringify(item));
-            this.viewModal = true;
-        },
-        
-        editItem(item) {
-            this.currentForm = 'edit';
-            this.currentItemId = item.id;
-            this.formData = {...item};
-            this.openModal = true;
-        },
-        
-        confirmDelete(item) {
-            this.currentItemId = item.id;
-            this.deleteModal = true;
-        },
-        
-        deleteItem() {
-            this.monitoringData = this.monitoringData.filter(item => item.id !== this.currentItemId);
-            this.saveToLocalStorage();
-            this.deleteModal = false;
-        },
-        
-        saveData() {
-            // Validate form
-            if (!this.validateForm()) {
-                return;
-            }
-            
-            if (this.currentForm === 'new') {
-                // Add new item
-                const newId = Math.max(...this.monitoringData.map(item => item.id), 0) + 1;
-                this.monitoringData.push({
-                    id: newId,
-                    ...this.formData
-                });
-            } else {
-                // Update existing item
-                const index = this.monitoringData.findIndex(item => item.id === this.currentItemId);
-                if (index !== -1) {
-                    this.monitoringData[index] = {
-                        id: this.currentItemId,
-                        ...this.formData
-                    };
+                    }];
+                    this.saveToLocalStorage();
                 }
-            }
-            
-            this.saveToLocalStorage();
-            this.openModal = false;
-            this.resetForm();
-        },
-        
-        // Validate form before saving
-        validateForm() {
-            const requiredFields = [
-                'nama_lokasi', 'koordinat', 'tanggal_pemantauan',
-                'nama_petugas', 'pemilik_lahan'
-            ];
-            
-            // Check main form fields
-            for (const field of requiredFields) {
-                if (!this.formData[field]) {
-                    alert(`Field ${field.replace(/_/g, ' ')} harus diisi!`);
+            },
+
+            // Save data to localStorage
+            saveToLocalStorage() {
+                localStorage.setItem('nktMonitoringData', JSON.stringify(this.monitoringData));
+            },
+
+            formatDate(dateString) {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                return date.toLocaleDateString('id-ID');
+            },
+
+            // Calculate overall status based on monitoring indicators
+            getOverallStatus(item) {
+                // Check NKT 1 indicators
+                const nkt1Issues = [
+                    item.nkt1_indikator5 === 'Ya', // Ada gangguan
+                    item.nkt1_indikator3 === 'Tidak' // Vegetasi tidak utuh
+                ].filter(Boolean).length;
+
+                // Check NKT 4 indicators
+                const nkt4Issues = [
+                    item.nkt4_indikator1 === 'Tidak', // Aliran tidak normal
+                    item.nkt4_indikator2 === 'Tidak', // Air tidak jernih
+                    item.nkt4_indikator3 === 'Tidak', // Ada sampah/limbah
+                    item.nkt4_indikator4 === 'Tidak' // Vegetasi tidak utuh
+                ].filter(Boolean).length;
+
+                // Check follow-up actions
+                const followUpActions = [
+                    item.tindak_lanjut1 === 'Ya',
+                    item.tindak_lanjut2 === 'Ya'
+                ].filter(Boolean).length;
+
+                const totalIssues = nkt1Issues + nkt4Issues;
+
+                if (totalIssues === 0 && followUpActions === 0) return 'Baik';
+                if (totalIssues <= 2 || followUpActions > 0) return 'Perlu Perhatian';
+                return 'Kritis';
+            },
+
+            viewItem(item) {
+                this.viewData = JSON.parse(JSON.stringify(item));
+                this.viewModal = true;
+            },
+
+            editItem(item) {
+                this.currentForm = 'edit';
+                this.currentItemId = item.id;
+                this.formData = {
+                    ...item
+                };
+                this.openModal = true;
+            },
+
+            confirmDelete(item) {
+                this.currentItemId = item.id;
+                this.deleteModal = true;
+            },
+
+            deleteItem() {
+                this.monitoringData = this.monitoringData.filter(item => item.id !== this.currentItemId);
+                this.saveToLocalStorage();
+                this.deleteModal = false;
+            },
+
+            saveData() {
+                // Validate form
+                if (!this.validateForm()) {
+                    return;
+                }
+
+                if (this.currentForm === 'new') {
+                    // Add new item
+                    const newId = Math.max(...this.monitoringData.map(item => item.id), 0) + 1;
+                    this.monitoringData.push({
+                        id: newId,
+                        ...this.formData
+                    });
+                } else {
+                    // Update existing item
+                    const index = this.monitoringData.findIndex(item => item.id === this.currentItemId);
+                    if (index !== -1) {
+                        this.monitoringData[index] = {
+                            id: this.currentItemId,
+                            ...this.formData
+                        };
+                    }
+                }
+
+                this.saveToLocalStorage();
+                this.openModal = false;
+                this.resetForm();
+            },
+
+            // Validate form before saving
+            validateForm() {
+                const requiredFields = [
+                    'nama_lokasi', 'koordinat', 'tanggal_pemantauan',
+                    'nama_petugas', 'pemilik_lahan'
+                ];
+
+                // Check main form fields
+                for (const field of requiredFields) {
+                    if (!this.formData[field]) {
+                        alert(`Field ${field.replace(/_/g, ' ')} harus diisi!`);
+                        return false;
+                    }
+                }
+
+                // Check at least one NKT type is selected
+                if (this.formData.jenis_nkt.length === 0) {
+                    alert('Pilih minimal satu jenis NKT!');
                     return false;
                 }
-            }
-            
-            // Check at least one NKT type is selected
-            if (this.formData.jenis_nkt.length === 0) {
-                alert('Pilih minimal satu jenis NKT!');
-                return false;
-            }
-            
-            // Validate NKT 1 fields if selected
-            if (this.formData.jenis_nkt.includes('NKT 1')) {
-                const nkt1Fields = [
-                    'nkt1_indikator1', 'nkt1_indikator2', 
-                    'nkt1_indikator3', 'nkt1_indikator4',
-                    'nkt1_indikator5'
-                ];
-                
-                for (const field of nkt1Fields) {
-                    if (!this.formData[field]) {
-                        alert(`Semua indikator NKT 1 harus diisi!`);
-                        return false;
+
+                // Validate NKT 1 fields if selected
+                if (this.formData.jenis_nkt.includes('NKT 1')) {
+                    const nkt1Fields = [
+                        'nkt1_indikator1', 'nkt1_indikator2',
+                        'nkt1_indikator3', 'nkt1_indikator4',
+                        'nkt1_indikator5'
+                    ];
+
+                    for (const field of nkt1Fields) {
+                        if (!this.formData[field]) {
+                            alert(`Semua indikator NKT 1 harus diisi!`);
+                            return false;
+                        }
                     }
                 }
-            }
-            
-            // Validate NKT 4 fields if selected
-            if (this.formData.jenis_nkt.includes('NKT 4')) {
-                const nkt4Fields = [
-                    'nkt4_indikator1', 'nkt4_indikator2',
-                    'nkt4_indikator3', 'nkt4_indikator4'
-                ];
-                
-                for (const field of nkt4Fields) {
-                    if (!this.formData[field]) {
-                        alert(`Semua indikator NKT 4 harus diisi!`);
-                        return false;
+
+                // Validate NKT 4 fields if selected
+                if (this.formData.jenis_nkt.includes('NKT 4')) {
+                    const nkt4Fields = [
+                        'nkt4_indikator1', 'nkt4_indikator2',
+                        'nkt4_indikator3', 'nkt4_indikator4'
+                    ];
+
+                    for (const field of nkt4Fields) {
+                        if (!this.formData[field]) {
+                            alert(`Semua indikator NKT 4 harus diisi!`);
+                            return false;
+                        }
                     }
                 }
+
+                return true;
+            },
+
+            resetForm() {
+                this.formData = {
+                    nama_lokasi: '',
+                    koordinat: '',
+                    jenis_nkt: [],
+                    tanggal_pemantauan: '',
+                    nama_petugas: '',
+                    pemilik_lahan: '',
+                    // NKT 1 Fields
+                    nkt1_indikator1: '',
+                    nkt1_catatan1: '',
+                    nkt1_indikator2: '',
+                    nkt1_catatan2: '',
+                    nkt1_indikator3: '',
+                    nkt1_catatan3: '',
+                    nkt1_indikator4: '',
+                    nkt1_catatan4: '',
+                    nkt1_indikator5: '',
+                    nkt1_catatan5: '',
+                    // NKT 4 Fields
+                    nkt4_indikator1: '',
+                    nkt4_catatan1: '',
+                    nkt4_indikator2: '',
+                    nkt4_catatan2: '',
+                    nkt4_indikator3: '',
+                    nkt4_catatan3: '',
+                    nkt4_indikator4: '',
+                    nkt4_catatan4: '',
+                    // Tindak Lanjut
+                    tindak_lanjut1: '',
+                    tindak_lanjut2: '',
+                    tindak_lanjut3: ''
+                };
+                this.currentItemId = null;
             }
-            
-            return true;
-        },
-        
-        resetForm() {
-            this.formData = {
-                nama_lokasi: '',
-                koordinat: '',
-                jenis_nkt: [],
-                tanggal_pemantauan: '',
-                nama_petugas: '',
-                pemilik_lahan: '',
-                // NKT 1 Fields
-                nkt1_indikator1: '',
-                nkt1_catatan1: '',
-                nkt1_indikator2: '',
-                nkt1_catatan2: '',
-                nkt1_indikator3: '',
-                nkt1_catatan3: '',
-                nkt1_indikator4: '',
-                nkt1_catatan4: '',
-                nkt1_indikator5: '',
-                nkt1_catatan5: '',
-                // NKT 4 Fields
-                nkt4_indikator1: '',
-                nkt4_catatan1: '',
-                nkt4_indikator2: '',
-                nkt4_catatan2: '',
-                nkt4_indikator3: '',
-                nkt4_catatan3: '',
-                nkt4_indikator4: '',
-                nkt4_catatan4: '',
-                // Tindak Lanjut
-                tindak_lanjut1: '',
-                tindak_lanjut2: '',
-                tindak_lanjut3: ''
-            };
-            this.currentItemId = null;
         }
     }
-}
 </script>
 
 <?php

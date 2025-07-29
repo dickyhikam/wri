@@ -1,4 +1,4 @@
-<?php 
+<?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -64,29 +64,29 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Aplikasikan filter
 if ($filter_type) {
-    $filtered_pengguna = array_filter($filtered_pengguna, function($pengguna) use ($filter_type) {
+    $filtered_pengguna = array_filter($filtered_pengguna, function ($pengguna) use ($filter_type) {
         return $pengguna['user_type'] == $filter_type;
     });
 }
 
 if ($filter_village) {
-    $filtered_pengguna = array_filter($filtered_pengguna, function($pengguna) use ($filter_village) {
+    $filtered_pengguna = array_filter($filtered_pengguna, function ($pengguna) use ($filter_village) {
         return $pengguna['village_id'] == $filter_village;
     });
 }
 
 if ($filter_status) {
-    $filtered_pengguna = array_filter($filtered_pengguna, function($pengguna) use ($filter_status) {
+    $filtered_pengguna = array_filter($filtered_pengguna, function ($pengguna) use ($filter_status) {
         return $pengguna['status'] == $filter_status;
     });
 }
 
 if ($search) {
     $search = strtolower($search);
-    $filtered_pengguna = array_filter($filtered_pengguna, function($pengguna) use ($search) {
-        return (strpos(strtolower($pengguna['username']), $search) !== false || 
-               strpos(strtolower($pengguna['email']), $search) !== false ||
-               strpos(strtolower($pengguna['full_name']), $search) !== false);
+    $filtered_pengguna = array_filter($filtered_pengguna, function ($pengguna) use ($search) {
+        return (strpos(strtolower($pengguna['username']), $search) !== false ||
+            strpos(strtolower($pengguna['email']), $search) !== false ||
+            strpos(strtolower($pengguna['full_name']), $search) !== false);
     });
 }
 
@@ -120,34 +120,34 @@ include 'header.php';
                     <input type="hidden" id="user_id" name="user_id">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label for="username" class="block text-sm font-medium text-gray-700">Username*</label>
-                            <input type="text" id="username" name="username" required 
-                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <label for="username" class="block text-sm font-medium text-gray-700">Username<span class="text-red-500">*</span></label>
+                            <input type="text" id="username" name="username" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email*</label>
-                            <input type="email" id="email" name="email" required 
-                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email<span class="text-red-500">*</span></label>
+                            <input type="email" id="email" name="email" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700">Password*</label>
-                            <input type="password" id="password" name="password" required 
-                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <label for="password" class="block text-sm font-medium text-gray-700">Password<span class="text-red-500">*</span></label>
+                            <input type="password" id="password" name="password" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div>
-                            <label for="confirm_password" class="block text-sm font-medium text-gray-700">Konfirmasi Password*</label>
-                            <input type="password" id="confirm_password" name="confirm_password" required 
-                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <label for="confirm_password" class="block text-sm font-medium text-gray-700">Konfirmasi Password<span class="text-red-500">*</span></label>
+                            <input type="password" id="confirm_password" name="confirm_password" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div>
-                            <label for="full_name" class="block text-sm font-medium text-gray-700">Nama Lengkap*</label>
-                            <input type="text" id="full_name" name="full_name" required 
-                                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <label for="full_name" class="block text-sm font-medium text-gray-700">Nama Lengkap<span class="text-red-500">*</span></label>
+                            <input type="text" id="full_name" name="full_name" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div>
-                            <label for="user_type" class="block text-sm font-medium text-gray-700">Tipe Pengguna*</label>
-                            <select id="user_type" name="user_type" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <label for="user_type" class="block text-sm font-medium text-gray-700">Tipe Pengguna<span class="text-red-500">*</span></label>
+                            <select id="user_type" name="user_type" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Pilih Tipe</option>
                                 <option value="admin">Administrator</option>
                                 <option value="officer">Petugas Lapangan</option>
@@ -156,8 +156,8 @@ include 'header.php';
                         </div>
                         <div>
                             <label for="village_id" class="block text-sm font-medium text-gray-700">Desa</label>
-                            <select id="village_id" name="village_id" 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <select id="village_id" name="village_id"
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Pilih Desa</option>
                                 <option value="1">Kantor Pusat</option>
                                 <option value="2">Desa Makmur</option>
@@ -166,15 +166,15 @@ include 'header.php';
                             </select>
                         </div>
                         <div>
-                            <label for="status" class="block text-sm font-medium text-gray-700">Status*</label>
-                            <select id="status" name="status" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <label for="status" class="block text-sm font-medium text-gray-700">Status<span class="text-red-500">*</span></label>
+                            <select id="status" name="status" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 <option value="active">Aktif</option>
                                 <option value="inactive">Non-Aktif</option>
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="flex justify-end space-x-3">
                         <button type="button" onclick="hideFormAndShowTable()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">Batal</button>
                         <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">Simpan Pengguna</button>
@@ -208,9 +208,9 @@ include 'header.php';
                 <form id="filter-form" class="space-y-4">
                     <div class="mb-4">
                         <div class="relative">
-                            <input type="text" id="search-input" name="search" 
-                                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                                   placeholder="Cari pengguna...">
+                            <input type="text" id="search-input" name="search"
+                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Cari pengguna...">
                             <button type="button" onclick="applyFilters()" class="absolute right-2 top-2 text-gray-500 hover:text-gray-700">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -218,8 +218,8 @@ include 'header.php';
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                            <select id="filter-type-user" name="filter_type_user" 
-                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <select id="filter-type-user" name="filter_type_user"
+                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option value="">Semua Tipe User</option>
                                 <option value="admin">Administrator</option>
                                 <option value="officer">Petugas Lapangan</option>
@@ -227,8 +227,8 @@ include 'header.php';
                             </select>
                         </div>
                         <div>
-                            <select id="filter-village" name="filter_village" 
-                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <select id="filter-village" name="filter_village"
+                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option value="">Semua Desa</option>
                                 <option value="1">Kantor Pusat</option>
                                 <option value="2">Desa Makmur</option>
@@ -237,8 +237,8 @@ include 'header.php';
                             </select>
                         </div>
                         <div>
-                            <select id="filter-status" name="filter_status" 
-                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <select id="filter-status" name="filter_status"
+                                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option value="">Semua Status</option>
                                 <option value="active">Aktif</option>
                                 <option value="inactive">Non-Aktif</option>
@@ -246,8 +246,8 @@ include 'header.php';
                         </div>
                     </div>
                     <div class="flex justify-end">
-                        <button type="button" onclick="applyFilters()" 
-                                class="bg-[#2463ec] hover:bg-[#1a4bb0] text-white px-4 py-2 rounded-lg flex items-center">
+                        <button type="button" onclick="applyFilters()"
+                            class="bg-[#2463ec] hover:bg-[#1a4bb0] text-white px-4 py-2 rounded-lg flex items-center">
                             <i class="fas fa-filter mr-2"></i> Filter
                         </button>
                     </div>
@@ -343,20 +343,20 @@ include 'header.php';
                                 <i class="fas fa-chevron-left"></i>
                             </a>
 
-                            <?php 
+                            <?php
                             $startPage = max(1, $currentPage - 2);
                             $endPage = min($totalPages, $currentPage + 2);
-                            
+
                             if ($currentPage <= 3) {
                                 $endPage = min(5, $totalPages);
                             }
-                            
+
                             if ($currentPage >= $totalPages - 2) {
                                 $startPage = max(1, $totalPages - 4);
                             }
-                            
+
                             if ($startPage > 1) {
-                                ?>
+                            ?>
                                 <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                     1
                                 </a>
@@ -365,19 +365,19 @@ include 'header.php';
                                         ...
                                     </span>
                                 <?php endif; ?>
-                                <?php
+                            <?php
                             }
-                            
+
                             for ($i = $startPage; $i <= $endPage; $i++) {
-                                ?>
+                            ?>
                                 <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium <?= $i == $currentPage ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50' ?>">
                                     <?= $i ?>
                                 </a>
-                                <?php
+                            <?php
                             }
-                            
+
                             if ($endPage < $totalPages) {
-                                ?>
+                            ?>
                                 <?php if ($endPage < $totalPages - 1): ?>
                                     <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
                                         ...
@@ -386,7 +386,7 @@ include 'header.php';
                                 <a href="?<?= http_build_query(array_merge($_GET, ['page' => $totalPages])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                     <?= $totalPages ?>
                                 </a>
-                                <?php
+                            <?php
                             }
                             ?>
 
@@ -403,61 +403,67 @@ include 'header.php';
 </main>
 
 <script>
-// Function to show form (add/edit) dan menyembunyikan tabel
-function showForm(action, id = null) {
-    const form = document.getElementById('user-form');
-    const tableContainer = document.getElementById('user-table-container');
-    const viewSection = document.getElementById('view-section');
-    
-    // Sembunyikan tabel dan view section
-    tableContainer.classList.add('hidden');
-    viewSection.classList.add('hidden');
-    
-    // Reset form
-    document.getElementById('user-form-element').reset();
-    document.getElementById('user_id').value = '';
-    
-    const formTitle = document.getElementById('form-title');
-    if (action === 'add') {
-        formTitle.textContent = 'Tambah Pengguna Baru';
-    } else if (action === 'edit' && id) {
-        formTitle.textContent = 'Edit Data Pengguna';
-        // In a real application, you would fetch user data here
-        // For demo, we'll use the PHP data
+    // Function to show form (add/edit) dan menyembunyikan tabel
+    function showForm(action, id = null) {
+        const form = document.getElementById('user-form');
+        const tableContainer = document.getElementById('user-table-container');
+        const viewSection = document.getElementById('view-section');
+
+        // Sembunyikan tabel dan view section
+        tableContainer.classList.add('hidden');
+        viewSection.classList.add('hidden');
+
+        // Reset form
+        document.getElementById('user-form-element').reset();
+        document.getElementById('user_id').value = '';
+
+        const formTitle = document.getElementById('form-title');
+        if (action === 'add') {
+            formTitle.textContent = 'Tambah Pengguna Baru';
+        } else if (action === 'edit' && id) {
+            formTitle.textContent = 'Edit Data Pengguna';
+            // In a real application, you would fetch user data here
+            // For demo, we'll use the PHP data
+            const userData = <?= json_encode($data_pengguna) ?>[id];
+            if (userData) {
+                // Populate form with user data
+                document.getElementById('username').value = userData.username;
+                document.getElementById('email').value = userData.email;
+                document.getElementById('full_name').value = userData.full_name;
+                document.getElementById('user_type').value = userData.user_type;
+                document.getElementById('village_id').value = userData.village_id;
+                document.getElementById('status').value = userData.status;
+            }
+            document.getElementById('user_id').value = id;
+        }
+
+        // Tampilkan form
+        form.classList.remove('hidden');
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Function to hide form and show table
+    function hideFormAndShowTable() {
+        document.getElementById('user-form').classList.add('hidden');
+        document.getElementById('view-section').classList.add('hidden');
+        document.getElementById('user-table-container').classList.remove('hidden');
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Function to view user details
+    function viewUser(id) {
         const userData = <?= json_encode($data_pengguna) ?>[id];
         if (userData) {
-            // Populate form with user data
-            document.getElementById('username').value = userData.username;
-            document.getElementById('email').value = userData.email;
-            document.getElementById('full_name').value = userData.full_name;
-            document.getElementById('user_type').value = userData.user_type;
-            document.getElementById('village_id').value = userData.village_id;
-            document.getElementById('status').value = userData.status;
-        }
-        document.getElementById('user_id').value = id;
-    }
-    
-    // Tampilkan form
-    form.classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+            const viewSection = document.getElementById('view-section');
+            const detailsDiv = document.getElementById('view-user-details');
 
-// Function to hide form and show table
-function hideFormAndShowTable() {
-    document.getElementById('user-form').classList.add('hidden');
-    document.getElementById('view-section').classList.add('hidden');
-    document.getElementById('user-table-container').classList.remove('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Function to view user details
-function viewUser(id) {
-    const userData = <?= json_encode($data_pengguna) ?>[id];
-    if (userData) {
-        const viewSection = document.getElementById('view-section');
-        const detailsDiv = document.getElementById('view-user-details');
-        
-        detailsDiv.innerHTML = `
+            detailsDiv.innerHTML = `
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div>
                     <p class="text-sm text-gray-500">ID Pengguna</p>
@@ -499,51 +505,54 @@ function viewUser(id) {
                 </div>
             </div>
         `;
-        
-        // Sembunyikan tabel dan form, tampilkan view section
-        document.getElementById('user-table-container').classList.add('hidden');
-        document.getElementById('user-form').classList.add('hidden');
-        viewSection.classList.remove('hidden');
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Sembunyikan tabel dan form, tampilkan view section
+            document.getElementById('user-table-container').classList.add('hidden');
+            document.getElementById('user-form').classList.add('hidden');
+            viewSection.classList.remove('hidden');
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
     }
-}
 
-// Function to hide view section
-function hideViewSection() {
-    document.getElementById('view-section').classList.add('hidden');
-    document.getElementById('user-table-container').classList.remove('hidden');
-}
+    // Function to hide view section
+    function hideViewSection() {
+        document.getElementById('view-section').classList.add('hidden');
+        document.getElementById('user-table-container').classList.remove('hidden');
+    }
 
-// Function to edit user
-function editUser(id) {
-    showForm('edit', id);
-}
+    // Function to edit user
+    function editUser(id) {
+        showForm('edit', id);
+    }
 
-// Function to delete user
-function deleteUser(id) {
-    if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
+    // Function to delete user
+    function deleteUser(id) {
+        if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
+            // In a real application, you would make an AJAX call here
+            alert('Pengguna berhasil dihapus!');
+            window.location.href = '?mode=list';
+        }
+    }
+
+    // Function to apply filters
+    function applyFilters() {
+        // In a real application, this would submit the form
+        document.getElementById('filter-form').submit();
+    }
+
+    // Event listener for form submission
+    document.getElementById('user-form-element')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+
         // In a real application, you would make an AJAX call here
-        alert('Pengguna berhasil dihapus!');
+        alert('Data pengguna berhasil disimpan!');
+        hideFormAndShowTable();
         window.location.href = '?mode=list';
-    }
-}
-
-// Function to apply filters
-function applyFilters() {
-    // In a real application, this would submit the form
-    document.getElementById('filter-form').submit();
-}
-
-// Event listener for form submission
-document.getElementById('user-form-element')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // In a real application, you would make an AJAX call here
-    alert('Data pengguna berhasil disimpan!');
-    hideFormAndShowTable();
-    window.location.href = '?mode=list';
-});
+    });
 </script>
 
 <?php include 'footer.php'; ?>

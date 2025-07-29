@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Enable error reporting
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -97,28 +97,28 @@ $filter_menu = isset($_GET['filter_menu']) ? $_GET['filter_menu'] : '';
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 if ($filter_type) {
-    $filtered_hak_akses = array_filter($filtered_hak_akses, function($hak_akses) use ($filter_type) {
+    $filtered_hak_akses = array_filter($filtered_hak_akses, function ($hak_akses) use ($filter_type) {
         return $hak_akses['user_type'] == $filter_type;
     });
 }
 
 if ($filter_status) {
-    $filtered_hak_akses = array_filter($filtered_hak_akses, function($hak_akses) use ($filter_status) {
+    $filtered_hak_akses = array_filter($filtered_hak_akses, function ($hak_akses) use ($filter_status) {
         return $hak_akses['status'] == $filter_status;
     });
 }
 
 if ($filter_menu) {
-    $filtered_hak_akses = array_filter($filtered_hak_akses, function($hak_akses) use ($filter_menu) {
+    $filtered_hak_akses = array_filter($filtered_hak_akses, function ($hak_akses) use ($filter_menu) {
         return in_array($filter_menu, $hak_akses['menu_access']);
     });
 }
 
 if ($search) {
     $search = strtolower($search);
-    $filtered_hak_akses = array_filter($filtered_hak_akses, function($hak_akses) use ($search) {
-        return (strpos(strtolower($hak_akses['username']), $search) !== false || 
-               strpos(strtolower($hak_akses['full_name']), $search) !== false);
+    $filtered_hak_akses = array_filter($filtered_hak_akses, function ($hak_akses) use ($search) {
+        return (strpos(strtolower($hak_akses['username']), $search) !== false ||
+            strpos(strtolower($hak_akses['full_name']), $search) !== false);
     });
 }
 
@@ -141,13 +141,22 @@ include 'header.php';
     <header class="h-20 flex items-center justify-between px-8 sticky top-0 z-10">
         <div class="flex items-center space-x-4">
             <h1 class="text-2xl font-bold text-gray-800">
-                <?php 
-                switch($mode) {
-                    case 'list': echo 'Manajemen Hak Akses'; break;
-                    case 'add': echo 'Tambah Hak Akses Baru'; break;
-                    case 'view': echo 'Detail Hak Akses'; break;
-                    case 'edit': echo 'Edit Hak Akses'; break;
-                    default: echo 'Manajemen Hak Akses';
+                <?php
+                switch ($mode) {
+                    case 'list':
+                        echo 'Manajemen Hak Akses';
+                        break;
+                    case 'add':
+                        echo 'Tambah Hak Akses Baru';
+                        break;
+                    case 'view':
+                        echo 'Detail Hak Akses';
+                        break;
+                    case 'edit':
+                        echo 'Edit Hak Akses';
+                        break;
+                    default:
+                        echo 'Manajemen Hak Akses';
                 }
                 ?>
             </h1>
@@ -184,10 +193,10 @@ include 'header.php';
                             <input type="hidden" name="mode" value="list">
                             <div class="mb-4">
                                 <div class="relative">
-                                    <input type="text" id="search" name="search" 
-                                           value="<?= htmlspecialchars($search) ?>" 
-                                           class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                                           placeholder="Cari hak akses...">
+                                    <input type="text" id="search" name="search"
+                                        value="<?= htmlspecialchars($search) ?>"
+                                        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        placeholder="Cari hak akses...">
                                     <button type="submit" class="absolute right-2 top-2 text-gray-500 hover:text-gray-700">
                                         <i class="fas fa-search"></i>
                                     </button>
@@ -197,7 +206,7 @@ include 'header.php';
                                 <div>
                                     <select id="filter_type" name="filter_type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <option value="">Semua Tipe</option>
-                                        <?php foreach($user_types as $key => $type): ?>
+                                        <?php foreach ($user_types as $key => $type): ?>
                                             <option value="<?= htmlspecialchars($key) ?>" <?= $filter_type === $key ? 'selected' : '' ?>>
                                                 <?= htmlspecialchars($type) ?>
                                             </option>
@@ -207,7 +216,7 @@ include 'header.php';
                                 <div>
                                     <select id="filter_menu" name="filter_menu" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <option value="">Semua Menu</option>
-                                        <?php foreach($menu_options as $key => $menu): ?>
+                                        <?php foreach ($menu_options as $key => $menu): ?>
                                             <option value="<?= htmlspecialchars($key) ?>" <?= $filter_menu === $key ? 'selected' : '' ?>>
                                                 <?= htmlspecialchars($menu) ?>
                                             </option>
@@ -217,7 +226,7 @@ include 'header.php';
                                 <div>
                                     <select id="filter_status" name="filter_status" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                         <option value="">Semua Status</option>
-                                        <?php foreach($statuses as $key => $status): ?>
+                                        <?php foreach ($statuses as $key => $status): ?>
                                             <option value="<?= htmlspecialchars($key) ?>" <?= $filter_status === $key ? 'selected' : '' ?>>
                                                 <?= htmlspecialchars($status) ?>
                                             </option>
@@ -253,7 +262,7 @@ include 'header.php';
                                         <td colspan="7" class="px-6 py-4 text-center text-gray-500">Tidak ada data hak akses</td>
                                     </tr>
                                 <?php else: ?>
-                                    <?php foreach ($paginatedHakAkses as $id_akses => $hak_akses): 
+                                    <?php foreach ($paginatedHakAkses as $id_akses => $hak_akses):
                                         $rowNumber = $startIndex + array_search($id_akses, array_keys($filtered_hak_akses)) + 1;
                                     ?>
                                         <tr class="hover:bg-gray-50">
@@ -280,7 +289,7 @@ include 'header.php';
                                             </td>
                                             <td class="px-6 py-4">
                                                 <div class="text-sm text-gray-900">
-                                                    <?= implode(', ', array_map(function($menu) use ($menu_options) {
+                                                    <?= implode(', ', array_map(function ($menu) use ($menu_options) {
                                                         return $menu_options[$menu] ?? $menu;
                                                     }, $hak_akses['menu_access'])) ?>
                                                 </div>
@@ -313,46 +322,46 @@ include 'header.php';
                     <!-- Pagination Section -->
                     <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
                         <div class="flex-1 flex justify-between sm:hidden">
-                            <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" 
-                               class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>"
+                                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                 Previous
                             </a>
-                            <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" 
-                               class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>"
+                                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                 Next
                             </a>
                         </div>
                         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                             <div>
                                 <p class="text-sm text-gray-700">
-                                    Menampilkan <span class="font-medium"><?= $startIndex + 1 ?></span> sampai 
-                                    <span class="font-medium"><?= min($startIndex + $itemsPerPage, $totalItems) ?></span> dari 
+                                    Menampilkan <span class="font-medium"><?= $startIndex + 1 ?></span> sampai
+                                    <span class="font-medium"><?= min($startIndex + $itemsPerPage, $totalItems) ?></span> dari
                                     <span class="font-medium"><?= $totalItems ?></span> hasil
                                 </p>
                             </div>
                             <div>
                                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                    <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" 
-                                       class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                    <a href="?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>"
+                                        class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
                                         <span class="sr-only">Previous</span>
                                         <i class="fas fa-chevron-left"></i>
                                     </a>
 
-                                    <?php 
+                                    <?php
                                     $startPage = max(1, $currentPage - 2);
                                     $endPage = min($totalPages, $currentPage + 2);
-                                    
+
                                     if ($currentPage <= 3) {
                                         $endPage = min(5, $totalPages);
                                     }
-                                    
+
                                     if ($currentPage >= $totalPages - 2) {
                                         $startPage = max(1, $totalPages - 4);
                                     }
-                                    
+
                                     if ($startPage > 1): ?>
-                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1])) ?>" 
-                                           class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1])) ?>"
+                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                             1
                                         </a>
                                         <?php if ($startPage > 2): ?>
@@ -361,28 +370,28 @@ include 'header.php';
                                             </span>
                                         <?php endif; ?>
                                     <?php endif; ?>
-                                    
+
                                     <?php for ($i = $startPage; $i <= $endPage; $i++): ?>
-                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" 
-                                           class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium <?= $i == $currentPage ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50' ?>">
+                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>"
+                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium <?= $i == $currentPage ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50' ?>">
                                             <?= $i ?>
                                         </a>
                                     <?php endfor; ?>
-                                    
+
                                     <?php if ($endPage < $totalPages): ?>
                                         <?php if ($endPage < $totalPages - 1): ?>
                                             <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
                                                 ...
                                             </span>
                                         <?php endif; ?>
-                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $totalPages])) ?>" 
-                                           class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        <a href="?<?= http_build_query(array_merge($_GET, ['page' => $totalPages])) ?>"
+                                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                             <?= $totalPages ?>
                                         </a>
                                     <?php endif; ?>
 
-                                    <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" 
-                                       class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                    <a href="?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>"
+                                        class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
                                         <span class="sr-only">Next</span>
                                         <i class="fas fa-chevron-right"></i>
                                     </a>
@@ -403,16 +412,16 @@ include 'header.php';
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <div class="mb-4">
-                                        <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">Pengguna*</label>
+                                        <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">Pengguna<span class="text-red-500">*</span></label>
                                         <select id="user_id" name="user_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Pengguna</option>
-                                            <?php foreach($data_pengguna as $id_pengguna => $pengguna): ?>
+                                            <?php foreach ($data_pengguna as $id_pengguna => $pengguna): ?>
                                                 <option value="<?= $id_pengguna ?>"><?= $pengguna['full_name'] ?> (<?= $pengguna['username'] ?>)</option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status<span class="text-red-500">*</span></label>
                                         <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="active" selected>Aktif</option>
                                             <option value="inactive">Non-Aktif</option>
@@ -421,7 +430,7 @@ include 'header.php';
                                 </div>
                                 <div>
                                     <div class="mb-4">
-                                        <label for="user_type" class="block text-sm font-medium text-gray-700 mb-1">Tipe Pengguna*</label>
+                                        <label for="user_type" class="block text-sm font-medium text-gray-700 mb-1">Tipe Pengguna<span class="text-red-500">*</span></label>
                                         <select id="user_type" name="user_type" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Tipe</option>
                                             <option value="admin">Administrator</option>
@@ -431,11 +440,11 @@ include 'header.php';
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="mt-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Menu Akses*</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Menu Akses<span class="text-red-500">*</span></label>
                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    <?php foreach($menu_options as $key => $menu): ?>
+                                    <?php foreach ($menu_options as $key => $menu): ?>
                                         <div class="flex items-center">
                                             <input type="checkbox" id="menu_<?= $key ?>" name="menu_access[]" value="<?= $key ?>" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                                             <label for="menu_<?= $key ?>" class="ml-2 text-sm text-gray-700"><?= $menu ?></label>
@@ -443,7 +452,7 @@ include 'header.php';
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
+
                             <div class="mt-8 flex justify-end space-x-4">
                                 <button type="button" onclick="window.location.href='?mode=list'" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
                                     Batal
@@ -472,7 +481,7 @@ include 'header.php';
                                 <?= $hak_akses['status'] === 'active' ? 'Aktif' : 'Non-Aktif' ?>
                             </span>
                         </div>
-                        
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <h3 class="font-medium text-gray-900 mb-2">Informasi Pengguna</h3>
@@ -489,7 +498,7 @@ include 'header.php';
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <h3 class="font-medium text-gray-900 mb-2">Informasi Tambahan</h3>
                                 <div class="space-y-2">
@@ -500,11 +509,11 @@ include 'header.php';
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <h3 class="font-medium text-gray-900 mb-2">Menu Akses</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <?php foreach($menu_options as $key => $menu): ?>
+                                <?php foreach ($menu_options as $key => $menu): ?>
                                     <div class="flex items-center">
                                         <?php if (in_array($key, $hak_akses['menu_access'])): ?>
                                             <i class="fas fa-check-circle text-green-500 mr-2"></i>
@@ -532,10 +541,10 @@ include 'header.php';
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <div class="mb-4">
-                                        <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">Pengguna*</label>
+                                        <label for="user_id" class="block text-sm font-medium text-gray-700 mb-1">Pengguna<span class="text-red-500">*</span></label>
                                         <select id="user_id" name="user_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required disabled>
                                             <option value="">Pilih Pengguna</option>
-                                            <?php foreach($data_pengguna as $id_pengguna => $pengguna): ?>
+                                            <?php foreach ($data_pengguna as $id_pengguna => $pengguna): ?>
                                                 <option value="<?= $id_pengguna ?>" <?= $hak_akses['username'] === $pengguna['username'] ? 'selected' : '' ?>>
                                                     <?= $pengguna['full_name'] ?> (<?= $pengguna['username'] ?>)
                                                 </option>
@@ -543,7 +552,7 @@ include 'header.php';
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status<span class="text-red-500">*</span></label>
                                         <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="active" <?= $hak_akses['status'] === 'active' ? 'selected' : '' ?>>Aktif</option>
                                             <option value="inactive" <?= $hak_akses['status'] === 'inactive' ? 'selected' : '' ?>>Non-Aktif</option>
@@ -552,7 +561,7 @@ include 'header.php';
                                 </div>
                                 <div>
                                     <div class="mb-4">
-                                        <label for="user_type" class="block text-sm font-medium text-gray-700 mb-1">Tipe Pengguna*</label>
+                                        <label for="user_type" class="block text-sm font-medium text-gray-700 mb-1">Tipe Pengguna<span class="text-red-500">*</span></label>
                                         <select id="user_type" name="user_type" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="admin" <?= $hak_akses['user_type'] === 'admin' ? 'selected' : '' ?>>Administrator</option>
                                             <option value="officer" <?= $hak_akses['user_type'] === 'officer' ? 'selected' : '' ?>>Petugas Lapangan</option>
@@ -561,21 +570,21 @@ include 'header.php';
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="mt-6">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Menu Akses*</label>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Menu Akses<span class="text-red-500">*</span></label>
                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    <?php foreach($menu_options as $key => $menu): ?>
+                                    <?php foreach ($menu_options as $key => $menu): ?>
                                         <div class="flex items-center">
-                                            <input type="checkbox" id="menu_<?= $key ?>" name="menu_access[]" value="<?= $key ?>" 
-                                                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                                                   <?= in_array($key, $hak_akses['menu_access']) ? 'checked' : '' ?>>
+                                            <input type="checkbox" id="menu_<?= $key ?>" name="menu_access[]" value="<?= $key ?>"
+                                                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                                <?= in_array($key, $hak_akses['menu_access']) ? 'checked' : '' ?>>
                                             <label for="menu_<?= $key ?>" class="ml-2 text-sm text-gray-700"><?= $menu ?></label>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
-                            
+
                             <div class="mt-8 flex justify-end space-x-4">
                                 <button type="button" onclick="window.location.href='?mode=view&id=<?= $id ?>'" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
                                     Batal
@@ -617,12 +626,12 @@ include 'header.php';
     document.getElementById('user_type')?.addEventListener('change', function() {
         const type = this.value;
         const userSelect = document.getElementById('user_id');
-        
+
         // Reset dropdown
         userSelect.innerHTML = '<option value="">Pilih Pengguna</option>';
-        
+
         // Filter users based on type
-        <?php foreach($data_pengguna as $id_pengguna => $pengguna): ?>
+        <?php foreach ($data_pengguna as $id_pengguna => $pengguna): ?>
             if (type === '' || '<?= $pengguna['user_type'] ?>' === type) {
                 userSelect.innerHTML += `
                     <option value="<?= $id_pengguna ?>">

@@ -520,11 +520,11 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <div class="mb-4">
-                                        <label for="nama_lahan" class="block text-sm font-medium text-gray-700 mb-1">Nama Lahan*</label>
+                                        <label for="nama_lahan" class="block text-sm font-medium text-gray-700 mb-1">Nama Lahan<span class="text-red-500">*</span></label>
                                         <input type="text" id="nama_lahan" name="nama_lahan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Kebun Sawit Utama" required>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="petani_pemilik" class="block text-sm font-medium text-gray-700 mb-1">Petani Pemilik*</label>
+                                        <label for="petani_pemilik" class="block text-sm font-medium text-gray-700 mb-1">Petani Pemilik<span class="text-red-500">*</span></label>
                                         <select id="petani_pemilik" name="petani_pemilik" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Petani</option>
                                             <option value="1">Ahmad Fauzi (ICS-12)</option>
@@ -535,11 +535,11 @@
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="luas" class="block text-sm font-medium text-gray-700 mb-1">Luas (Ha)*</label>
+                                        <label for="luas" class="block text-sm font-medium text-gray-700 mb-1">Luas (Ha)<span class="text-red-500">*</span></label>
                                         <input type="number" step="0.01" id="luas" name="luas" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 5.2" required>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="jenis_tanah" class="block text-sm font-medium text-gray-700 mb-1">Jenis Tanah (Gambut/Mineral)*</label>
+                                        <label for="jenis_tanah" class="block text-sm font-medium text-gray-700 mb-1">Jenis Tanah (Gambut/Mineral)<span class="text-red-500">*</span></label>
                                         <select id="jenis_tanah" name="jenis_tanah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Jenis Tanah</option>
                                             <option value="mineral">Mineral</option>
@@ -551,11 +551,11 @@
                                         <input type="text" id="kedalaman_gambut" name="kedalaman_gambut" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 0 m (Mineral)">
                                     </div>
                                     <div class="mb-4">
-                                        <label for="tahun_tanam" class="block text-sm font-medium text-gray-700 mb-1">Tahun Tanam*</label>
+                                        <label for="tahun_tanam" class="block text-sm font-medium text-gray-700 mb-1">Tahun Tanam<span class="text-red-500">*</span></label>
                                         <input type="number" id="tahun_tanam" name="tahun_tanam" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 2018" required>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="status_kepemilikan" class="block text-sm font-medium text-gray-700 mb-1">Status Kepemilikan*</label>
+                                        <label for="status_kepemilikan" class="block text-sm font-medium text-gray-700 mb-1">Status Kepemilikan<span class="text-red-500">*</span></label>
                                         <select id="status_kepemilikan" name="status_kepemilikan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Status</option>
                                             <option value="Milik Sendiri">Milik Sendiri</option>
@@ -567,7 +567,7 @@
                                 </div>
                                 <div>
                                     <div class="mb-4">
-                                        <label for="asal_benih" class="block text-sm font-medium text-gray-700 mb-1">Asal Benih*</label>
+                                        <label for="asal_benih" class="block text-sm font-medium text-gray-700 mb-1">Asal Benih<span class="text-red-500">*</span></label>
                                         <select id="asal_benih" name="asal_benih" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Asal Benih</option>
                                             <option value="Pusat Pembibitan">Pusat Pembibitan</option>
@@ -577,11 +577,11 @@
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="jumlah_pokok" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Pokok*</label>
+                                        <label for="jumlah_pokok" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Pokok<span class="text-red-500">*</span></label>
                                         <input type="number" id="jumlah_pokok" name="jumlah_pokok" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 260" required>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="pola_tanam" class="block text-sm font-medium text-gray-700 mb-1">Pola Tanam*</label>
+                                        <label for="pola_tanam" class="block text-sm font-medium text-gray-700 mb-1">Pola Tanam<span class="text-red-500">*</span></label>
                                         <select id="pola_tanam" name="pola_tanam" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Pola Tanam</option>
                                             <option value="Monokultur">Monokultur</option>
@@ -589,7 +589,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="usaha_lain" class="block text-sm font-medium text-gray-700 mb-1">Usaha Lain*</label>
+                                        <label for="usaha_lain" class="block text-sm font-medium text-gray-700 mb-1">Usaha Lain<span class="text-red-500">*</span></label>
                                         <select id="usaha_lain" name="usaha_lain" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Usaha Lain</option>
                                             <option value="Tidak Ada">Tidak Ada</option>
@@ -599,7 +599,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="jenis_pupuk" class="block text-sm font-medium text-gray-700 mb-1">Jenis Pupuk*</label>
+                                        <label for="jenis_pupuk" class="block text-sm font-medium text-gray-700 mb-1">Jenis Pupuk<span class="text-red-500">*</span></label>
                                         <select id="jenis_pupuk" name="jenis_pupuk" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Jenis Pupuk</option>
                                             <option value="Organik">Organik</option>
@@ -615,25 +615,25 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <div class="mb-4">
-                                            <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa/Kelurahan*</label>
+                                            <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa/Kelurahan<span class="text-red-500">*</span></label>
                                             <input type="text" id="desa" name="desa" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Bukit Agung" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan*</label>
+                                            <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan<span class="text-red-500">*</span></label>
                                             <input type="text" id="kecamatan" name="kecamatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Pangkalan Kerinci" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten/Kota*</label>
+                                            <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten/Kota<span class="text-red-500">*</span></label>
                                             <input type="text" id="kabupaten" name="kabupaten" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Pelalawan" required>
                                         </div>
                                     </div>
                                     <div>
                                         <div class="mb-4">
-                                            <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi*</label>
+                                            <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi<span class="text-red-500">*</span></label>
                                             <input type="text" id="provinsi" name="provinsi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Riau" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="kode_wilayah" class="block text-sm font-medium text-gray-700 mb-1">Kode Wilayah*</label>
+                                            <label for="kode_wilayah" class="block text-sm font-medium text-gray-700 mb-1">Kode Wilayah<span class="text-red-500">*</span></label>
                                             <input type="text" id="kode_wilayah" name="kode_wilayah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 1408062006" required>
                                         </div>
                                     </div>
@@ -645,7 +645,7 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <div class="mb-4">
-                                            <label for="jenis_surat" class="block text-sm font-medium text-gray-700 mb-1">Jenis Surat*</label>
+                                            <label for="jenis_surat" class="block text-sm font-medium text-gray-700 mb-1">Jenis Surat<span class="text-red-500">*</span></label>
                                             <select id="jenis_surat" name="jenis_surat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                                 <option value="">Pilih Jenis Surat</option>
                                                 <option value="SHM">SHM (Sertifikat Hak Milik)</option>
@@ -656,7 +656,7 @@
                                             </select>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="no_surat" class="block text-sm font-medium text-gray-700 mb-1">Nomor Surat*</label>
+                                            <label for="no_surat" class="block text-sm font-medium text-gray-700 mb-1">Nomor Surat<span class="text-red-500">*</span></label>
                                             <input type="text" id="no_surat" name="no_surat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 02812" required>
                                         </div>
                                         <div class="mb-4">
@@ -666,7 +666,7 @@
                                     </div>
                                     <div>
                                         <div class="mb-4">
-                                            <label for="luas_surat" class="block text-sm font-medium text-gray-700 mb-1">Luas Menurut Surat (Ha)*</label>
+                                            <label for="luas_surat" class="block text-sm font-medium text-gray-700 mb-1">Luas Menurut Surat (Ha)<span class="text-red-500">*</span></label>
                                             <input type="number" step="0.01" id="luas_surat" name="luas_surat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 20.00" required>
                                         </div>
                                         <div class="mb-4">
@@ -686,27 +686,27 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <div class="mb-4">
-                                            <label for="batas_utara" class="block text-sm font-medium text-gray-700 mb-1">Batas Utara*</label>
+                                            <label for="batas_utara" class="block text-sm font-medium text-gray-700 mb-1">Batas Utara<span class="text-red-500">*</span></label>
                                             <input type="text" id="batas_utara" name="batas_utara" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Sungai (Sungai Kerinci)" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="batas_selatan" class="block text-sm font-medium text-gray-700 mb-1">Batas Selatan*</label>
+                                            <label for="batas_selatan" class="block text-sm font-medium text-gray-700 mb-1">Batas Selatan<span class="text-red-500">*</span></label>
                                             <input type="text" id="batas_selatan" name="batas_selatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Jalan (Jalan Lintas Timur)" required>
                                         </div>
                                     </div>
                                     <div>
                                         <div class="mb-4">
-                                            <label for="batas_barat" class="block text-sm font-medium text-gray-700 mb-1">Batas Barat*</label>
+                                            <label for="batas_barat" class="block text-sm font-medium text-gray-700 mb-1">Batas Barat<span class="text-red-500">*</span></label>
                                             <input type="text" id="batas_barat" name="batas_barat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Lahan Lain (Milik PT. Sawit Makmur)" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="batas_timur" class="block text-sm font-medium text-gray-700 mb-1">Batas Timur*</label>
+                                            <label for="batas_timur" class="block text-sm font-medium text-gray-700 mb-1">Batas Timur<span class="text-red-500">*</span></label>
                                             <input type="text" id="batas_timur" name="batas_timur" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Sungai (Sungai Tapung)" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="koordinat" class="block text-sm font-medium text-gray-700 mb-1">Koordinat (Format: Long,Lat;Long,Lat;...)*</label>
+                                    <label for="koordinat" class="block text-sm font-medium text-gray-700 mb-1">Koordinat (Format: Long,Lat;Long,Lat;...)<span class="text-red-500">*</span></label>
                                     <textarea id="koordinat" name="koordinat" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 101.944025862, 0.678626965;101.943115368, 0.678607038;..." required></textarea>
                                 </div>
                             </div>
@@ -916,11 +916,11 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <div class="mb-4">
-                                        <label for="nama_lahan" class="block text-sm font-medium text-gray-700 mb-1">Nama Lahan*</label>
+                                        <label for="nama_lahan" class="block text-sm font-medium text-gray-700 mb-1">Nama Lahan<span class="text-red-500">*</span></label>
                                         <input type="text" id="nama_lahan" name="nama_lahan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['nama'] ?>" required>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="petani_pemilik" class="block text-sm font-medium text-gray-700 mb-1">Petani Pemilik*</label>
+                                        <label for="petani_pemilik" class="block text-sm font-medium text-gray-700 mb-1">Petani Pemilik<span class="text-red-500">*</span></label>
                                         <select id="petani_pemilik" name="petani_pemilik" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="1" <?= $lahan['petani'] === 'Ahmad Fauzi' ? 'selected' : '' ?>>Ahmad Fauzi (ICS-12)</option>
                                             <option value="2" <?= $lahan['petani'] === 'Siti Rahma' ? 'selected' : '' ?>>Siti Rahma (ICS-08)</option>
@@ -930,11 +930,11 @@
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="luas" class="block text-sm font-medium text-gray-700 mb-1">Luas (Ha)*</label>
+                                        <label for="luas" class="block text-sm font-medium text-gray-700 mb-1">Luas (Ha)<span class="text-red-500">*</span></label>
                                         <input type="number" step="0.01" id="luas" name="luas" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['luas'] ?>" required>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="jenis_tanah" class="block text-sm font-medium text-gray-700 mb-1">Jenis Tanah (Gambut/Mineral)*</label>
+                                        <label for="jenis_tanah" class="block text-sm font-medium text-gray-700 mb-1">Jenis Tanah (Gambut/Mineral)<span class="text-red-500">*</span></label>
                                         <select id="jenis_tanah" name="jenis_tanah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="mineral" <?= $lahan['jenis_tanah'] === 'Mineral' ? 'selected' : '' ?>>Mineral</option>
                                             <option value="gambut" <?= $lahan['jenis_tanah'] === 'Gambut' ? 'selected' : '' ?>>Gambut</option>
@@ -945,11 +945,11 @@
                                         <input type="text" id="kedalaman_gambut" name="kedalaman_gambut" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['kedalaman_gambut'] ?>">
                                     </div>
                                     <div class="mb-4">
-                                        <label for="tahun_tanam" class="block text-sm font-medium text-gray-700 mb-1">Tahun Tanam*</label>
+                                        <label for="tahun_tanam" class="block text-sm font-medium text-gray-700 mb-1">Tahun Tanam<span class="text-red-500">*</span></label>
                                         <input type="number" id="tahun_tanam" name="tahun_tanam" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['tahun_tanam'] ?>" required>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="status_kepemilikan" class="block text-sm font-medium text-gray-700 mb-1">Status Kepemilikan*</label>
+                                        <label for="status_kepemilikan" class="block text-sm font-medium text-gray-700 mb-1">Status Kepemilikan<span class="text-red-500">*</span></label>
                                         <select id="status_kepemilikan" name="status_kepemilikan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="Milik Sendiri" <?= $lahan['status_kepemilikan'] === 'Milik Sendiri' ? 'selected' : '' ?>>Milik Sendiri</option>
                                             <option value="Milik Keluarga" <?= $lahan['status_kepemilikan'] === 'Milik Keluarga' ? 'selected' : '' ?>>Milik Keluarga</option>
@@ -960,7 +960,7 @@
                                 </div>
                                 <div>
                                     <div class="mb-4">
-                                        <label for="asal_benih" class="block text-sm font-medium text-gray-700 mb-1">Asal Benih*</label>
+                                        <label for="asal_benih" class="block text-sm font-medium text-gray-700 mb-1">Asal Benih<span class="text-red-500">*</span></label>
                                         <select id="asal_benih" name="asal_benih" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="Pusat Pembibitan" <?= $lahan['asal_benih'] === 'Pusat Pembibitan' ? 'selected' : '' ?>>Pusat Pembibitan</option>
                                             <option value="Distributor Lokal" <?= $lahan['asal_benih'] === 'Distributor Lokal' ? 'selected' : '' ?>>Distributor Lokal</option>
@@ -969,18 +969,18 @@
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="jumlah_pokok" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Pokok*</label>
+                                        <label for="jumlah_pokok" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Pokok<span class="text-red-500">*</span></label>
                                         <input type="number" id="jumlah_pokok" name="jumlah_pokok" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['jumlah_pokok'] ?>" required>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="pola_tanam" class="block text-sm font-medium text-gray-700 mb-1">Pola Tanam*</label>
+                                        <label for="pola_tanam" class="block text-sm font-medium text-gray-700 mb-1">Pola Tanam<span class="text-red-500">*</span></label>
                                         <select id="pola_tanam" name="pola_tanam" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="Monokultur" <?= $lahan['pola_tanam'] === 'Monokultur' ? 'selected' : '' ?>>Monokultur</option>
                                             <option value="Polikultur" <?= $lahan['pola_tanam'] === 'Polikultur' ? 'selected' : '' ?>>Polikultur</option>
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="usaha_lain" class="block text-sm font-medium text-gray-700 mb-1">Usaha Lain*</label>
+                                        <label for="usaha_lain" class="block text-sm font-medium text-gray-700 mb-1">Usaha Lain<span class="text-red-500">*</span></label>
                                         <select id="usaha_lain" name="usaha_lain" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="Tidak Ada" <?= $lahan['usaha_lain'] === 'Tidak Ada' ? 'selected' : '' ?>>Tidak Ada</option>
                                             <option value="Ada (Kebun Sayur)" <?= $lahan['usaha_lain'] === 'Ada (Kebun Sayur)' ? 'selected' : '' ?>>Ada (Kebun Sayur)</option>
@@ -989,7 +989,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="jenis_pupuk" class="block text-sm font-medium text-gray-700 mb-1">Jenis Pupuk*</label>
+                                        <label for="jenis_pupuk" class="block text-sm font-medium text-gray-700 mb-1">Jenis Pupuk<span class="text-red-500">*</span></label>
                                         <select id="jenis_pupuk" name="jenis_pupuk" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="Organik" <?= $lahan['jenis_pupuk'] === 'Organik' ? 'selected' : '' ?>>Organik</option>
                                             <option value="Anorganik" <?= $lahan['jenis_pupuk'] === 'Anorganik' ? 'selected' : '' ?>>Anorganik</option>
@@ -997,7 +997,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                                        <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status<span class="text-red-500">*</span></label>
                                         <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="Aktif" <?= $lahan['status'] === 'Aktif' ? 'selected' : '' ?>>Aktif</option>
                                             <option value="Proses Verifikasi" <?= $lahan['status'] === 'Proses Verifikasi' ? 'selected' : '' ?>>Proses Verifikasi</option>
@@ -1011,25 +1011,25 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <div class="mb-4">
-                                            <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa/Kelurahan*</label>
+                                            <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa/Kelurahan<span class="text-red-500">*</span></label>
                                             <input type="text" id="desa" name="desa" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['desa'] ?>" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan*</label>
+                                            <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan<span class="text-red-500">*</span></label>
                                             <input type="text" id="kecamatan" name="kecamatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['kecamatan'] ?>" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten/Kota*</label>
+                                            <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten/Kota<span class="text-red-500">*</span></label>
                                             <input type="text" id="kabupaten" name="kabupaten" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['kabupaten'] ?>" required>
                                         </div>
                                     </div>
                                     <div>
                                         <div class="mb-4">
-                                            <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi*</label>
+                                            <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi<span class="text-red-500">*</span></label>
                                             <input type="text" id="provinsi" name="provinsi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['provinsi'] ?>" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="kode_wilayah" class="block text-sm font-medium text-gray-700 mb-1">Kode Wilayah*</label>
+                                            <label for="kode_wilayah" class="block text-sm font-medium text-gray-700 mb-1">Kode Wilayah<span class="text-red-500">*</span></label>
                                             <input type="text" id="kode_wilayah" name="kode_wilayah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['kode_wilayah'] ?>" required>
                                         </div>
                                     </div>
@@ -1041,7 +1041,7 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <div class="mb-4">
-                                            <label for="jenis_surat" class="block text-sm font-medium text-gray-700 mb-1">Jenis Surat*</label>
+                                            <label for="jenis_surat" class="block text-sm font-medium text-gray-700 mb-1">Jenis Surat<span class="text-red-500">*</span></label>
                                             <select id="jenis_surat" name="jenis_surat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                                 <option value="SHM" <?= $lahan['jenis_surat'] === 'SHM' ? 'selected' : '' ?>>SHM (Sertifikat Hak Milik)</option>
                                                 <option value="SHGB" <?= $lahan['jenis_surat'] === 'SHGB' ? 'selected' : '' ?>>SHGB (Sertifikat Hak Guna Bangunan)</option>
@@ -1051,7 +1051,7 @@
                                             </select>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="no_surat" class="block text-sm font-medium text-gray-700 mb-1">Nomor Surat*</label>
+                                            <label for="no_surat" class="block text-sm font-medium text-gray-700 mb-1">Nomor Surat<span class="text-red-500">*</span></label>
                                             <input type="text" id="no_surat" name="no_surat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['no_surat'] ?>" required>
                                         </div>
                                         <div class="mb-4">
@@ -1061,7 +1061,7 @@
                                     </div>
                                     <div>
                                         <div class="mb-4">
-                                            <label for="luas_surat" class="block text-sm font-medium text-gray-700 mb-1">Luas Menurut Surat (Ha)*</label>
+                                            <label for="luas_surat" class="block text-sm font-medium text-gray-700 mb-1">Luas Menurut Surat (Ha)<span class="text-red-500">*</span></label>
                                             <input type="number" step="0.01" id="luas_surat" name="luas_surat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['luas_surat'] ?>" required>
                                         </div>
                                         <div class="mb-4">
@@ -1081,27 +1081,27 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <div class="mb-4">
-                                            <label for="batas_utara" class="block text-sm font-medium text-gray-700 mb-1">Batas Utara*</label>
+                                            <label for="batas_utara" class="block text-sm font-medium text-gray-700 mb-1">Batas Utara<span class="text-red-500">*</span></label>
                                             <input type="text" id="batas_utara" name="batas_utara" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['batas_utara'] ?>" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="batas_selatan" class="block text-sm font-medium text-gray-700 mb-1">Batas Selatan*</label>
+                                            <label for="batas_selatan" class="block text-sm font-medium text-gray-700 mb-1">Batas Selatan<span class="text-red-500">*</span></label>
                                             <input type="text" id="batas_selatan" name="batas_selatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['batas_selatan'] ?>" required>
                                         </div>
                                     </div>
                                     <div>
                                         <div class="mb-4">
-                                            <label for="batas_barat" class="block text-sm font-medium text-gray-700 mb-1">Batas Barat*</label>
+                                            <label for="batas_barat" class="block text-sm font-medium text-gray-700 mb-1">Batas Barat<span class="text-red-500">*</span></label>
                                             <input type="text" id="batas_barat" name="batas_barat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['batas_barat'] ?>" required>
                                         </div>
                                         <div class="mb-4">
-                                            <label for="batas_timur" class="block text-sm font-medium text-gray-700 mb-1">Batas Timur*</label>
+                                            <label for="batas_timur" class="block text-sm font-medium text-gray-700 mb-1">Batas Timur<span class="text-red-500">*</span></label>
                                             <input type="text" id="batas_timur" name="batas_timur" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $lahan['batas_timur'] ?>" required>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="koordinat" class="block text-sm font-medium text-gray-700 mb-1">Koordinat (Format: Long,Lat;Long,Lat;...)*</label>
+                                    <label for="koordinat" class="block text-sm font-medium text-gray-700 mb-1">Koordinat (Format: Long,Lat;Long,Lat;...)<span class="text-red-500">*</span></label>
                                     <textarea id="koordinat" name="koordinat" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required><?= $lahan['koordinat'] ?></textarea>
                                 </div>
                             </div>

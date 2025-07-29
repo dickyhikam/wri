@@ -370,13 +370,13 @@ $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
               <!-- Kolom Kiri -->
               <div class="space-y-4">
                 <div>
-                  <label for="group_name" class="block text-sm font-medium text-gray-700">Nama Kelompok *</label>
+                  <label for="group_name" class="block text-sm font-medium text-gray-700">Nama Kelompok <span class="text-red-500">*</span></label>
                   <input type="text" id="group_name" name="group_name" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Masukkan nama kelompok">
                 </div>
                 <div>
-                  <label for="mentor" class="block text-sm font-medium text-gray-700">Pendamping (ICS) *</label>
+                  <label for="mentor" class="block text-sm font-medium text-gray-700">Pendamping (ICS) <span class="text-red-500">*</span></label>
                   <select id="mentor" name="mentor" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">Pilih Pendamping</option>
@@ -386,7 +386,7 @@ $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
                   </select>
                 </div>
                 <div>
-                  <label for="status" class="block text-sm font-medium text-gray-700">Status *</label>
+                  <label for="status" class="block text-sm font-medium text-gray-700">Status <span class="text-red-500">*</span></label>
                   <select id="status" name="status" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="Active">Aktif</option>
@@ -398,20 +398,20 @@ $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
               <!-- Kolom Kanan -->
               <div class="space-y-4">
                 <div>
-                  <label for="area" class="block text-sm font-medium text-gray-700">Area Wilayah *</label>
+                  <label for="area" class="block text-sm font-medium text-gray-700">Area Wilayah <span class="text-red-500">*</span></label>
                   <input type="text" id="area" name="area" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Masukkan area wilayah">
                 </div>
                 <div>
-                  <label for="coordinates" class="block text-sm font-medium text-gray-700">Lokasi Peta (latlong) *</label>
+                  <label for="coordinates" class="block text-sm font-medium text-gray-700">Lokasi Peta (latlong) <span class="text-red-500">*</span></label>
                   <input type="text" id="coordinates" name="coordinates" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Contoh: -0.456, 101.345">
                   <p class="mt-1 text-sm text-gray-500">Format: latitude, longitude (gunakan titik desimal)</p>
                 </div>
                 <div>
-                  <label for="total_members" class="block text-sm font-medium text-gray-700">Jumlah Anggota *</label>
+                  <label for="total_members" class="block text-sm font-medium text-gray-700">Jumlah Anggota <span class="text-red-500">*</span></label>
                   <input type="number" id="total_members" name="total_members" min="1" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Masukkan jumlah anggota">
@@ -443,13 +443,13 @@ $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
               <!-- Kolom Kiri -->
               <div class="space-y-4">
                 <div>
-                  <label for="group_name" class="block text-sm font-medium text-gray-700">Nama Kelompok *</label>
+                  <label for="group_name" class="block text-sm font-medium text-gray-700">Nama Kelompok <span class="text-red-500">*</span></label>
                   <input type="text" id="group_name" name="group_name" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     value="<?= htmlspecialchars($group['group_name']) ?>">
                 </div>
                 <div>
-                  <label for="mentor" class="block text-sm font-medium text-gray-700">Pendamping (ICS) *</label>
+                  <label for="mentor" class="block text-sm font-medium text-gray-700">Pendamping (ICS) <span class="text-red-500">*</span></label>
                   <select id="mentor" name="mentor" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">Pilih Pendamping</option>
@@ -461,7 +461,7 @@ $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
                   </select>
                 </div>
                 <div>
-                  <label for="status" class="block text-sm font-medium text-gray-700">Status *</label>
+                  <label for="status" class="block text-sm font-medium text-gray-700">Status <span class="text-red-500">*</span></label>
                   <select id="status" name="status" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="Active" <?= $group['status'] == 'Active' ? 'selected' : '' ?>>Aktif</option>
@@ -473,20 +473,20 @@ $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
               <!-- Kolom Kanan -->
               <div class="space-y-4">
                 <div>
-                  <label for="area" class="block text-sm font-medium text-gray-700">Area Wilayah *</label>
+                  <label for="area" class="block text-sm font-medium text-gray-700">Area Wilayah <span class="text-red-500">*</span></label>
                   <input type="text" id="area" name="area" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     value="<?= htmlspecialchars($group['area']) ?>">
                 </div>
                 <div>
-                  <label for="coordinates" class="block text-sm font-medium text-gray-700">Lokasi Peta (latlong) *</label>
+                  <label for="coordinates" class="block text-sm font-medium text-gray-700">Lokasi Peta (latlong) <span class="text-red-500">*</span></label>
                   <input type="text" id="coordinates" name="coordinates" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     value="<?= htmlspecialchars($group['coordinates']) ?>">
                   <p class="mt-1 text-sm text-gray-500">Format: latitude, longitude (gunakan titik desimal)</p>
                 </div>
                 <div>
-                  <label for="total_members" class="block text-sm font-medium text-gray-700">Jumlah Anggota *</label>
+                  <label for="total_members" class="block text-sm font-medium text-gray-700">Jumlah Anggota <span class="text-red-500">*</span></label>
                   <input type="number" id="total_members" name="total_members" min="1" required
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     value="<?= htmlspecialchars($group['total_members']) ?>">
@@ -695,7 +695,7 @@ $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
 
             <div class="space-y-4">
               <div>
-                <label for="activity_type" class="block text-sm font-medium text-gray-700">Jenis Kegiatan *</label>
+                <label for="activity_type" class="block text-sm font-medium text-gray-700">Jenis Kegiatan <span class="text-red-500">*</span></label>
                 <select id="activity_type" name="activity_type" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                   <option value="">Pilih Jenis Kegiatan</option>
                   <option value="Pelatihan SOP" <?= ($activity && $activity['activity_type'] == 'Pelatihan SOP') ? 'selected' : '' ?>>Pelatihan SOP</option>
@@ -705,13 +705,13 @@ $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
                 </select>
               </div>
               <div>
-                <label for="date" class="block text-sm font-medium text-gray-700">Tanggal *</label>
+                <label for="date" class="block text-sm font-medium text-gray-700">Tanggal <span class="text-red-500">*</span></label>
                 <input type="date" id="date" name="date" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   value="<?= $activity ? htmlspecialchars($activity['date']) : '' ?>">
               </div>
               <div>
-                <label for="summary" class="block text-sm font-medium text-gray-700">Ringkasan Laporan *</label>
+                <label for="summary" class="block text-sm font-medium text-gray-700">Ringkasan Laporan <span class="text-red-500">*</span></label>
                 <textarea id="summary" name="summary" rows="3" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"><?= $activity ? htmlspecialchars($activity['summary']) : '' ?></textarea>
               </div>
@@ -754,21 +754,21 @@ $status_filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
 
             <div class="space-y-4">
               <div>
-                <label for="name" class="block text-sm font-medium text-gray-700">Nama Anggota *</label>
+                <label for="name" class="block text-sm font-medium text-gray-700">Nama Anggota <span class="text-red-500">*</span></label>
                 <input type="text" id="name" name="name" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   value="<?= $member ? htmlspecialchars($member['name']) : '' ?>"
                   placeholder="Masukkan nama anggota">
               </div>
               <div>
-                <label for="plot" class="block text-sm font-medium text-gray-700">Plot Kebun *</label>
+                <label for="plot" class="block text-sm font-medium text-gray-700">Plot Kebun <span class="text-red-500">*</span></label>
                 <input type="text" id="plot" name="plot" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   value="<?= $member ? htmlspecialchars($member['plot']) : '' ?>"
                   placeholder="Masukkan plot kebun">
               </div>
               <div>
-                <label for="status" class="block text-sm font-medium text-gray-700">Status *</label>
+                <label for="status" class="block text-sm font-medium text-gray-700">Status <span class="text-red-500">*</span></label>
                 <select id="status" name="status" required
                   class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                   <option value="Aktif" <?= ($member && $member['status'] == 'Aktif') ? 'selected' : '' ?>>Aktif</option>

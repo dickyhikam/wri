@@ -98,23 +98,23 @@ include 'header.php';
                                         <div class="border border-gray-200 p-4 rounded-b-lg">
                                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Nama Lokasi/Blok *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Nama Lokasi/Blok <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.nama_lokasi" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Nama Sungai/Kanal *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Nama Sungai/Kanal <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.nama_sungai" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Pemilik Lahan *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Pemilik Lahan <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.pemilik_lahan" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Tanggal Pemantauan *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Tanggal Pemantauan <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.tanggal_pemantauan" type="date" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Nama Petugas/Pemantau *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Nama Petugas/Pemantau <span class="text-red-500">*</span></label>
                                                     <input x-model="formData.nama_petugas" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                 </div>
                                             </div>
@@ -132,7 +132,7 @@ include 'header.php';
                                                     <i class="fas fa-plus mr-2"></i> Tambah Patok
                                                 </button>
                                             </div>
-                                            
+
                                             <div class="space-y-6">
                                                 <template x-for="(patok, index) in formData.patok" :key="index">
                                                     <div class="border border-gray-200 p-4 rounded-lg">
@@ -142,15 +142,15 @@ include 'header.php';
                                                                 <i class="fas fa-times"></i>
                                                             </button>
                                                         </div>
-                                                        
+
                                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                             <div>
-                                                                <label class="block text-sm font-medium text-gray-700">Nomor Patok *</label>
+                                                                <label class="block text-sm font-medium text-gray-700">Nomor Patok <span class="text-red-500">*</span></label>
                                                                 <input x-model="patok.nomor" type="text" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50">
                                                             </div>
-                                                            
+
                                                             <div>
-                                                                <label class="block text-sm font-medium text-gray-700">Kondisi Patok *</label>
+                                                                <label class="block text-sm font-medium text-gray-700">Kondisi Patok <span class="text-red-500">*</span></label>
                                                                 <div class="mt-2 space-y-2">
                                                                     <div class="flex items-center">
                                                                         <input x-model="patok.kondisi" value="Baik" type="radio" class="h-4 w-4 text-[#f0ab00] focus:ring-[#f0ab00] border-gray-300">
@@ -166,9 +166,9 @@ include 'header.php';
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             <div>
-                                                                <label class="block text-sm font-medium text-gray-700">Vegetasi Sempadan *</label>
+                                                                <label class="block text-sm font-medium text-gray-700">Vegetasi Sempadan <span class="text-red-500">*</span></label>
                                                                 <div class="mt-2 space-y-2">
                                                                     <div class="flex items-center">
                                                                         <input x-model="patok.vegetasi" value="Terjaga" type="radio" class="h-4 w-4 text-[#f0ab00] focus:ring-[#f0ab00] border-gray-300">
@@ -180,9 +180,9 @@ include 'header.php';
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             <div>
-                                                                <label class="block text-sm font-medium text-gray-700">Tanda Gangguan *</label>
+                                                                <label class="block text-sm font-medium text-gray-700">Tanda Gangguan <span class="text-red-500">*</span></label>
                                                                 <div class="mt-2 space-y-2">
                                                                     <div class="flex items-center">
                                                                         <input x-model="patok.gangguan" value="Ya" type="radio" class="h-4 w-4 text-[#f0ab00] focus:ring-[#f0ab00] border-gray-300">
@@ -194,9 +194,9 @@ include 'header.php';
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             <div>
-                                                                <label class="block text-sm font-medium text-gray-700">Perlu Tindak Lanjut *</label>
+                                                                <label class="block text-sm font-medium text-gray-700">Perlu Tindak Lanjut <span class="text-red-500">*</span></label>
                                                                 <div class="mt-2 space-y-2">
                                                                     <div class="flex items-center">
                                                                         <input x-model="patok.tindak_lanjut" value="Ya" type="radio" class="h-4 w-4 text-[#f0ab00] focus:ring-[#f0ab00] border-gray-300">
@@ -208,7 +208,7 @@ include 'header.php';
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             <div class="md:col-span-2">
                                                                 <label class="block text-sm font-medium text-gray-700">Catatan Tambahan</label>
                                                                 <textarea x-model="patok.catatan" rows="2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50"></textarea>
@@ -228,7 +228,7 @@ include 'header.php';
                                         <div class="border border-gray-200 p-4 rounded-b-lg">
                                             <div class="grid grid-cols-1 gap-4">
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Rekomendasi *</label>
+                                                    <label class="block text-sm font-medium text-gray-700">Rekomendasi <span class="text-red-500">*</span></label>
                                                     <textarea x-model="formData.rekomendasi" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#f0ab00] focus:ring focus:ring-[#f0ab00] focus:ring-opacity-50"></textarea>
                                                 </div>
                                             </div>
@@ -395,41 +395,39 @@ include 'header.php';
 </div>
 
 <script>
-function boundaryMarkerApp() {
-    return {
-        openModal: false,
-        viewModal: false,
-        deleteModal: false,
-        currentForm: 'new',
-        currentItemId: null,
-        monitoringData: [],
-        formData: {
-            nama_lokasi: '',
-            nama_sungai: '',
-            pemilik_lahan: '',
-            tanggal_pemantauan: '',
-            nama_petugas: '',
-            patok: [],
-            rekomendasi: ''
-        },
-        
-        // Initialize data from localStorage
-        init() {
-            const savedData = localStorage.getItem('boundaryMarkerData');
-            if (savedData) {
-                this.monitoringData = JSON.parse(savedData);
-            } else {
-                // Sample data if localStorage is empty
-                this.monitoringData = [
-                    {
+    function boundaryMarkerApp() {
+        return {
+            openModal: false,
+            viewModal: false,
+            deleteModal: false,
+            currentForm: 'new',
+            currentItemId: null,
+            monitoringData: [],
+            formData: {
+                nama_lokasi: '',
+                nama_sungai: '',
+                pemilik_lahan: '',
+                tanggal_pemantauan: '',
+                nama_petugas: '',
+                patok: [],
+                rekomendasi: ''
+            },
+
+            // Initialize data from localStorage
+            init() {
+                const savedData = localStorage.getItem('boundaryMarkerData');
+                if (savedData) {
+                    this.monitoringData = JSON.parse(savedData);
+                } else {
+                    // Sample data if localStorage is empty
+                    this.monitoringData = [{
                         id: 1,
                         nama_lokasi: 'Blok Sungai A',
                         nama_sungai: 'Sungai Ciliwung',
                         pemilik_lahan: 'PT Perkebunan Nusantara',
                         tanggal_pemantauan: '2023-07-20',
                         nama_petugas: 'Budi Santoso',
-                        patok: [
-                            {
+                        patok: [{
                                 nomor: 'P001',
                                 kondisi: 'Baik',
                                 vegetasi: 'Terjaga',
@@ -447,154 +445,155 @@ function boundaryMarkerApp() {
                             }
                         ],
                         rekomendasi: 'Perlu perbaikan patok P002 dan penanaman vegetasi di sempadan'
-                    }
-                ];
-                this.saveToLocalStorage();
-            }
-        },
-        
-        // Save data to localStorage
-        saveToLocalStorage() {
-            localStorage.setItem('boundaryMarkerData', JSON.stringify(this.monitoringData));
-        },
-        
-        formatDate(dateString) {
-            if (!dateString) return '';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('id-ID');
-        },
-        
-        // Add new patok entry
-        addPatok() {
-            this.formData.patok.push({
-                nomor: '',
-                kondisi: '',
-                vegetasi: '',
-                gangguan: '',
-                tindak_lanjut: '',
-                catatan: ''
-            });
-        },
-        
-        // Remove patok entry
-        removePatok(index) {
-            this.formData.patok.splice(index, 1);
-        },
-        
-        // Calculate overall status based on patok conditions
-        getOverallStatus(item) {
-            if (!item.patok || item.patok.length === 0) return 'Baik';
-            
-            const criticalCount = item.patok.filter(p => 
-                p.kondisi === 'Hilang' || 
-                p.kondisi === 'Rusak' || 
-                p.gangguan === 'Ya' || 
-                p.tindak_lanjut === 'Ya'
-            ).length;
-            
-            if (criticalCount === 0) return 'Baik';
-            if (criticalCount < item.patok.length / 2) return 'Perlu Perbaikan';
-            return 'Kritis';
-        },
-        
-        viewItem(item) {
-            this.viewData = JSON.parse(JSON.stringify(item));
-            this.viewModal = true;
-        },
-        
-        editItem(item) {
-            this.currentForm = 'edit';
-            this.currentItemId = item.id;
-            this.formData = {...item};
-            this.openModal = true;
-        },
-        
-        confirmDelete(item) {
-            this.currentItemId = item.id;
-            this.deleteModal = true;
-        },
-        
-        deleteItem() {
-            this.monitoringData = this.monitoringData.filter(item => item.id !== this.currentItemId);
-            this.saveToLocalStorage();
-            this.deleteModal = false;
-        },
-        
-        saveData() {
-            // Validate form
-            if (!this.validateForm()) {
-                return;
-            }
-            
-            if (this.currentForm === 'new') {
-                // Add new item
-                const newId = Math.max(...this.monitoringData.map(item => item.id), 0) + 1;
-                this.monitoringData.push({
-                    id: newId,
-                    ...this.formData
+                    }];
+                    this.saveToLocalStorage();
+                }
+            },
+
+            // Save data to localStorage
+            saveToLocalStorage() {
+                localStorage.setItem('boundaryMarkerData', JSON.stringify(this.monitoringData));
+            },
+
+            formatDate(dateString) {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                return date.toLocaleDateString('id-ID');
+            },
+
+            // Add new patok entry
+            addPatok() {
+                this.formData.patok.push({
+                    nomor: '',
+                    kondisi: '',
+                    vegetasi: '',
+                    gangguan: '',
+                    tindak_lanjut: '',
+                    catatan: ''
                 });
-            } else {
-                // Update existing item
-                const index = this.monitoringData.findIndex(item => item.id === this.currentItemId);
-                if (index !== -1) {
-                    this.monitoringData[index] = {
-                        id: this.currentItemId,
+            },
+
+            // Remove patok entry
+            removePatok(index) {
+                this.formData.patok.splice(index, 1);
+            },
+
+            // Calculate overall status based on patok conditions
+            getOverallStatus(item) {
+                if (!item.patok || item.patok.length === 0) return 'Baik';
+
+                const criticalCount = item.patok.filter(p =>
+                    p.kondisi === 'Hilang' ||
+                    p.kondisi === 'Rusak' ||
+                    p.gangguan === 'Ya' ||
+                    p.tindak_lanjut === 'Ya'
+                ).length;
+
+                if (criticalCount === 0) return 'Baik';
+                if (criticalCount < item.patok.length / 2) return 'Perlu Perbaikan';
+                return 'Kritis';
+            },
+
+            viewItem(item) {
+                this.viewData = JSON.parse(JSON.stringify(item));
+                this.viewModal = true;
+            },
+
+            editItem(item) {
+                this.currentForm = 'edit';
+                this.currentItemId = item.id;
+                this.formData = {
+                    ...item
+                };
+                this.openModal = true;
+            },
+
+            confirmDelete(item) {
+                this.currentItemId = item.id;
+                this.deleteModal = true;
+            },
+
+            deleteItem() {
+                this.monitoringData = this.monitoringData.filter(item => item.id !== this.currentItemId);
+                this.saveToLocalStorage();
+                this.deleteModal = false;
+            },
+
+            saveData() {
+                // Validate form
+                if (!this.validateForm()) {
+                    return;
+                }
+
+                if (this.currentForm === 'new') {
+                    // Add new item
+                    const newId = Math.max(...this.monitoringData.map(item => item.id), 0) + 1;
+                    this.monitoringData.push({
+                        id: newId,
                         ...this.formData
-                    };
+                    });
+                } else {
+                    // Update existing item
+                    const index = this.monitoringData.findIndex(item => item.id === this.currentItemId);
+                    if (index !== -1) {
+                        this.monitoringData[index] = {
+                            id: this.currentItemId,
+                            ...this.formData
+                        };
+                    }
                 }
-            }
-            
-            this.saveToLocalStorage();
-            this.openModal = false;
-            this.resetForm();
-        },
-        
-        // Validate form before saving
-        validateForm() {
-            const requiredFields = [
-                'nama_lokasi', 'nama_sungai', 'pemilik_lahan', 
-                'tanggal_pemantauan', 'nama_petugas', 'rekomendasi'
-            ];
-            
-            // Check main form fields
-            for (const field of requiredFields) {
-                if (!this.formData[field]) {
-                    alert(`Field ${field.replace(/_/g, ' ')} harus diisi!`);
+
+                this.saveToLocalStorage();
+                this.openModal = false;
+                this.resetForm();
+            },
+
+            // Validate form before saving
+            validateForm() {
+                const requiredFields = [
+                    'nama_lokasi', 'nama_sungai', 'pemilik_lahan',
+                    'tanggal_pemantauan', 'nama_petugas', 'rekomendasi'
+                ];
+
+                // Check main form fields
+                for (const field of requiredFields) {
+                    if (!this.formData[field]) {
+                        alert(`Field ${field.replace(/_/g, ' ')} harus diisi!`);
+                        return false;
+                    }
+                }
+
+                // Check patok entries
+                if (this.formData.patok.length === 0) {
+                    alert('Minimal harus ada satu patok yang dimonitoring!');
                     return false;
                 }
-            }
-            
-            // Check patok entries
-            if (this.formData.patok.length === 0) {
-                alert('Minimal harus ada satu patok yang dimonitoring!');
-                return false;
-            }
-            
-            for (const patok of this.formData.patok) {
-                if (!patok.nomor || !patok.kondisi || !patok.vegetasi || 
-                    !patok.gangguan || !patok.tindak_lanjut) {
-                    alert('Semua field wajib untuk setiap patok harus diisi!');
-                    return false;
+
+                for (const patok of this.formData.patok) {
+                    if (!patok.nomor || !patok.kondisi || !patok.vegetasi ||
+                        !patok.gangguan || !patok.tindak_lanjut) {
+                        alert('Semua field wajib untuk setiap patok harus diisi!');
+                        return false;
+                    }
                 }
+
+                return true;
+            },
+
+            resetForm() {
+                this.formData = {
+                    nama_lokasi: '',
+                    nama_sungai: '',
+                    pemilik_lahan: '',
+                    tanggal_pemantauan: '',
+                    nama_petugas: '',
+                    patok: [],
+                    rekomendasi: ''
+                };
+                this.currentItemId = null;
             }
-            
-            return true;
-        },
-        
-        resetForm() {
-            this.formData = {
-                nama_lokasi: '',
-                nama_sungai: '',
-                pemilik_lahan: '',
-                tanggal_pemantauan: '',
-                nama_petugas: '',
-                patok: [],
-                rekomendasi: ''
-            };
-            this.currentItemId = null;
         }
     }
-}
 </script>
 
 <?php

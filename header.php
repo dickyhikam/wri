@@ -14,9 +14,17 @@ if (strpos($request_uri, '/wri/') !== false) {
   $modified_uri = $request_uri;
 }
 
+// Check if there's a '?' in the URI (indicating query parameters)
+if (strpos($modified_uri, '?') !== false) {
+  // Remove everything after '?' including the '?'
+  $modified_uri = strtok($modified_uri, '?');
+}
+
+
 $name_menu = [
-  'index' => 'Dashboard',
   '' => 'Dashboard',
+  'index' => 'Dashboard',
+  'index-user' => 'Dashboard User',
   'petani' => 'Petani',
   'lahan' => 'Lahan/Persil',
   'parcel' => 'Parcel Data',
@@ -31,6 +39,9 @@ $name_menu = [
   'produksi' => 'Produksi',
   'perawatan' => 'Perawatan',
   'limbah' => 'Limbah B3 dan K3',
+  'workplan' => 'WorkPlan',
+  'role' => 'Role',
+  'keselamatan' => 'Kecelakaan Kerja'
 ];
 ?>
 
@@ -48,6 +59,12 @@ $name_menu = [
   <link rel="stylesheet" href="assets/layout.css" />
 
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 
 <body class="bg-gray-50 text-gray-800" x-data="{ openModal: false,
@@ -76,14 +93,20 @@ $name_menu = [
       <nav class="flex-1 overflow-y-auto py-4 space-y-1 text-sm">
         <!-- Dashboard -->
         <div>
-          <a href="index" @click="currentMenu = 'dashboard'" :class="{'sidebar-item active': currentMenu === 'dashboard', 'sidebar-item': currentMenu !== 'dashboard'}" class="flex items-center px-6 py-3">
+          <a href="index" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == '' || $name_menu[$modified_uri] == 'Dashboard') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
             Dashboard
           </a>
         </div>
+        <div>
+          <a href="index-user" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == '' || $name_menu[$modified_uri] == 'Dashboard User') ? 'sidebar-item active' : ''; ?>">
+            <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
+            Dashboard User
+          </a>
+        </div>
 
         <!-- Master Data -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.masterData}">
+        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.masterData, 'sidebar-item active': currentMenu === 'Role' || currentMenu === 'Parcel Data' || currentMenu === 'Petani' || currentMenu === 'Lahan/Persil' || currentMenu === 'Pekerja' || currentMenu === 'Mitra & Organisasi' || currentMenu === 'Kelompok Tani'}">
           <div @click="menuCollapse.masterData = !menuCollapse.masterData" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-database w-5 mr-3 text-[#f0ab00]"></i>
@@ -92,46 +115,42 @@ $name_menu = [
             <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.masterData}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="role" @click="currentMenu = 'role'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Role</a>
-            <a href="parcel" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Parcel Data</a>
-            <a href="petani" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Petani</a>
-            <a href="lahan" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Lahan/Persil</a>
-            <!-- <a href="ics" @click="currentMenu = 'ics'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">ICS & Fasilitator</a> -->
-            <!-- <a href="pelatihan" @click="currentMenu = 'trainings'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pelatihan</a> -->
-            <!-- <a href="sertifikasi" @click="currentMenu = 'certifications'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Sertifikasi & Audit</a> -->
-            <a href="pekerja" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Pekerja</a>
-            <!-- <a href="transaksi" @click="currentMenu = 'transactions'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Transaksi</a> -->
-            <!-- <a href="mitra" @click="currentMenu = 'partners'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Mitra & Organisasi</a> -->
-            <!-- <a href="nkt" @click="currentMenu = 'hcv'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">HCV/NKT</a> -->
-            <a href="kelompok_tani" @click="currentMenu = 'farmers_gt'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Kelompok Tani</a>
-            <!-- <a href="produksi" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Produksi</a> -->
-            <!-- <a href="perawatan" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Perawatan</a> -->
-            <!-- <a href="limbah" @click="currentMenu = 'limbah'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Limbah B3</a> -->
-            <!-- <a href="keselamatan" @click="currentMenu = 'k3'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">K3</a> -->
+            <a href="role" @click="currentMenu = 'role'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Role') ? 'sidebar-item active' : ''; ?>">Role</a>
+            <a href="parcel" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Parcel Data') ? 'sidebar-item active' : ''; ?>">Parcel Data</a>
+            <a href="petani" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Petani') ? 'sidebar-item active' : ''; ?>">Petani</a>
+            <a href="lahan" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Lahan/Persil') ? 'sidebar-item active' : ''; ?>">Lahan/Persil</a>
+            <a href="pekerja" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Pekerja') ? 'sidebar-item active' : ''; ?>">Pekerja</a>
+            <a href="mitra" @click="currentMenu = 'partners'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Mitra & Organisasi') ? 'sidebar-item active' : ''; ?>">Mitra & Organisasi</a>
+            <a href="kelompok_tani" @click="currentMenu = 'farmers_gt'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Kelompok Tani') ? 'sidebar-item active' : ''; ?>">Kelompok Tani</a>
           </div>
         </div>
 
+        <!-- WorkPlan -->
         <div>
-          <a href="workplan" @click="currentMenu = 'workplan'" :class="{'sidebar-item active': currentMenu === 'workplan', 'sidebar-item': currentMenu !== 'workplan'}" class="flex items-center px-6 py-3">
+          <a href="workplan" @click="currentMenu = 'workplan'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'WorkPlan') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-project-diagram w-5 mr-3 text-[#f0ab00]"></i>
             WorkPlan
           </a>
         </div>
+
+        <!-- Audit -->
         <div>
-          <a href="sertifikasi" @click="currentMenu = 'sertifikasi'" :class="{'sidebar-item active': currentMenu === 'sertifikasi', 'sidebar-item': currentMenu !== 'sertifikasi'}" class="flex items-center px-6 py-3">
+          <a href="sertifikasi" @click="currentMenu = 'sertifikasi'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'Sertifikasi & Audit') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-user-secret w-5 mr-3 text-[#f0ab00]"></i>
             Audit
           </a>
         </div>
+
+        <!-- HCV -->
         <div>
-          <a href="nkt" @click="currentMenu = 'nkt'" :class="{'sidebar-item active': currentMenu === 'nkt', 'sidebar-item': currentMenu !== 'nkt'}" class="flex items-center px-6 py-3">
+          <a href="nkt" @click="currentMenu = 'nkt'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'HCV/NKT') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-chart-line w-5 mr-3 text-[#f0ab00]"></i>
             HCV
           </a>
         </div>
 
         <!-- BMP -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.bmp}">
+        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.bmp, 'sidebar-item active': currentMenu === 'produksition'}">
           <div @click="menuCollapse.bmp = !menuCollapse.bmp" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-warehouse w-5 mr-3 text-[#f0ab00]"></i>
@@ -140,13 +159,13 @@ $name_menu = [
             <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.bmp}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="perawatan" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Perawatan</a>
-            <a href="produksi" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Produksi</a>
+            <a href="perawatan" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Perawatan') ? 'sidebar-item active' : ''; ?>">Perawatan</a>
+            <a href="produksi" @click="currentMenu = 'produksition'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Produksi') ? 'sidebar-item active' : ''; ?>">Produksi</a>
           </div>
         </div>
 
         <!-- K3 -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.k3}">
+        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.k3, 'sidebar-item active': currentMenu === 'limbah' || currentMenu === 'keselamatan' || currentMenu === 'productionSummary'}">
           <div @click="menuCollapse.k3 = !menuCollapse.k3" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-user-shield w-5 mr-3 text-[#f0ab00]"></i>
@@ -155,14 +174,14 @@ $name_menu = [
             <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.k3}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="limbah" @click="currentMenu = 'limbah'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Limbah</a>
-            <a href="keselamatan" @click="currentMenu = 'keselamatan'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Kecelakaan Kerja</a>
-            <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Safety Awareness</a>
+            <a href="limbah" @click="currentMenu = 'limbah'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Limbah B3 dan K3') ? 'sidebar-item active' : ''; ?>">Limbah</a>
+            <a href="keselamatan" @click="currentMenu = 'keselamatan'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Kecelakaan Kerja') ? 'sidebar-item active' : ''; ?>">Kecelakaan Kerja</a>
+            <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Safety Awareness') ? 'sidebar-item active' : ''; ?>">Safety Awareness</a>
           </div>
         </div>
 
         <!-- ICS -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.ics}">
+        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.ics, 'sidebar-item active': currentMenu === 'queryBuilder' || currentMenu === 'analyticsDashboard' || currentMenu === 'productionSummary' || currentMenu === 'dataExport'}">
           <div @click="menuCollapse.ics = !menuCollapse.ics" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
             <div class="flex items-center">
               <i class="fas fa-users w-5 mr-3 text-[#f0ab00]"></i>
@@ -171,12 +190,42 @@ $name_menu = [
             <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.ics}"></i>
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="#" @click="currentMenu = 'queryBuilder'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">List Data</a>
-            <a href="analitik" @click="currentMenu = 'analyticsDashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Galery</a>
-            <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Fasilitas</a>
-            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Organisasi</a>
-            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Training</a>
-            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Aktivity</a>
+            <a href="ics" @click="currentMenu = 'queryBuilder'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'ICS & Fasilitator') ? 'sidebar-item active' : ''; ?>">List Data</a>
+            <a href="analitik" @click="currentMenu = 'analyticsDashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Galery') ? 'sidebar-item active' : ''; ?>">Galery</a>
+            <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Fasilitas') ? 'sidebar-item active' : ''; ?>">Fasilitas</a>
+            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Organisasi') ? 'sidebar-item active' : ''; ?>">Organisasi</a>
+            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Training') ? 'sidebar-item active' : ''; ?>">Training</a>
+            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Aktivity') ? 'sidebar-item active' : ''; ?>">Aktivity</a>
+          </div>
+        </div>
+
+        <!-- User Management -->
+        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.userManagement}">
+          <div @click="menuCollapse.userManagement = !menuCollapse.userManagement" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
+            <div class="flex items-center">
+              <i class="fas fa-users-cog w-5 mr-3 text-[#f0ab00]"></i>
+              Manajemen User
+            </div>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.userManagement}"></i>
+          </div>
+          <div class="submenu pl-14 pr-6 py-2 space-y-1">
+            <a href="user" @click="currentMenu = 'user'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">User</a>
+            <a href="user-log" @click="currentMenu = 'userLog'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">User Log</a>
+          </div>
+        </div>
+
+        <!-- System Admin -->
+        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.systemAdmin}">
+          <div @click="menuCollapse.systemAdmin = !menuCollapse.systemAdmin" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
+            <div class="flex items-center">
+              <i class="fas fa-cog w-5 mr-3 text-[#f0ab00]"></i>
+              Utility
+            </div>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.systemAdmin}"></i>
+          </div>
+          <div class="submenu pl-14 pr-6 py-2 space-y-1">
+            <a href="menu" @click="currentMenu = 'menu'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Menu</a>
+            <a href="akses-menu" @click="currentMenu = 'aksesMenu'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Akses Menu</a>
           </div>
         </div>
 
@@ -230,41 +279,6 @@ $name_menu = [
             <a href="#" @click="currentMenu = 'gallery'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Galeri Foto/Video</a>
           </div>
         </div> -->
-
-        <!-- User Management -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.userManagement}">
-          <div @click="menuCollapse.userManagement = !menuCollapse.userManagement" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
-            <div class="flex items-center">
-              <i class="fas fa-users-cog w-5 mr-3 text-[#f0ab00]"></i>
-              Manajemen User
-            </div>
-            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.userManagement}"></i>
-          </div>
-          <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="user" @click="currentMenu = 'user'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">User</a>
-            <a href="user-log" @click="currentMenu = 'userLog'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">User Log</a>
-          </div>
-        </div>
-
-        <!-- System Admin -->
-        <div class="menu-collapse" :class="{'collapsed': !menuCollapse.systemAdmin}">
-          <div @click="menuCollapse.systemAdmin = !menuCollapse.systemAdmin" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
-            <div class="flex items-center">
-              <i class="fas fa-cog w-5 mr-3 text-[#f0ab00]"></i>
-              Utility
-            </div>
-            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.systemAdmin}"></i>
-          </div>
-          <div class="submenu pl-14 pr-6 py-2 space-y-1">
-            <a href="menu" @click="currentMenu = 'menu'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Menu</a>
-            <a href="akses-menu" @click="currentMenu = 'aksesMenu'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Akses Menu</a>
-            <!-- <a href="#" @click="currentMenu = 'adminRegions'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Wilayah Administratif</a>
-            <a href="#" @click="currentMenu = 'systemParams'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Parameter Sistem</a>
-            <a href="#" @click="currentMenu = 'referenceData'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Data Referensi</a>
-            <a href="#" @click="currentMenu = 'backupRestore'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Backup & Restore</a>
-            <a href="#" @click="currentMenu = 'apiIntegration'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black">Integrasi External API</a> -->
-          </div>
-        </div>
 
       </nav>
       <!-- Footer -->

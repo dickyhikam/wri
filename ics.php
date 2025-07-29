@@ -1,137 +1,137 @@
 <?php include 'header.php'; ?>
-  <!-- Mode untuk menentukan tampilan -->
-  <?php
-  $mode = isset($_GET['mode']) ? $_GET['mode'] : 'list';
-  $id = isset($_GET['id']) ? $_GET['id'] : null;
+<!-- Mode untuk menentukan tampilan -->
+<?php
+$mode = isset($_GET['mode']) ? $_GET['mode'] : 'list';
+$id = isset($_GET['id']) ? $_GET['id'] : null;
 
-  // Data Dummy ICS
-  $data_ics = [
+// Data Dummy ICS
+$data_ics = [
     'ICS-2023-001' => [
-      'nama' => 'Lembaga Sawit Kampar',
-      'no_badan_hukum' => '123/KPR/2023',
-      'jumlah_petani' => 50,
-      'tgl_berdiri' => '2023-01-15',
-      'tgl_legalitas' => '2023-02-20',
-      'pic' => [
-        'nama' => 'Budi Santoso',
-        'kontak' => '08123456789',
-        'email' => 'budi@sawitkampar.com'
-      ],
-      'alamat' => 'Jl. Sawit Makmur No. 12, Dusun Sejahtera',
-      'provinsi' => 'Riau',
-      'kabupaten' => 'Kampar',
-      'kecamatan' => 'Bangkinang',
-      'desa' => 'Bangkinang Kota',
-      'lokasi' => '-0.335987, 101.025543',
-      'area_wilayah' => 'Kawasan Perkebunan Sawit Kampar',
-      'dokumen' => [
-        ['nama' => 'Akta Pendirian', 'file' => 'akta_pendirian.pdf'],
-        ['nama' => 'SIUP', 'file' => 'siup.pdf']
-      ],
-      'logo' => 'https://via.placeholder.com/150',
-      'sop' => ['nama' => 'SOP Pengelolaan', 'file' => 'sop_pengelolaan.pdf'],
-      'fasilitas' => [
-        ['fasilitas' => 'Traktor', 'jumlah' => 2, 'keterangan' => 'Kondisi baik'],
-        ['fasilitas' => 'Gudang', 'jumlah' => 1, 'keterangan' => 'Kapasitas 100 ton']
-      ],
-      'pengurus' => [
-        ['nama' => 'Budi Santoso', 'jabatan' => 'Ketua', 'status' => 'Aktif'],
-        ['nama' => 'Ani Wijaya', 'jabatan' => 'Bendahara', 'status' => 'Aktif']
-      ],
-      'status' => 'Aktif',
-      'created_by' => 'admin1',
-      'created_at' => '2023-01-10',
-      'updated_by' => 'admin1',
-      'updated_at' => '2023-03-15'
+        'nama' => 'Lembaga Sawit Kampar',
+        'no_badan_hukum' => '123/KPR/2023',
+        'jumlah_petani' => 50,
+        'tgl_berdiri' => '2023-01-15',
+        'tgl_legalitas' => '2023-02-20',
+        'pic' => [
+            'nama' => 'Budi Santoso',
+            'kontak' => '08123456789',
+            'email' => 'budi@sawitkampar.com'
+        ],
+        'alamat' => 'Jl. Sawit Makmur No. 12, Dusun Sejahtera',
+        'provinsi' => 'Riau',
+        'kabupaten' => 'Kampar',
+        'kecamatan' => 'Bangkinang',
+        'desa' => 'Bangkinang Kota',
+        'lokasi' => '-0.335987, 101.025543',
+        'area_wilayah' => 'Kawasan Perkebunan Sawit Kampar',
+        'dokumen' => [
+            ['nama' => 'Akta Pendirian', 'file' => 'akta_pendirian.pdf'],
+            ['nama' => 'SIUP', 'file' => 'siup.pdf']
+        ],
+        'logo' => 'https://via.placeholder.com/150',
+        'sop' => ['nama' => 'SOP Pengelolaan', 'file' => 'sop_pengelolaan.pdf'],
+        'fasilitas' => [
+            ['fasilitas' => 'Traktor', 'jumlah' => 2, 'keterangan' => 'Kondisi baik'],
+            ['fasilitas' => 'Gudang', 'jumlah' => 1, 'keterangan' => 'Kapasitas 100 ton']
+        ],
+        'pengurus' => [
+            ['nama' => 'Budi Santoso', 'jabatan' => 'Ketua', 'status' => 'Aktif'],
+            ['nama' => 'Ani Wijaya', 'jabatan' => 'Bendahara', 'status' => 'Aktif']
+        ],
+        'status' => 'Aktif',
+        'created_by' => 'admin1',
+        'created_at' => '2023-01-10',
+        'updated_by' => 'admin1',
+        'updated_at' => '2023-03-15'
     ],
     'ICS-2023-002' => [
-      'nama' => 'Koperasi Rokan Hulu',
-      'no_badan_hukum' => '456/RHU/2023',
-      'jumlah_petani' => 35,
-      'tgl_berdiri' => '2023-03-10',
-      'tgl_legalitas' => '2023-04-05',
-      'pic' => [
-        'nama' => 'Ani Wijaya',
-        'kontak' => '08234567890',
-        'email' => 'ani@koperasirh.com'
-      ],
-      'alamat' => 'Jl. Koperasi No. 45, Dusun Makmur',
-      'provinsi' => 'Riau',
-      'kabupaten' => 'Rokan Hulu',
-      'kecamatan' => 'Pasir Pengaraian',
-      'desa' => 'Pasir Pengaraian',
-      'lokasi' => '0.596672, 100.751798',
-      'area_wilayah' => 'Wilayah Rokan Hulu',
-      'dokumen' => [
-        ['nama' => 'Akta Notaris', 'file' => 'akta_notaris.pdf']
-      ],
-      'logo' => 'https://via.placeholder.com/150',
-      'sop' => ['nama' => 'SOP Koperasi', 'file' => 'sop_koperasi.pdf'],
-      'fasilitas' => [
-        ['fasilitas' => 'Alat Penyemprot', 'jumlah' => 5, 'keterangan' => 'Kondisi baru']
-      ],
-      'pengurus' => [
-        ['nama' => 'Siti Rahayu', 'jabatan' => 'Sekretaris', 'status' => 'Aktif']
-      ],
-      'status' => 'Proses Verifikasi',
-      'created_by' => 'operator1',
-      'created_at' => '2023-03-05',
-      'updated_by' => 'operator1',
-      'updated_at' => '2023-04-12'
+        'nama' => 'Koperasi Rokan Hulu',
+        'no_badan_hukum' => '456/RHU/2023',
+        'jumlah_petani' => 35,
+        'tgl_berdiri' => '2023-03-10',
+        'tgl_legalitas' => '2023-04-05',
+        'pic' => [
+            'nama' => 'Ani Wijaya',
+            'kontak' => '08234567890',
+            'email' => 'ani@koperasirh.com'
+        ],
+        'alamat' => 'Jl. Koperasi No. 45, Dusun Makmur',
+        'provinsi' => 'Riau',
+        'kabupaten' => 'Rokan Hulu',
+        'kecamatan' => 'Pasir Pengaraian',
+        'desa' => 'Pasir Pengaraian',
+        'lokasi' => '0.596672, 100.751798',
+        'area_wilayah' => 'Wilayah Rokan Hulu',
+        'dokumen' => [
+            ['nama' => 'Akta Notaris', 'file' => 'akta_notaris.pdf']
+        ],
+        'logo' => 'https://via.placeholder.com/150',
+        'sop' => ['nama' => 'SOP Koperasi', 'file' => 'sop_koperasi.pdf'],
+        'fasilitas' => [
+            ['fasilitas' => 'Alat Penyemprot', 'jumlah' => 5, 'keterangan' => 'Kondisi baru']
+        ],
+        'pengurus' => [
+            ['nama' => 'Siti Rahayu', 'jabatan' => 'Sekretaris', 'status' => 'Aktif']
+        ],
+        'status' => 'Proses Verifikasi',
+        'created_by' => 'operator1',
+        'created_at' => '2023-03-05',
+        'updated_by' => 'operator1',
+        'updated_at' => '2023-04-12'
     ]
-  ];
+];
 
-  // Data unik untuk filter
-  $kabupatens = array_unique(array_column($data_ics, 'kabupaten'));
-  $kecamatans = array_unique(array_column($data_ics, 'kecamatan'));
-  $statuses = array_unique(array_column($data_ics, 'status'));
+// Data unik untuk filter
+$kabupatens = array_unique(array_column($data_ics, 'kabupaten'));
+$kecamatans = array_unique(array_column($data_ics, 'kecamatan'));
+$statuses = array_unique(array_column($data_ics, 'status'));
 
-  // Initialize filtered data with all data first
-  $filtered_ics = $data_ics;
-  
-  // Get filter parameters
-  $filter_kabupaten = isset($_GET['filter_kabupaten']) ? $_GET['filter_kabupaten'] : '';
-  $filter_kecamatan = isset($_GET['filter_kecamatan']) ? $_GET['filter_kecamatan'] : '';
-  $filter_status = isset($_GET['filter_status']) ? $_GET['filter_status'] : '';
-  $search = isset($_GET['search']) ? $_GET['search'] : '';
+// Initialize filtered data with all data first
+$filtered_ics = $data_ics;
 
-  // Apply filters
-  if ($filter_kabupaten) {
-      $filtered_ics = array_filter($filtered_ics, function($ics) use ($filter_kabupaten) {
-          return $ics['kabupaten'] == $filter_kabupaten;
-      });
-  }
+// Get filter parameters
+$filter_kabupaten = isset($_GET['filter_kabupaten']) ? $_GET['filter_kabupaten'] : '';
+$filter_kecamatan = isset($_GET['filter_kecamatan']) ? $_GET['filter_kecamatan'] : '';
+$filter_status = isset($_GET['filter_status']) ? $_GET['filter_status'] : '';
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
-  if ($filter_kecamatan) {
-      $filtered_ics = array_filter($filtered_ics, function($ics) use ($filter_kecamatan) {
-          return $ics['kecamatan'] == $filter_kecamatan;
-      });
-  }
+// Apply filters
+if ($filter_kabupaten) {
+    $filtered_ics = array_filter($filtered_ics, function ($ics) use ($filter_kabupaten) {
+        return $ics['kabupaten'] == $filter_kabupaten;
+    });
+}
 
-  if ($filter_status) {
-      $filtered_ics = array_filter($filtered_ics, function($ics) use ($filter_status) {
-          return $ics['status'] == $filter_status;
-      });
-  }
+if ($filter_kecamatan) {
+    $filtered_ics = array_filter($filtered_ics, function ($ics) use ($filter_kecamatan) {
+        return $ics['kecamatan'] == $filter_kecamatan;
+    });
+}
 
-  if ($search) {
-      $search = strtolower($search);
-      $filtered_ics = array_filter($filtered_ics, function($ics) use ($search) {
-          return (strpos(strtolower($ics['nama']), $search) !== false || 
-                 strpos(strtolower($ics['pic']['nama']), $search) !== false ||
-                 strpos(strtolower($ics['pic']['kontak']), $search) !== false);
-      });
-  }
+if ($filter_status) {
+    $filtered_ics = array_filter($filtered_ics, function ($ics) use ($filter_status) {
+        return $ics['status'] == $filter_status;
+    });
+}
 
-  // Konfigurasi Pagination
-  $itemsPerPage = 5;
-  $currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-  $totalItems = count($filtered_ics);
-  $totalPages = ceil($totalItems / $itemsPerPage);
-  $currentPage = min($currentPage, $totalPages);
-  $startIndex = ($currentPage - 1) * $itemsPerPage;
-  $paginatedICS = array_slice($filtered_ics, $startIndex, $itemsPerPage, true);
-  ?>
+if ($search) {
+    $search = strtolower($search);
+    $filtered_ics = array_filter($filtered_ics, function ($ics) use ($search) {
+        return (strpos(strtolower($ics['nama']), $search) !== false ||
+            strpos(strtolower($ics['pic']['nama']), $search) !== false ||
+            strpos(strtolower($ics['pic']['kontak']), $search) !== false);
+    });
+}
+
+// Konfigurasi Pagination
+$itemsPerPage = 5;
+$currentPage = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$totalItems = count($filtered_ics);
+$totalPages = ceil($totalItems / $itemsPerPage);
+$currentPage = min($currentPage, $totalPages);
+$startIndex = ($currentPage - 1) * $itemsPerPage;
+$paginatedICS = array_slice($filtered_ics, $startIndex, $itemsPerPage, true);
+?>
 
 <main class="flex-1 flex flex-col overflow-hidden">
     <header class="h-20 shadow-sm flex items-center justify-between px-8">
@@ -182,9 +182,9 @@
                         <input type="hidden" name="mode" value="list">
                         <div class="mb-4">
                             <div class="relative">
-                                <input type="text" id="search" name="search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" 
-                                       class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                                       placeholder="Cari data ICS...">
+                                <input type="text" id="search" name="search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
+                                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Cari data ICS...">
                                 <button type="submit" class="absolute right-2 top-2 text-gray-500 hover:text-gray-700">
                                     <i class="fas fa-search"></i>
                                 </button>
@@ -195,27 +195,27 @@
                             <div>
                                 <select id="filter_kabupaten" name="filter_kabupaten" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option value="">Semua Kabupaten</option>
-                                    <?php foreach($kabupatens as $kabupaten): ?>
+                                    <?php foreach ($kabupatens as $kabupaten): ?>
                                         <option value="<?= htmlspecialchars($kabupaten) ?>" <?= $filter_kabupaten === $kabupaten ? 'selected' : '' ?>><?= htmlspecialchars($kabupaten) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            
+
                             <!-- Filter Kecamatan -->
                             <div>
                                 <select id="filter_kecamatan" name="filter_kecamatan" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option value="">Semua Kecamatan</option>
-                                    <?php foreach($kecamatans as $kecamatan): ?>
+                                    <?php foreach ($kecamatans as $kecamatan): ?>
                                         <option value="<?= htmlspecialchars($kecamatan) ?>" <?= $filter_kecamatan === $kecamatan ? 'selected' : '' ?>><?= htmlspecialchars($kecamatan) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            
+
                             <!-- Filter Status -->
                             <div>
                                 <select id="filter_status" name="filter_status" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     <option value="">Semua Status</option>
-                                    <?php foreach($statuses as $status): ?>
+                                    <?php foreach ($statuses as $status): ?>
                                         <option value="<?= htmlspecialchars($status) ?>" <?= $filter_status === $status ? 'selected' : '' ?>><?= htmlspecialchars($status) ?></option>
                                     <?php endforeach; ?>
                                 </select>
@@ -248,7 +248,7 @@
                                     <td colspan="8" class="px-6 py-4 text-center text-gray-500">Tidak ada data ICS</td>
                                 </tr>
                             <?php else: ?>
-                                <?php foreach ($paginatedICS as $id_ics => $ics): 
+                                <?php foreach ($paginatedICS as $id_ics => $ics):
                                     $rowNumber = $startIndex + array_search($id_ics, array_keys($filtered_ics)) + 1;
                                 ?>
                                     <tr class="hover:bg-gray-50">
@@ -285,7 +285,7 @@
                         </tbody>
                     </table>
                 </div>
-                
+
                 <!-- Pagination Controls -->
                 <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
                     <div class="flex-1 flex justify-between sm:hidden">
@@ -311,20 +311,20 @@
                                 </a>
 
                                 <!-- Page Numbers -->
-                                <?php 
+                                <?php
                                 $startPage = max(1, $currentPage - 2);
                                 $endPage = min($totalPages, $currentPage + 2);
-                                
+
                                 if ($currentPage <= 3) {
                                     $endPage = min(5, $totalPages);
                                 }
-                                
+
                                 if ($currentPage >= $totalPages - 2) {
                                     $startPage = max(1, $totalPages - 4);
                                 }
-                                
+
                                 if ($startPage > 1) {
-                                    ?>
+                                ?>
                                     <a href="?<?= http_build_query(array_merge($_GET, ['page' => 1])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                         1
                                     </a>
@@ -333,19 +333,19 @@
                                             ...
                                         </span>
                                     <?php endif; ?>
-                                    <?php
+                                <?php
                                 }
-                                
+
                                 for ($i = $startPage; $i <= $endPage; $i++) {
-                                    ?>
+                                ?>
                                     <a href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium <?= $i == $currentPage ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50' ?>">
                                         <?= $i ?>
                                     </a>
-                                    <?php
+                                <?php
                                 }
-                                
+
                                 if ($endPage < $totalPages) {
-                                    ?>
+                                ?>
                                     <?php if ($endPage < $totalPages - 1): ?>
                                         <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
                                             ...
@@ -354,7 +354,7 @@
                                     <a href="?<?= http_build_query(array_merge($_GET, ['page' => $totalPages])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                         <?= $totalPages ?>
                                     </a>
-                                    <?php
+                                <?php
                                 }
                                 ?>
 
@@ -377,7 +377,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <div class="mb-4">
-                                    <label for="nama_ics" class="block text-sm font-medium text-gray-700 mb-1">Nama ICS*</label>
+                                    <label for="nama_ics" class="block text-sm font-medium text-gray-700 mb-1">Nama ICS<span class="text-red-500">*</span></label>
                                     <input type="text" id="nama_ics" name="nama_ics" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Lembaga Sawit Makmur" required>
                                 </div>
                                 <div class="mb-4">
@@ -385,7 +385,7 @@
                                     <input type="text" id="no_badan_hukum" name="no_badan_hukum" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 123/XYZ/2023">
                                 </div>
                                 <div class="mb-4">
-                                    <label for="jumlah_petani" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Petani*</label>
+                                    <label for="jumlah_petani" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Petani<span class="text-red-500">*</span></label>
                                     <input type="number" id="jumlah_petani" name="jumlah_petani" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 50" required>
                                 </div>
                                 <div class="mb-4">
@@ -400,19 +400,19 @@
                             <div>
                                 <h3 class="text-md font-medium text-gray-700 border-b pb-2 mb-4">Informasi PIC</h3>
                                 <div class="mb-4">
-                                    <label for="nama_pic" class="block text-sm font-medium text-gray-700 mb-1">Nama PIC*</label>
+                                    <label for="nama_pic" class="block text-sm font-medium text-gray-700 mb-1">Nama PIC<span class="text-red-500">*</span></label>
                                     <input type="text" id="nama_pic" name="nama_pic" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Budi Santoso" required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="kontak_pic" class="block text-sm font-medium text-gray-700 mb-1">Kontak PIC*</label>
+                                    <label for="kontak_pic" class="block text-sm font-medium text-gray-700 mb-1">Kontak PIC<span class="text-red-500">*</span></label>
                                     <input type="text" id="kontak_pic" name="kontak_pic" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 08123456789" required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="email_pic" class="block text-sm font-medium text-gray-700 mb-1">Email PIC*</label>
+                                    <label for="email_pic" class="block text-sm font-medium text-gray-700 mb-1">Email PIC<span class="text-red-500">*</span></label>
                                     <input type="email" id="email_pic" name="email_pic" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: pic@example.com" required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status Verifikasi*</label>
+                                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status Verifikasi<span class="text-red-500">*</span></label>
                                     <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                         <option value="Aktif">Aktif</option>
                                         <option value="Proses Verifikasi">Proses Verifikasi</option>
@@ -421,7 +421,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Dokumen & Logo & SOP -->
                         <div class="mt-6 border-t pt-6">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Dokumen & Logo & SOP</h3>
@@ -437,7 +437,7 @@
                                     </div>
                                     <div id="file-list" class="mt-2 space-y-2"></div>
                                 </div>
-                                
+
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Logo</label>
                                     <div class="flex items-center">
@@ -463,24 +463,24 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Alamat & Lokasi -->
                         <div class="mt-6 border-t pt-6">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Alamat & Lokasi</h3>
                             <div class="mb-4">
-                                <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat (Jalan/Dusun)*</label>
+                                <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat (Jalan/Dusun)<span class="text-red-500">*</span></label>
                                 <input type="text" id="alamat" name="alamat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Jl. Sawit Makmur No. 12, Dusun Sejahtera" required>
                             </div>
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <div class="mb-4">
-                                        <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi*</label>
+                                        <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi<span class="text-red-500">*</span></label>
                                         <input type="text" id="provinsi" name="provinsi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="Riau" readonly>
                                     </div>
-                                    
+
                                     <div class="mb-4">
-                                        <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten*</label>
+                                        <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten<span class="text-red-500">*</span></label>
                                         <select id="kabupaten" name="kabupaten" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Kabupaten</option>
                                             <option value="Kampar">Kampar</option>
@@ -489,37 +489,37 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div class="mb-4">
-                                        <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan*</label>
+                                        <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan<span class="text-red-500">*</span></label>
                                         <select id="kecamatan" name="kecamatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Kecamatan</option>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="mb-4">
-                                        <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa*</label>
+                                        <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa<span class="text-red-500">*</span></label>
                                         <select id="desa" name="desa" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Desa</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="mb-4">
                                     <label for="lokasi" class="block text-sm font-medium text-gray-700 mb-1">Lokasi (Koordinat)</label>
                                     <input type="text" id="lokasi" name="lokasi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: -6.175392, 106.827153">
                                 </div>
-                                
+
                                 <div class="mb-4">
                                     <label for="area_wilayah" class="block text-sm font-medium text-gray-700 mb-1">Area Wilayah</label>
                                     <input type="text" id="area_wilayah" name="area_wilayah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Kawasan Perkebunan Sawit">
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Fasilitas -->
                         <div class="mt-6 border-t pt-6">
                             <div class="flex justify-between items-center mb-4">
@@ -545,7 +545,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                         <!-- Pengurus -->
                         <div class="mt-6 border-t pt-6">
                             <div class="flex justify-between items-center mb-4">
@@ -571,7 +571,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                         <div class="mt-8 flex justify-end space-x-4">
                             <button type="button" onclick="window.location.href='?mode=list'" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
                                 Batal
@@ -597,7 +597,7 @@
                             <?= $ics['status'] ?>
                         </span>
                     </div>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <h3 class="font-medium text-gray-900 mb-2">Informasi Dasar</h3>
@@ -620,7 +620,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <h3 class="font-medium text-gray-900 mb-2">Informasi PIC</h3>
                             <div class="space-y-2">
@@ -638,7 +638,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <h3 class="font-medium text-gray-900 mb-2">Informasi Administratif</h3>
                             <div class="space-y-2">
@@ -661,7 +661,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <h3 class="font-medium text-gray-900 mb-2">Alamat Lengkap</h3>
@@ -687,7 +687,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <h3 class="font-medium text-gray-900 mb-2">Lokasi & Area</h3>
                             <div class="space-y-2">
@@ -701,7 +701,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <h3 class="font-medium text-gray-900 mb-2">Dokumen & Logo</h3>
                             <div class="space-y-2">
@@ -746,7 +746,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Fasilitas -->
                     <div class="bg-gray-50 p-4 rounded-lg mb-8">
                         <h3 class="font-medium text-gray-900 mb-2">Fasilitas</h3>
@@ -779,7 +779,7 @@
                             </table>
                         </div>
                     </div>
-                    
+
                     <!-- Pengurus -->
                     <div class="bg-gray-50 p-4 rounded-lg mb-8">
                         <h3 class="font-medium text-gray-900 mb-2">Pengurus ICS</h3>
@@ -816,7 +816,7 @@
                             </table>
                         </div>
                     </div>
-                    
+
                     <div class="flex justify-end mt-6">
                         <a href="?mode=list" class="px-4 py-2 bg-[#F0AB00] hover:bg-yellow-600 text-white rounded-lg">
                             Kembali ke Daftar
@@ -834,7 +834,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <div class="mb-4">
-                                    <label for="nama_ics" class="block text-sm font-medium text-gray-700 mb-1">Nama ICS*</label>
+                                    <label for="nama_ics" class="block text-sm font-medium text-gray-700 mb-1">Nama ICS<span class="text-red-500">*</span></label>
                                     <input type="text" id="nama_ics" name="nama_ics" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['nama'] ?>" required>
                                 </div>
                                 <div class="mb-4">
@@ -842,7 +842,7 @@
                                     <input type="text" id="no_badan_hukum" name="no_badan_hukum" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['no_badan_hukum'] ?>">
                                 </div>
                                 <div class="mb-4">
-                                    <label for="jumlah_petani" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Petani*</label>
+                                    <label for="jumlah_petani" class="block text-sm font-medium text-gray-700 mb-1">Jumlah Petani<span class="text-red-500">*</span></label>
                                     <input type="number" id="jumlah_petani" name="jumlah_petani" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['jumlah_petani'] ?>" required>
                                 </div>
                                 <div class="mb-4">
@@ -857,19 +857,19 @@
                             <div>
                                 <h3 class="text-md font-medium text-gray-700 border-b pb-2 mb-4">Informasi PIC</h3>
                                 <div class="mb-4">
-                                    <label for="nama_pic" class="block text-sm font-medium text-gray-700 mb-1">Nama PIC*</label>
+                                    <label for="nama_pic" class="block text-sm font-medium text-gray-700 mb-1">Nama PIC<span class="text-red-500">*</span></label>
                                     <input type="text" id="nama_pic" name="nama_pic" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['pic']['nama'] ?>" required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="kontak_pic" class="block text-sm font-medium text-gray-700 mb-1">Kontak PIC*</label>
+                                    <label for="kontak_pic" class="block text-sm font-medium text-gray-700 mb-1">Kontak PIC<span class="text-red-500">*</span></label>
                                     <input type="text" id="kontak_pic" name="kontak_pic" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['pic']['kontak'] ?>" required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="email_pic" class="block text-sm font-medium text-gray-700 mb-1">Email PIC*</label>
+                                    <label for="email_pic" class="block text-sm font-medium text-gray-700 mb-1">Email PIC<span class="text-red-500">*</span></label>
                                     <input type="email" id="email_pic" name="email_pic" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['pic']['email'] ?>" required>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status Verifikasi*</label>
+                                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status Verifikasi<span class="text-red-500">*</span></label>
                                     <select id="status" name="status" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                         <option value="Aktif" <?= $ics['status'] === 'Aktif' ? 'selected' : '' ?>>Aktif</option>
                                         <option value="Proses Verifikasi" <?= $ics['status'] === 'Proses Verifikasi' ? 'selected' : '' ?>>Proses Verifikasi</option>
@@ -878,7 +878,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Dokumen & Logo & SOP -->
                         <div class="mt-6 border-t pt-6">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Dokumen & Logo & SOP</h3>
@@ -907,7 +907,7 @@
                                         <?php endif; ?>
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Logo</label>
                                     <div class="flex items-center">
@@ -952,24 +952,24 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Alamat & Lokasi -->
                         <div class="mt-6 border-t pt-6">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Alamat & Lokasi</h3>
                             <div class="mb-4">
-                                <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat (Jalan/Dusun)*</label>
+                                <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat (Jalan/Dusun)<span class="text-red-500">*</span></label>
                                 <input type="text" id="alamat" name="alamat" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['alamat'] ?>" required>
                             </div>
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <div class="mb-4">
-                                        <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi*</label>
+                                        <label for="provinsi" class="block text-sm font-medium text-gray-700 mb-1">Provinsi<span class="text-red-500">*</span></label>
                                         <input type="text" id="provinsi" name="provinsi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['provinsi'] ?>" readonly>
                                     </div>
-                                    
+
                                     <div class="mb-4">
-                                        <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten*</label>
+                                        <label for="kabupaten" class="block text-sm font-medium text-gray-700 mb-1">Kabupaten<span class="text-red-500">*</span></label>
                                         <select id="kabupaten" name="kabupaten" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Kabupaten</option>
                                             <option value="Kampar" <?= $ics['kabupaten'] === 'Kampar' ? 'selected' : '' ?>>Kampar</option>
@@ -978,13 +978,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div>
                                     <div class="mb-4">
-                                        <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan*</label>
+                                        <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-1">Kecamatan<span class="text-red-500">*</span></label>
                                         <select id="kecamatan" name="kecamatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Kecamatan</option>
-                                            <?php 
+                                            <?php
                                             // Kecamatan berdasarkan kabupaten
                                             $kecamatan_options = [];
                                             if ($ics['kabupaten'] === 'Kampar') {
@@ -994,18 +994,18 @@
                                             } elseif ($ics['kabupaten'] === 'Indragiri Hulu') {
                                                 $kecamatan_options = ['Rengat', 'Kelayang', 'Siberida'];
                                             }
-                                            
+
                                             foreach ($kecamatan_options as $kec): ?>
                                                 <option value="<?= $kec ?>" <?= $ics['kecamatan'] === $kec ? 'selected' : '' ?>><?= $kec ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    
+
                                     <div class="mb-4">
-                                        <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa*</label>
+                                        <label for="desa" class="block text-sm font-medium text-gray-700 mb-1">Desa<span class="text-red-500">*</span></label>
                                         <select id="desa" name="desa" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                                             <option value="">Pilih Desa</option>
-                                            <?php 
+                                            <?php
                                             // Desa berdasarkan kecamatan
                                             $desa_options = [];
                                             if ($ics['kecamatan'] === 'Bangkinang') {
@@ -1015,7 +1015,7 @@
                                             } elseif ($ics['kecamatan'] === 'Rengat') {
                                                 $desa_options = ['Rengat', 'Pematang Reba'];
                                             }
-                                            
+
                                             foreach ($desa_options as $desa): ?>
                                                 <option value="<?= $desa ?>" <?= $ics['desa'] === $desa ? 'selected' : '' ?>><?= $desa ?></option>
                                             <?php endforeach; ?>
@@ -1023,20 +1023,20 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="mb-4">
                                     <label for="lokasi" class="block text-sm font-medium text-gray-700 mb-1">Lokasi (Koordinat)</label>
                                     <input type="text" id="lokasi" name="lokasi" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['lokasi'] ?>">
                                 </div>
-                                
+
                                 <div class="mb-4">
                                     <label for="area_wilayah" class="block text-sm font-medium text-gray-700 mb-1">Area Wilayah</label>
                                     <input type="text" id="area_wilayah" name="area_wilayah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" value="<?= $ics['area_wilayah'] ?>">
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Fasilitas -->
                         <div class="mt-6 border-t pt-6">
                             <div class="flex justify-between items-center mb-4">
@@ -1079,7 +1079,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                         <!-- Pengurus -->
                         <div class="mt-6 border-t pt-6">
                             <div class="flex justify-between items-center mb-4">
@@ -1126,7 +1126,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                         <div class="mt-8 flex justify-end space-x-4">
                             <button type="button" onclick="window.location.href='?mode=view&id=<?= $id ?>'" class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg">
                                 Batal
@@ -1184,11 +1184,11 @@
             <input type="hidden" id="fasilitas-id">
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Fasilitas*</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Fasilitas<span class="text-red-500">*</span></label>
                     <input type="text" id="fasilitas-nama" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Traktor" required>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah*</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah<span class="text-red-500">*</span></label>
                     <input type="number" id="fasilitas-jumlah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: 2" required>
                 </div>
                 <div>
@@ -1221,15 +1221,15 @@
             <input type="hidden" id="pengurus-id">
             <div class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama*</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama<span class="text-red-500">*</span></label>
                     <input type="text" id="pengurus-nama" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Budi Santoso" required>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Jabatan*</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Jabatan<span class="text-red-500">*</span></label>
                     <input type="text" id="pengurus-jabatan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Ketua" required>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status<span class="text-red-500">*</span></label>
                     <select id="pengurus-status" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
                         <option value="Aktif">Aktif</option>
                         <option value="Tidak Aktif">Tidak Aktif</option>
@@ -1284,7 +1284,7 @@
             e.preventDefault();
             saveFasilitas();
         });
-        
+
         // Inisialisasi form pengurus
         document.getElementById('pengurus-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1295,10 +1295,10 @@
         document.getElementById('kabupaten').addEventListener('change', function() {
             const kabupaten = this.value;
             const kecamatanSelect = document.getElementById('kecamatan');
-            
+
             kecamatanSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
             kecamatanSelect.disabled = !kabupaten;
-            
+
             if (kabupaten && wilayahData.kecamatan[kabupaten]) {
                 wilayahData.kecamatan[kabupaten].forEach(kec => {
                     const option = document.createElement('option');
@@ -1307,7 +1307,7 @@
                     kecamatanSelect.appendChild(option);
                 });
             }
-            
+
             // Reset desa
             const desaSelect = document.getElementById('desa');
             desaSelect.innerHTML = '<option value="">Pilih Desa</option>';
@@ -1318,10 +1318,10 @@
         document.getElementById('kecamatan').addEventListener('change', function() {
             const kecamatan = this.value;
             const desaSelect = document.getElementById('desa');
-            
+
             desaSelect.innerHTML = '<option value="">Pilih Desa</option>';
             desaSelect.disabled = !kecamatan;
-            
+
             if (kecamatan && wilayahData.desa[kecamatan]) {
                 wilayahData.desa[kecamatan].forEach(desa => {
                     const option = document.createElement('option');
@@ -1336,20 +1336,20 @@
         document.getElementById('file-upload').addEventListener('change', function(e) {
             const files = e.target.files;
             const fileList = document.getElementById('file-list');
-            
+
             if (files.length > 10) {
                 showToast('Maksimal 10 file yang dapat diunggah', 'error');
                 return;
             }
-            
+
             for (let i = 0; i < Math.min(files.length, 10); i++) {
                 const file = files[i];
-                
+
                 if (file.size > 5 * 1024 * 1024) {
                     showToast(`File ${file.name} melebihi ukuran maksimal 5MB`, 'error');
                     continue;
                 }
-                
+
                 const docItem = document.createElement('div');
                 docItem.className = 'flex items-center justify-between bg-gray-50 p-2 rounded-lg';
                 docItem.innerHTML = `
@@ -1369,18 +1369,18 @@
         document.getElementById('logo-upload').addEventListener('change', function(e) {
             const file = e.target.files[0];
             const logoPreview = document.getElementById('logo-preview');
-            
+
             if (file) {
                 if (file.size > 2 * 1024 * 1024) {
                     showToast('Ukuran logo maksimal 2MB', 'error');
                     return;
                 }
-                
+
                 if (!file.type.match('image.*')) {
                     showToast('File harus berupa gambar', 'error');
                     return;
                 }
-                
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     logoPreview.innerHTML = `
@@ -1400,18 +1400,18 @@
         document.getElementById('sop-upload').addEventListener('change', function(e) {
             const file = e.target.files[0];
             const sopPreview = document.getElementById('sop-preview');
-            
+
             if (file) {
                 if (file.size > 5 * 1024 * 1024) {
                     showToast('Ukuran SOP maksimal 5MB', 'error');
                     return;
                 }
-                
+
                 if (!file.type.match('application/pdf') && !file.type.match('application/msword') && !file.type.match('application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
                     showToast('File harus berupa PDF atau DOC', 'error');
                     return;
                 }
-                
+
                 const sopItem = document.createElement('div');
                 sopItem.className = 'flex items-center justify-between bg-gray-50 p-2 rounded-lg';
                 sopItem.innerHTML = `
@@ -1460,12 +1460,12 @@
     // Fungsi untuk menampilkan modal fasilitas
     function showFasilitasModal(fasilitasId = null) {
         document.getElementById('fasilitas-modal').classList.remove('hidden');
-        
+
         if (fasilitasId !== null) {
             // Mode edit
             document.getElementById('fasilitas-modal-title').textContent = 'Edit Fasilitas';
             const fasilitas = currentFasilitas[fasilitasId];
-            
+
             document.getElementById('fasilitas-id').value = fasilitasId;
             document.getElementById('fasilitas-nama').value = fasilitas.fasilitas;
             document.getElementById('fasilitas-jumlah').value = fasilitas.jumlah;
@@ -1487,19 +1487,19 @@
     function saveFasilitas() {
         const fasilitasId = document.getElementById('fasilitas-id').value;
         const isEditMode = fasilitasId !== '';
-        
+
         const fasilitasData = {
             fasilitas: document.getElementById('fasilitas-nama').value,
             jumlah: parseInt(document.getElementById('fasilitas-jumlah').value),
             keterangan: document.getElementById('fasilitas-keterangan').value
         };
-        
+
         if (isEditMode) {
             currentFasilitas[fasilitasId] = fasilitasData;
         } else {
             currentFasilitas.push(fasilitasData);
         }
-        
+
         renderFasilitasList();
         hideFasilitasModal();
         showToast(`Fasilitas berhasil ${isEditMode ? 'diperbarui' : 'ditambahkan'}`, 'success');
@@ -1509,7 +1509,7 @@
     function renderFasilitasList() {
         const tbody = document.getElementById('fasilitas-list');
         tbody.innerHTML = '';
-        
+
         if (currentFasilitas.length === 0) {
             tbody.innerHTML = `
                 <tr>
@@ -1518,7 +1518,7 @@
             `;
             return;
         }
-        
+
         currentFasilitas.forEach((fasilitas, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -1550,12 +1550,12 @@
     // Fungsi untuk menampilkan modal pengurus
     function showPengurusModal(pengurusId = null) {
         document.getElementById('pengurus-modal').classList.remove('hidden');
-        
+
         if (pengurusId !== null) {
             // Mode edit
             document.getElementById('pengurus-modal-title').textContent = 'Edit Pengurus';
             const pengurus = currentPengurus[pengurusId];
-            
+
             document.getElementById('pengurus-id').value = pengurusId;
             document.getElementById('pengurus-nama').value = pengurus.nama;
             document.getElementById('pengurus-jabatan').value = pengurus.jabatan;
@@ -1577,19 +1577,19 @@
     function savePengurus() {
         const pengurusId = document.getElementById('pengurus-id').value;
         const isEditMode = pengurusId !== '';
-        
+
         const pengurusData = {
             nama: document.getElementById('pengurus-nama').value,
             jabatan: document.getElementById('pengurus-jabatan').value,
             status: document.getElementById('pengurus-status').value
         };
-        
+
         if (isEditMode) {
             currentPengurus[pengurusId] = pengurusData;
         } else {
             currentPengurus.push(pengurusData);
         }
-        
+
         renderPengurusList();
         hidePengurusModal();
         showToast(`Pengurus berhasil ${isEditMode ? 'diperbarui' : 'ditambahkan'}`, 'success');
@@ -1599,7 +1599,7 @@
     function renderPengurusList() {
         const tbody = document.getElementById('pengurus-list');
         tbody.innerHTML = '';
-        
+
         if (currentPengurus.length === 0) {
             tbody.innerHTML = `
                 <tr>
@@ -1608,7 +1608,7 @@
             `;
             return;
         }
-        
+
         currentPengurus.forEach((pengurus, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -1675,9 +1675,9 @@
             type === 'success' ? 'bg-green-500' : 'bg-red-500'
         }`;
         toast.textContent = message;
-        
+
         document.body.appendChild(toast);
-        
+
         setTimeout(() => {
             toast.classList.add('opacity-0', 'transition-opacity', 'duration-300');
             setTimeout(() => {
