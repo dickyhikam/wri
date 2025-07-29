@@ -11,7 +11,11 @@ if (strpos($request_uri, '/wri/') !== false) {
   $modified_uri = str_replace('/wri/', '', $request_uri);
 } else {
   // If '/wri' doesn't exist, keep the original URI
-  $modified_uri = $request_uri;
+  if (strpos($modified_uri, '/') !== false) {
+    $modified_uri = str_replace('/', '', $request_uri);
+  } else {
+    $modified_uri = $request_uri;
+  }
 }
 
 // Check if there's a '?' in the URI (indicating query parameters)
@@ -43,8 +47,6 @@ $name_menu = [
   'role' => 'Role',
   'keselamatan' => 'Kecelakaan Kerja'
 ];
-
-echo $modified_uri;
 ?>
 
 <head>
@@ -101,7 +103,7 @@ echo $modified_uri;
           </a>
         </div>
         <div>
-          <a href="index-user" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == '' || $name_menu[$modified_uri] == 'Dashboard User') ? 'sidebar-item active' : ''; ?>">
+          <a href="index-user" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'Dashboard User') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
             Dashboard User
           </a>
