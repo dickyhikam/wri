@@ -231,21 +231,21 @@ if ($farmer_id) {
 
                         <!-- Name -->
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Role</label>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Role <span class="text-red-500">*</span></label>
                             <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 value="<?= $action == 'edit' ? htmlspecialchars($farmer['name']) : '' ?>">
                         </div>
 
                         <!-- Number -->
                         <div>
-                            <label for="number" class="block text-sm font-medium text-gray-700">Urutan</label>
+                            <label for="number" class="block text-sm font-medium text-gray-700">Urutan <span class="text-red-500">*</span></label>
                             <input type="number" id="number" name="number" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 value="<?= $action == 'edit' ? htmlspecialchars($farmer['number']) : '' ?>">
                         </div>
 
                         <!-- Approval -->
                         <div>
-                            <label for="approval" class="block text-sm font-medium text-gray-700">Permission Manager</label>
+                            <label for="approval" class="block text-sm font-medium text-gray-700">Permission Manager <span class="text-red-500">*</span></label>
                             <select id="approval" name="approval" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 <option value="Ya" <?= $action == 'edit' && $farmer['approval'] == 'Ya' ? 'selected' : '' ?>>Ya</option>
                                 <option value="Tidak" <?= $action == 'edit' && $farmer['approval'] == 'Tidak' ? 'selected' : '' ?>>Tidak</option>
@@ -254,7 +254,7 @@ if ($farmer_id) {
 
                         <!-- Status -->
                         <div>
-                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                            <label for="status" class="block text-sm font-medium text-gray-700">Status <span class="text-red-500">*</span></label>
                             <select id="status" name="status" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 <option value="Active" <?= $action == 'edit' && $farmer['status'] == 'Active' ? 'selected' : '' ?>>Active</option>
                                 <option value="Inactive" <?= $action == 'edit' && $farmer['status'] == 'Inactive' ? 'selected' : '' ?>>Inactive</option>

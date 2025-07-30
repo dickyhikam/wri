@@ -135,7 +135,7 @@ switch ($submodule) {
 
 // Apply filters if needed
 if ($searchTerm !== '') {
-    $currentData = array_filter($currentData, function($item) use ($searchTerm, $submodule) {
+    $currentData = array_filter($currentData, function ($item) use ($searchTerm, $submodule) {
         if ($submodule === 'respon') {
             return stripos($item['respon_id'], $searchTerm) !== false;
         } elseif ($submodule === 'pertanyaan') {
@@ -153,21 +153,21 @@ if ($searchTerm !== '') {
 }
 
 if ($jenisFilter !== '' && $submodule === 'respon') {
-    $currentData = array_filter($currentData, function($item) use ($jenisFilter) {
+    $currentData = array_filter($currentData, function ($item) use ($jenisFilter) {
         return $item['jenis_id'] == $jenisFilter;
     });
     $totalItems = count($currentData);
 }
 
 if ($plotFilter !== '' && $submodule === 'respon') {
-    $currentData = array_filter($currentData, function($item) use ($plotFilter) {
+    $currentData = array_filter($currentData, function ($item) use ($plotFilter) {
         return $item['plot_id'] === $plotFilter;
     });
     $totalItems = count($currentData);
 }
 
 if ($tanggalFilter !== '' && $submodule === 'respon') {
-    $currentData = array_filter($currentData, function($item) use ($tanggalFilter) {
+    $currentData = array_filter($currentData, function ($item) use ($tanggalFilter) {
         return $item['tanggal'] === $tanggalFilter;
     });
     $totalItems = count($currentData);
@@ -202,7 +202,7 @@ include 'header.php';
             </div>
         </div>
     </div>
-    
+
     <!-- Submodule Navigation -->
     <div class="bg-white rounded-xl shadow-md p-4 mb-6 border border-gray-100">
         <nav class="flex space-x-4" aria-label="Tabs">
@@ -229,13 +229,23 @@ include 'header.php';
         <div class="bg-white rounded-xl shadow-md p-6 mb-8 border border-gray-100">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold">
-                    <?php 
-                    switch($submodule) {
-                        case 'respon': echo 'Daftar Respon NKT/HCV'; break;
-                        case 'pertanyaan': echo 'Daftar Pertanyaan NKT'; break;
-                        case 'jenis': echo 'Daftar Jenis NKT'; break;
-                        case 'parameter': echo 'Daftar Parameter'; break;
-                        case 'pilihan': echo 'Daftar Pilihan Jawaban'; break;
+                    <?php
+                    switch ($submodule) {
+                        case 'respon':
+                            echo 'Daftar Respon NKT/HCV';
+                            break;
+                        case 'pertanyaan':
+                            echo 'Daftar Pertanyaan NKT';
+                            break;
+                        case 'jenis':
+                            echo 'Daftar Jenis NKT';
+                            break;
+                        case 'parameter':
+                            echo 'Daftar Parameter';
+                            break;
+                        case 'pilihan':
+                            echo 'Daftar Pilihan Jawaban';
+                            break;
                     }
                     ?>
                 </h2>
@@ -255,15 +265,25 @@ include 'header.php';
                     <!-- Global Search -->
                     <div class="flex-1">
                         <input type="text" name="search" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Cari <?php 
-                                switch($submodule) {
-                                    case 'respon': echo 'ID Respon'; break;
-                                    case 'pertanyaan': echo 'Pertanyaan'; break;
-                                    case 'jenis': echo 'Jenis NKT'; break;
-                                    case 'parameter': echo 'Parameter'; break;
-                                    case 'pilihan': echo 'Pilihan Jawaban'; break;
-                                }
-                            ?>..."
+                            placeholder="Cari <?php
+                                                switch ($submodule) {
+                                                    case 'respon':
+                                                        echo 'ID Respon';
+                                                        break;
+                                                    case 'pertanyaan':
+                                                        echo 'Pertanyaan';
+                                                        break;
+                                                    case 'jenis':
+                                                        echo 'Jenis NKT';
+                                                        break;
+                                                    case 'parameter':
+                                                        echo 'Parameter';
+                                                        break;
+                                                    case 'pilihan':
+                                                        echo 'Pilihan Jawaban';
+                                                        break;
+                                                }
+                                                ?>..."
                             value="<?= htmlspecialchars($searchTerm) ?>">
                     </div>
 
@@ -403,40 +423,40 @@ include 'header.php';
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $index + 1 + $offset ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= htmlspecialchars($item['respon_id']) ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <?php 
-                                                $jenisName = '';
-                                                foreach ($dummyJenisNKT as $jenis) {
-                                                    if ($jenis['jenis_id'] === $item['jenis_id']) {
-                                                        $jenisName = $jenis['nama_jenis'];
-                                                        break;
-                                                    }
+                                            <?php
+                                            $jenisName = '';
+                                            foreach ($dummyJenisNKT as $jenis) {
+                                                if ($jenis['jenis_id'] === $item['jenis_id']) {
+                                                    $jenisName = $jenis['nama_jenis'];
+                                                    break;
                                                 }
-                                                echo htmlspecialchars($jenisName);
+                                            }
+                                            echo htmlspecialchars($jenisName);
                                             ?>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <?php 
-                                                $plotName = '';
-                                                foreach ($dummyPlotKebun as $plot) {
-                                                    if ($plot['plot_id'] === $item['plot_id']) {
-                                                        $plotName = $plot['nama_plot'];
-                                                        break;
-                                                    }
+                                            <?php
+                                            $plotName = '';
+                                            foreach ($dummyPlotKebun as $plot) {
+                                                if ($plot['plot_id'] === $item['plot_id']) {
+                                                    $plotName = $plot['nama_plot'];
+                                                    break;
                                                 }
-                                                echo htmlspecialchars($plotName);
+                                            }
+                                            echo htmlspecialchars($plotName);
                                             ?>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= htmlspecialchars($item['tanggal']) ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <?php 
-                                                $timName = '';
-                                                foreach ($dummyTimLapangan as $tim) {
-                                                    if ($tim['tim_id'] === $item['tim_id']) {
-                                                        $timName = $tim['nama_tim'];
-                                                        break;
-                                                    }
+                                            <?php
+                                            $timName = '';
+                                            foreach ($dummyTimLapangan as $tim) {
+                                                if ($tim['tim_id'] === $item['tim_id']) {
+                                                    $timName = $tim['nama_tim'];
+                                                    break;
                                                 }
-                                                echo htmlspecialchars($timName);
+                                            }
+                                            echo htmlspecialchars($timName);
                                             ?>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= count($item['detail_respon']) ?></td>
@@ -454,27 +474,27 @@ include 'header.php';
                                     <?php elseif ($submodule === 'pertanyaan'): ?>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $index + 1 + $offset ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <?php 
-                                                $paramName = '';
-                                                foreach ($dummyParameter as $param) {
-                                                    if ($param['parameter_id'] === $item['parameter_id']) {
-                                                        $paramName = $param['nama_parameter'];
-                                                        break;
-                                                    }
+                                            <?php
+                                            $paramName = '';
+                                            foreach ($dummyParameter as $param) {
+                                                if ($param['parameter_id'] === $item['parameter_id']) {
+                                                    $paramName = $param['nama_parameter'];
+                                                    break;
                                                 }
-                                                echo htmlspecialchars($paramName);
+                                            }
+                                            echo htmlspecialchars($paramName);
                                             ?>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <?php 
-                                                $jenisName = '';
-                                                foreach ($dummyJenisNKT as $jenis) {
-                                                    if ($jenis['jenis_id'] === $item['jenis_id']) {
-                                                        $jenisName = $jenis['nama_jenis'];
-                                                        break;
-                                                    }
+                                            <?php
+                                            $jenisName = '';
+                                            foreach ($dummyJenisNKT as $jenis) {
+                                                if ($jenis['jenis_id'] === $item['jenis_id']) {
+                                                    $jenisName = $jenis['nama_jenis'];
+                                                    break;
                                                 }
-                                                echo htmlspecialchars($jenisName);
+                                            }
+                                            echo htmlspecialchars($jenisName);
                                             ?>
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-900"><?= htmlspecialchars($item['pertanyaan']) ?></td>
@@ -513,15 +533,15 @@ include 'header.php';
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= htmlspecialchars($item['kode']) ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= htmlspecialchars($item['nama_parameter']) ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <?php 
-                                                $jenisName = '';
-                                                foreach ($dummyJenisNKT as $jenis) {
-                                                    if ($jenis['jenis_id'] === $item['jenis_id']) {
-                                                        $jenisName = $jenis['nama_jenis'];
-                                                        break;
-                                                    }
+                                            <?php
+                                            $jenisName = '';
+                                            foreach ($dummyJenisNKT as $jenis) {
+                                                if ($jenis['jenis_id'] === $item['jenis_id']) {
+                                                    $jenisName = $jenis['nama_jenis'];
+                                                    break;
                                                 }
-                                                echo htmlspecialchars($jenisName);
+                                            }
+                                            echo htmlspecialchars($jenisName);
                                             ?>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
@@ -541,15 +561,15 @@ include 'header.php';
                                     <?php elseif ($submodule === 'pilihan'): ?>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><?= htmlspecialchars($item['pilihan_id']) ?></td>
                                         <td class="px-6 py-4 text-sm text-gray-500">
-                                            <?php 
-                                                $pertanyaanText = '';
-                                                foreach ($dummyPertanyaan as $pertanyaan) {
-                                                    if ($pertanyaan['pertanyaan_id'] === $item['pertanyaan_id']) {
-                                                        $pertanyaanText = $pertanyaan['pertanyaan'];
-                                                        break;
-                                                    }
+                                            <?php
+                                            $pertanyaanText = '';
+                                            foreach ($dummyPertanyaan as $pertanyaan) {
+                                                if ($pertanyaan['pertanyaan_id'] === $item['pertanyaan_id']) {
+                                                    $pertanyaanText = $pertanyaan['pertanyaan'];
+                                                    break;
                                                 }
-                                                echo htmlspecialchars(substr($pertanyaanText, 0, 50)) . (strlen($pertanyaanText) > 50 ? '...' : '');
+                                            }
+                                            echo htmlspecialchars(substr($pertanyaanText, 0, 50)) . (strlen($pertanyaanText) > 50 ? '...' : '');
                                             ?>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><?= htmlspecialchars($item['jawaban']) ?></td>
@@ -641,14 +661,24 @@ include 'header.php';
         <div class="bg-white rounded-xl shadow-md p-6 mb-8 border border-gray-100">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold">
-                    <?= $action === 'add' ? 'Tambah' : 'Edit' ?> 
-                    <?php 
-                    switch($submodule) {
-                        case 'respon': echo 'Respon NKT/HCV'; break;
-                        case 'pertanyaan': echo 'Pertanyaan NKT'; break;
-                        case 'jenis': echo 'Jenis NKT'; break;
-                        case 'parameter': echo 'Parameter'; break;
-                        case 'pilihan': echo 'Pilihan Jawaban'; break;
+                    <?= $action === 'add' ? 'Tambah' : 'Edit' ?>
+                    <?php
+                    switch ($submodule) {
+                        case 'respon':
+                            echo 'Respon NKT/HCV';
+                            break;
+                        case 'pertanyaan':
+                            echo 'Pertanyaan NKT';
+                            break;
+                        case 'jenis':
+                            echo 'Jenis NKT';
+                            break;
+                        case 'parameter':
+                            echo 'Parameter';
+                            break;
+                        case 'pilihan':
+                            echo 'Pilihan Jawaban';
+                            break;
                     }
                     ?>
                 </h2>
@@ -706,12 +736,12 @@ include 'header.php';
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Pertanyaan Section -->
                     <div class="mt-8 pt-6 border-t border-gray-200">
                         <h3 class="text-lg font-medium text-gray-900 mb-4">Pertanyaan dan Jawaban</h3>
-                        
-                        <?php 
+
+                        <?php
                         $pertanyaanToShow = [];
                         if ($selectedItem) {
                             // Jika edit, tampilkan pertanyaan yang sudah dijawab
@@ -743,28 +773,28 @@ include 'header.php';
                             }
                         }
                         ?>
-                        
+
                         <?php if (!empty($pertanyaanToShow)): ?>
                             <div class="space-y-6">
                                 <?php foreach ($pertanyaanToShow as $index => $item): ?>
                                     <div class="p-4 border rounded-lg">
                                         <div class="mb-3">
                                             <label class="block text-sm font-medium text-gray-700 mb-1"><?= $index + 1 ?>. <?= htmlspecialchars($item['pertanyaan']['pertanyaan']) ?></label>
-                                            
+
                                             <?php if ($item['pertanyaan']['tipe_jawaban'] === 'pilihan'): ?>
                                                 <div class="mt-2 space-y-2">
-                                                    <?php 
-                                                    $pilihanForThisQuestion = array_filter($dummyPilihanJawaban, function($pilihan) use ($item) {
+                                                    <?php
+                                                    $pilihanForThisQuestion = array_filter($dummyPilihanJawaban, function ($pilihan) use ($item) {
                                                         return $pilihan['pertanyaan_id'] === $item['pertanyaan']['pertanyaan_id'];
                                                     });
                                                     ?>
                                                     <?php foreach ($pilihanForThisQuestion as $pilihan): ?>
                                                         <div class="flex items-center">
-                                                            <input type="radio" id="jawaban_<?= $item['pertanyaan']['pertanyaan_id'] ?>_<?= $pilihan['pilihan_id'] ?>" 
-                                                                   name="jawaban[<?= $item['pertanyaan']['pertanyaan_id'] ?>]" 
-                                                                   value="<?= htmlspecialchars($pilihan['jawaban']) ?>"
-                                                                   <?= $item['jawaban'] === $pilihan['jawaban'] ? 'checked' : '' ?>
-                                                                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                                            <input type="radio" id="jawaban_<?= $item['pertanyaan']['pertanyaan_id'] ?>_<?= $pilihan['pilihan_id'] ?>"
+                                                                name="jawaban[<?= $item['pertanyaan']['pertanyaan_id'] ?>]"
+                                                                value="<?= htmlspecialchars($pilihan['jawaban']) ?>"
+                                                                <?= $item['jawaban'] === $pilihan['jawaban'] ? 'checked' : '' ?>
+                                                                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                                                             <label for="jawaban_<?= $item['pertanyaan']['pertanyaan_id'] ?>_<?= $pilihan['pilihan_id'] ?>" class="ml-2 block text-sm text-gray-700">
                                                                 <?= htmlspecialchars($pilihan['jawaban']) ?>
                                                             </label>
@@ -772,9 +802,9 @@ include 'header.php';
                                                     <?php endforeach; ?>
                                                 </div>
                                             <?php else: ?>
-                                                <input type="text" name="jawaban[<?= $item['pertanyaan']['pertanyaan_id'] ?>]" 
-                                                       value="<?= htmlspecialchars($item['jawaban']) ?>" 
-                                                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500">
+                                                <input type="text" name="jawaban[<?= $item['pertanyaan']['pertanyaan_id'] ?>]"
+                                                    value="<?= htmlspecialchars($item['jawaban']) ?>"
+                                                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500">
                                             <?php endif; ?>
                                         </div>
                                         <div>
@@ -788,7 +818,7 @@ include 'header.php';
                             <p class="text-gray-500">Pilih jenis NKT/HCV terlebih dahulu untuk menampilkan pertanyaan.</p>
                         <?php endif; ?>
                     </div>
-                    
+
                 <?php elseif ($submodule === 'pertanyaan'): ?>
                     <div class="space-y-4">
                         <div>
@@ -821,15 +851,15 @@ include 'header.php';
                             <label class="block text-sm font-medium text-gray-700 mb-1">Tipe Jawaban</label>
                             <div class="mt-2 space-y-2">
                                 <div class="flex items-center">
-                                    <input type="radio" id="tipe_pilihan" name="tipe_jawaban" value="pilihan" 
-                                           <?= ($selectedItem && $selectedItem['tipe_jawaban'] === 'pilihan') ? 'checked' : '' ?> 
-                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                    <input type="radio" id="tipe_pilihan" name="tipe_jawaban" value="pilihan"
+                                        <?= ($selectedItem && $selectedItem['tipe_jawaban'] === 'pilihan') ? 'checked' : '' ?>
+                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                                     <label for="tipe_pilihan" class="ml-2 block text-sm text-gray-700">Pilihan</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="radio" id="tipe_text" name="tipe_jawaban" value="text" 
-                                           <?= (!$selectedItem || $selectedItem['tipe_jawaban'] === 'text') ? 'checked' : '' ?> 
-                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                    <input type="radio" id="tipe_text" name="tipe_jawaban" value="text"
+                                        <?= (!$selectedItem || $selectedItem['tipe_jawaban'] === 'text') ? 'checked' : '' ?>
+                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                                     <label for="tipe_text" class="ml-2 block text-sm text-gray-700">Text Bebas</label>
                                 </div>
                             </div>
@@ -873,21 +903,21 @@ include 'header.php';
                                         <?= htmlspecialchars($jenis['nama_jenis']) ?>
                                     </option>
                                 <?php endforeach; ?>
-                                </select>
+                            </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Tipe Jawaban</label>
                             <div class="mt-2 space-y-2">
                                 <div class="flex items-center">
-                                    <input type="radio" id="tipe_pilihan" name="tipe" value="pilihan" 
-                                           <?= ($selectedItem && $selectedItem['tipe'] === 'pilihan') ? 'checked' : '' ?> 
-                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                    <input type="radio" id="tipe_pilihan" name="tipe" value="pilihan"
+                                        <?= ($selectedItem && $selectedItem['tipe'] === 'pilihan') ? 'checked' : '' ?>
+                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                                     <label for="tipe_pilihan" class="ml-2 block text-sm text-gray-700">Pilihan</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="radio" id="tipe_text" name="tipe" value="text" 
-                                           <?= (!$selectedItem || $selectedItem['tipe'] === 'text') ? 'checked' : '' ?> 
-                                           class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                    <input type="radio" id="tipe_text" name="tipe" value="text"
+                                        <?= (!$selectedItem || $selectedItem['tipe'] === 'text') ? 'checked' : '' ?>
+                                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300">
                                     <label for="tipe_text" class="ml-2 block text-sm text-gray-700">Text Bebas</label>
                                 </div>
                             </div>
@@ -938,14 +968,24 @@ include 'header.php';
         <div class="bg-white rounded-xl shadow-md p-6 mb-8 border border-gray-100">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold">
-                    Detail 
-                    <?php 
-                    switch($submodule) {
-                        case 'respon': echo 'Respon NKT/HCV'; break;
-                        case 'pertanyaan': echo 'Pertanyaan NKT'; break;
-                        case 'jenis': echo 'Jenis NKT'; break;
-                        case 'parameter': echo 'Parameter'; break;
-                        case 'pilihan': echo 'Pilihan Jawaban'; break;
+                    Detail
+                    <?php
+                    switch ($submodule) {
+                        case 'respon':
+                            echo 'Respon NKT/HCV';
+                            break;
+                        case 'pertanyaan':
+                            echo 'Pertanyaan NKT';
+                            break;
+                        case 'jenis':
+                            echo 'Jenis NKT';
+                            break;
+                        case 'parameter':
+                            echo 'Parameter';
+                            break;
+                        case 'pilihan':
+                            echo 'Pilihan Jawaban';
+                            break;
                     }
                     ?>
                 </h2>
@@ -965,30 +1005,30 @@ include 'header.php';
                             <div>
                                 <label class="block text-sm font-medium text-gray-500 mb-1">Jenis NKT/HCV</label>
                                 <p class="text-gray-900">
-                                    <?php 
-                                        $jenisName = '';
-                                        foreach ($dummyJenisNKT as $jenis) {
-                                            if ($jenis['jenis_id'] === $selectedItem['jenis_id']) {
-                                                $jenisName = $jenis['nama_jenis'];
-                                                break;
-                                            }
+                                    <?php
+                                    $jenisName = '';
+                                    foreach ($dummyJenisNKT as $jenis) {
+                                        if ($jenis['jenis_id'] === $selectedItem['jenis_id']) {
+                                            $jenisName = $jenis['nama_jenis'];
+                                            break;
                                         }
-                                        echo htmlspecialchars($jenisName);
+                                    }
+                                    echo htmlspecialchars($jenisName);
                                     ?>
                                 </p>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-500 mb-1">Plot Kebun</label>
                                 <p class="text-gray-900">
-                                    <?php 
-                                        $plotName = '';
-                                        foreach ($dummyPlotKebun as $plot) {
-                                            if ($plot['plot_id'] === $selectedItem['plot_id']) {
-                                                $plotName = $plot['nama_plot'];
-                                                break;
-                                            }
+                                    <?php
+                                    $plotName = '';
+                                    foreach ($dummyPlotKebun as $plot) {
+                                        if ($plot['plot_id'] === $selectedItem['plot_id']) {
+                                            $plotName = $plot['nama_plot'];
+                                            break;
                                         }
-                                        echo htmlspecialchars($plotName);
+                                    }
+                                    echo htmlspecialchars($plotName);
                                     ?>
                                 </p>
                             </div>
@@ -1001,15 +1041,15 @@ include 'header.php';
                             <div>
                                 <label class="block text-sm font-medium text-gray-500 mb-1">Diisi Oleh</label>
                                 <p class="text-gray-900">
-                                    <?php 
-                                        $timName = '';
-                                        foreach ($dummyTimLapangan as $tim) {
-                                            if ($tim['tim_id'] === $selectedItem['tim_id']) {
-                                                $timName = $tim['nama_tim'];
-                                                break;
-                                            }
+                                    <?php
+                                    $timName = '';
+                                    foreach ($dummyTimLapangan as $tim) {
+                                        if ($tim['tim_id'] === $selectedItem['tim_id']) {
+                                            $timName = $tim['nama_tim'];
+                                            break;
                                         }
-                                        echo htmlspecialchars($timName);
+                                    }
+                                    echo htmlspecialchars($timName);
                                     ?>
                                 </p>
                             </div>
@@ -1019,13 +1059,13 @@ include 'header.php';
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Detail Jawaban Section -->
                     <div class="mt-8 pt-6 border-t border-gray-200">
                         <h3 class="text-lg font-medium text-gray-900 mb-4">Detail Jawaban</h3>
-                        
+
                         <div class="space-y-6">
-                            <?php foreach ($selectedItem['detail_respon'] as $index => $detail): 
+                            <?php foreach ($selectedItem['detail_respon'] as $index => $detail):
                                 $pertanyaan = null;
                                 foreach ($dummyPertanyaan as $p) {
                                     if ($p['pertanyaan_id'] === $detail['pertanyaan_id']) {
@@ -1063,30 +1103,30 @@ include 'header.php';
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Parameter</label>
                             <p class="text-gray-900">
-                                <?php 
-                                    $paramName = '';
-                                    foreach ($dummyParameter as $param) {
-                                        if ($param['parameter_id'] === $selectedItem['parameter_id']) {
-                                            $paramName = $param['nama_parameter'];
-                                            break;
-                                        }
+                                <?php
+                                $paramName = '';
+                                foreach ($dummyParameter as $param) {
+                                    if ($param['parameter_id'] === $selectedItem['parameter_id']) {
+                                        $paramName = $param['nama_parameter'];
+                                        break;
                                     }
-                                    echo htmlspecialchars($paramName);
+                                }
+                                echo htmlspecialchars($paramName);
                                 ?>
                             </p>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Jenis NKT/HCV</label>
                             <p class="text-gray-900">
-                                <?php 
-                                    $jenisName = '';
-                                    foreach ($dummyJenisNKT as $jenis) {
-                                        if ($jenis['jenis_id'] === $selectedItem['jenis_id']) {
-                                            $jenisName = $jenis['nama_jenis'];
-                                            break;
-                                        }
+                                <?php
+                                $jenisName = '';
+                                foreach ($dummyJenisNKT as $jenis) {
+                                    if ($jenis['jenis_id'] === $selectedItem['jenis_id']) {
+                                        $jenisName = $jenis['nama_jenis'];
+                                        break;
                                     }
-                                    echo htmlspecialchars($jenisName);
+                                }
+                                echo htmlspecialchars($jenisName);
                                 ?>
                             </p>
                         </div>
@@ -1139,15 +1179,15 @@ include 'header.php';
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Jenis NKT/HCV</label>
                             <p class="text-gray-900">
-                                <?php 
-                                    $jenisName = '';
-                                    foreach ($dummyJenisNKT as $jenis) {
-                                        if ($jenis['jenis_id'] === $selectedItem['jenis_id']) {
-                                            $jenisName = $jenis['nama_jenis'];
-                                            break;
-                                        }
+                                <?php
+                                $jenisName = '';
+                                foreach ($dummyJenisNKT as $jenis) {
+                                    if ($jenis['jenis_id'] === $selectedItem['jenis_id']) {
+                                        $jenisName = $jenis['nama_jenis'];
+                                        break;
                                     }
-                                    echo htmlspecialchars($jenisName);
+                                }
+                                echo htmlspecialchars($jenisName);
                                 ?>
                             </p>
                         </div>
@@ -1173,15 +1213,15 @@ include 'header.php';
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Pertanyaan</label>
                             <p class="text-gray-900">
-                                <?php 
-                                    $pertanyaanText = '';
-                                    foreach ($dummyPertanyaan as $pertanyaan) {
-                                        if ($pertanyaan['pertanyaan_id'] === $selectedItem['pertanyaan_id']) {
-                                            $pertanyaanText = $pertanyaan['pertanyaan'];
-                                            break;
-                                        }
+                                <?php
+                                $pertanyaanText = '';
+                                foreach ($dummyPertanyaan as $pertanyaan) {
+                                    if ($pertanyaan['pertanyaan_id'] === $selectedItem['pertanyaan_id']) {
+                                        $pertanyaanText = $pertanyaan['pertanyaan'];
+                                        break;
                                     }
-                                    echo htmlspecialchars($pertanyaanText);
+                                }
+                                echo htmlspecialchars($pertanyaanText);
                                 ?>
                             </p>
                         </div>
