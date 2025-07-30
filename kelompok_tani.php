@@ -1,5 +1,5 @@
 <?php
-// include 'config.php';
+// include 'config';
 include 'header.php';
 
 // Simulasi data dummy kelompok tani
@@ -180,14 +180,14 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
     </div>
     <div class="flex items-center space-x-6">
       <?php if ($action == 'list'): ?>
-        <a href="kelompok_tani.php?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="kelompok_tani?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-plus mr-2"></i> Tambah Kelompok
         </a>
       <?php elseif ($action == 'view'): ?>
-        <a href="kelompok_tani.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="kelompok_tani" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-arrow-left mr-2"></i> Kembali
         </a>
-        <a href="kelompok_tani.php?action=edit&id=<?= $group_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="kelompok_tani?action=edit&id=<?= $group_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-edit mr-2"></i> Edit
         </a>
         <button onclick="confirmDelete('<?= $group_id ?>')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center">
@@ -198,7 +198,7 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
           <i class="fas fa-times mr-2"></i> Batal
         </a>
       <?php elseif ($action == 'add'): ?>
-        <a href="kelompok_tani.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="kelompok_tani" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-arrow-left mr-2"></i> Kembali
         </a>
       <?php endif; ?>
@@ -282,10 +282,10 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
                       </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <a href="kelompok_tani.php?action=view&id=<?= $g['group_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Detail">
+                      <a href="kelompok_tani?action=view&id=<?= $g['group_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Detail">
                         <i class="fas fa-eye"></i>
                       </a>
-                      <a href="kelompok_tani.php?action=edit&id=<?= $g['group_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
+                      <a href="kelompok_tani?action=edit&id=<?= $g['group_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
                         <i class="fas fa-edit"></i>
                       </a>
                       <a href="#" onclick="confirmDelete('<?= $g['group_id'] ?>')" class="text-red-600 hover:text-red-900" title="Hapus">
@@ -310,30 +310,30 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
               </div>
               <div>
                 <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                  <a href="kelompok_tani.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                  <a href="kelompok_tani?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
                     <i class="fas fa-chevron-left"></i>
                   </a>
                   <?php
                   $startPage = max(1, $currentPage - 2);
                   $endPage = min($totalPages, $currentPage + 2);
                   if ($startPage > 1) {
-                    echo '<a href="kelompok_tani.php?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
+                    echo '<a href="kelompok_tani?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
                     if ($startPage > 2) {
                       echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
                     }
                   }
                   for ($i = $startPage; $i <= $endPage; $i++) {
                     $active = $i == $currentPage ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50';
-                    echo '<a href="kelompok_tani.php?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
+                    echo '<a href="kelompok_tani?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
                   }
                   if ($endPage < $totalPages) {
                     if ($endPage < $totalPages - 1) {
                       echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
                     }
-                    echo '<a href="kelompok_tani.php?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
+                    echo '<a href="kelompok_tani?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
                   }
                   ?>
-                  <a href="kelompok_tani.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                  <a href="kelompok_tani?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
                     <i class="fas fa-chevron-right"></i>
                   </a>
                 </nav>
@@ -406,15 +406,13 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
             <!-- Peta Interaktif -->
             <div class="mt-4">
               <h5 class="text-sm font-medium text-gray-700 mb-2">Lokasi di Peta</h5>
-              <div id="map" class="w-full h-64 border rounded-lg" style="background-color: #f0f0f0;">
-                <iframe width="100%" height="100%" style="border:0; border-radius: 0.5rem;"
-                  src="https://maps.google.com/maps?q=-0.456,101.345&z=15&output=embed"
-                  frameborder="0" allowfullscreen></iframe>
-              </div>
-              <p class="mt-2 text-xs text-gray-500">Gunakan input di atas untuk mengisi koordinat.</p>
+              <div id="map" class="w-full h-64 border rounded-lg" style="background-color: #f0f0f0;"></div>
+              <input type="hidden" id="latitude" name="latitude">
+              <input type="hidden" id="longitude" name="longitude">
+              <p class="mt-2 text-xs text-gray-500">Klik pada peta untuk memilih lokasi.</p>
             </div>
             <div class="flex justify-end space-x-3">
-              <a href="kelompok_tani.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
+              <a href="kelompok_tani" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
                 Batal
               </a>
               <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">
@@ -498,7 +496,7 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
               </div>
             </div>
             <div class="flex justify-end space-x-3">
-              <a href="kelompok_tani.php?action=view&id=<?= $group_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
+              <a href="kelompok_tani?action=view&id=<?= $group_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
                 Batal
               </a>
               <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">
@@ -514,7 +512,7 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
         <div class="p-6 bg-gray-50 border-b flex justify-between items-center">
           <h3 class="text-lg font-medium text-gray-900">Detail Kelompok Tani</h3>
           <div class="flex space-x-2">
-            <a href="kelompok_tani.php?action=edit&id=<?= $group_id ?>" class="text-blue-600 hover:text-blue-800 text-sm">
+            <a href="kelompok_tani?action=edit&id=<?= $group_id ?>" class="text-blue-600 hover:text-blue-800 text-sm">
               <i class="fas fa-edit mr-1"></i> Edit
             </a>
             <a href="#" onclick="confirmDelete('<?= $group_id ?>')" class="text-red-600 hover:text-red-800 text-sm">
@@ -577,7 +575,7 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
             <div id="aktivitas-content" class="tab-content active">
               <div class="flex justify-between items-center mb-4">
                 <h4 class="text-md font-semibold text-gray-700">Daftar Aktivitas</h4>
-                <a href="kelompok_tani.php?action=add_activity&group_id=<?= $group_id ?>" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-3 py-1 rounded-lg text-sm flex items-center">
+                <a href="kelompok_tani?action=add_activity&group_id=<?= $group_id ?>" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-3 py-1 rounded-lg text-sm flex items-center">
                   <i class="fas fa-plus mr-1"></i> Tambah
                 </a>
               </div>
@@ -604,7 +602,7 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
                           <td class="px-4 py-4"><?= date('d/m/Y', strtotime($a['date'])) ?></td>
                           <td class="px-4 py-4"><?= htmlspecialchars($a['summary']) ?></td>
                           <td class="px-4 py-4 text-sm">
-                            <a href="kelompok_tani.php?action=edit_activity&id=<?= $a['activity_id'] ?>" class="text-blue-600 mr-3"><i class="fas fa-edit"></i></a>
+                            <a href="kelompok_tani?action=edit_activity&id=<?= $a['activity_id'] ?>" class="text-blue-600 mr-3"><i class="fas fa-edit"></i></a>
                             <a href="#" onclick="confirmDeleteActivity('<?= $a['activity_id'] ?>')" class="text-red-600"><i class="fas fa-trash-alt"></i></a>
                           </td>
                         </tr>
@@ -619,7 +617,7 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
             <div id="anggota-content" class="tab-content hidden">
               <div class="flex justify-between items-center mb-4">
                 <h4 class="text-md font-semibold text-gray-700">Daftar Anggota</h4>
-                <a href="kelompok_tani.php?action=add_member&group_id=<?= $group_id ?>" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-3 py-1 rounded-lg text-sm flex items-center">
+                <a href="kelompok_tani?action=add_member&group_id=<?= $group_id ?>" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-3 py-1 rounded-lg text-sm flex items-center">
                   <i class="fas fa-plus mr-1"></i> Tambah
                 </a>
               </div>
@@ -652,7 +650,7 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
                             </span>
                           </td>
                           <td class="px-4 py-4 text-sm">
-                            <a href="kelompok_tani.php?action=edit_member&id=<?= $m['member_id'] ?>" class="text-blue-600 mr-3"><i class="fas fa-edit"></i></a>
+                            <a href="kelompok_tani?action=edit_member&id=<?= $m['member_id'] ?>" class="text-blue-600 mr-3"><i class="fas fa-edit"></i></a>
                             <a href="#" onclick="confirmDeleteMember('<?= $m['member_id'] ?>')" class="text-red-600"><i class="fas fa-trash-alt"></i></a>
                           </td>
                         </tr>
@@ -792,6 +790,42 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
 </div>
 
 <script>
+  // Initialize the map
+  var map = L.map('map').setView([-0.456, 101.345], 15); // Starting coordinates for the map
+
+  // Add a tile layer to the map
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  // Add a marker to the map with a click event
+  var marker;
+  map.on('click', function(e) {
+    var lat = e.latlng.lat;
+    var lon = e.latlng.lng;
+
+    // Remove the previous marker (if any)
+    if (marker) {
+      map.removeLayer(marker);
+    }
+
+    // Add a new marker at the clicked location
+    marker = L.marker([lat, lon]).addTo(map);
+
+    // Set the latitude and longitude values in the hidden inputs
+    document.getElementById('latitude').value = lat;
+    document.getElementById('longitude').value = lon;
+  });
+
+  // Optional: Add a default marker (based on the initial map coordinates)
+  var initialLat = -0.456;
+  var initialLon = 101.345;
+  marker = L.marker([initialLat, initialLon]).addTo(map);
+
+  // Set the hidden input fields with the initial coordinates
+  document.getElementById('latitude').value = initialLat;
+  document.getElementById('longitude').value = initialLon;
+
   // Tab functionality
   document.querySelectorAll('.tab-button').forEach(button => {
     button.addEventListener('click', function() {
@@ -812,7 +846,7 @@ $currentPageGroups = array_slice($filteredGroups, $offset, $perPage);
 
   // Delete confirmation with modal
   function confirmDelete(id) {
-    document.getElementById('confirmDeleteBtn').href = 'kelompok_tani.php?action=delete&id=' + id;
+    document.getElementById('confirmDeleteBtn').href = 'kelompok_tani?action=delete&id=' + id;
     document.getElementById('deleteModal').classList.remove('hidden');
   }
 
@@ -835,17 +869,17 @@ function getBackUrl($action, $group_id, $activity_id, $member_id)
   switch ($action) {
     case 'edit':
     case 'view':
-      return 'kelompok_tani.php?action=view&id=' . $group_id;
+      return 'kelompok_tani?action=view&id=' . $group_id;
     case 'edit_activity':
-      return 'kelompok_tani.php?action=view&id=' . $group_id;
+      return 'kelompok_tani?action=view&id=' . $group_id;
     case 'edit_member':
-      return 'kelompok_tani.php?action=view&id=' . $group_id;
+      return 'kelompok_tani?action=view&id=' . $group_id;
     case 'add_activity':
-      return 'kelompok_tani.php?action=view&id=' . $group_id;
+      return 'kelompok_tani?action=view&id=' . $group_id;
     case 'add_member':
-      return 'kelompok_tani.php?action=view&id=' . $group_id;
+      return 'kelompok_tani?action=view&id=' . $group_id;
     default:
-      return 'kelompok_tani.php';
+      return 'kelompok_tani';
   }
 }
 include 'footer.php';
