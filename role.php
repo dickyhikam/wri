@@ -97,6 +97,7 @@ if ($farmer_id) {
                             <?php
                             // Filter data berdasarkan dropdown
                             $filteredRoles = $dummyRoles;
+                            echo count($dummyRoles);
                             if (isset($_GET['ics_filter']) && $_GET['ics_filter'] != '') {
                                 $filteredRoles = array_filter($filteredRoles, function ($f) {
                                     return $f['ics_id'] == $_GET['ics_filter'];

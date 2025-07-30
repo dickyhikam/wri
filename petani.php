@@ -320,21 +320,21 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
     </div>
     <div class="flex items-center space-x-6">
       <?php if ($action == 'list'): ?>
-        <a href="petani.php?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="petani?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-plus mr-2"></i> Tambah Petani
         </a>
       <?php elseif ($action == 'view'): ?>
-        <a href="petani.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="petani" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-arrow-left mr-2"></i> Kembali
         </a>
-        <a href="petani.php?action=edit&id=<?= $farmer_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="petani?action=edit&id=<?= $farmer_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-edit mr-2"></i> Edit
         </a>
         <button onclick="confirmDelete('<?= $farmer_id ?>')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-trash-alt mr-2"></i> Hapus
         </button>
       <?php elseif ($action == 'edit'): ?>
-        <a href="petani.php?action=view&id=<?= $farmer_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="petani?action=view&id=<?= $farmer_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-times mr-2"></i> Batal
         </a>
       <?php endif; ?>
@@ -468,10 +468,10 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                       </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <a href="petani.php?action=view&id=<?= $f['farmer_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Profil">
+                      <a href="petani?action=view&id=<?= $f['farmer_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Profil">
                         <i class="fas fa-eye"></i>
                       </a>
-                      <a href="petani.php?action=edit&id=<?= $f['farmer_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
+                      <a href="petani?action=edit&id=<?= $f['farmer_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
                         <i class="fas fa-edit"></i>
                       </a>
                       <a href="#" onclick="confirmDelete('<?= $f['farmer_id'] ?>')" class="text-red-600 hover:text-red-900" title="Hapus">
@@ -488,10 +488,10 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
         <!-- Pagination -->
         <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
           <div class="flex-1 flex justify-between sm:hidden">
-            <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+            <a href="petani?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
               Sebelumnya
             </a>
-            <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+            <a href="petani?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
               Selanjutnya
             </a>
           </div>
@@ -503,7 +503,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
             </div>
             <div>
               <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                <a href="petani?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
                   <span class="sr-only">Sebelumnya</span>
                   <i class="fas fa-chevron-left"></i>
                 </a>
@@ -514,7 +514,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                 $endPage = min($totalPages, $currentPage + 2);
 
                 if ($startPage > 1) {
-                  echo '<a href="petani.php?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
+                  echo '<a href="petani?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
                   if ($startPage > 2) {
                     echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
                   }
@@ -522,18 +522,18 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
 
                 for ($i = $startPage; $i <= $endPage; $i++) {
                   $active = $i == $currentPage ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50';
-                  echo '<a href="petani.php?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
+                  echo '<a href="petani?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
                 }
 
                 if ($endPage < $totalPages) {
                   if ($endPage < $totalPages - 1) {
                     echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
                   }
-                  echo '<a href="petani.php?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
+                  echo '<a href="petani?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
                 }
                 ?>
 
-                <a href="petani.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                <a href="petani?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
                   <span class="sr-only">Selanjutnya</span>
                   <i class="fas fa-chevron-right"></i>
                 </a>
@@ -544,6 +544,25 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
       </div>
 
     <?php elseif ($action == 'add' || $action == 'edit'): ?>
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="p-6">
+          <div class="flex items-center space-x-2"> <!-- Flexbox untuk membuat elemen sejajar -->
+            <div class="flex-1"> <!-- Inputan mengambil ruang yang tersisa -->
+              <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
+              <div class="flex items-center"> <!-- Flex untuk menyelaraskan input dan tombol -->
+                <input type="text" id="nik" name="nik" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  value="<?= $action == 'edit' ? htmlspecialchars($farmer['nik']) : '' ?>">
+                <button type="button" class="ml-2 bg-yellow-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 h-full">
+                  Cari
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
       <!-- Form Tambah/Edit Petani -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden">
         <div class="p-6">
@@ -562,41 +581,15 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                     value="<?= $action == 'edit' ? htmlspecialchars($farmer['farmer_id']) : generateNewFarmerId() ?>" readonly>
                 </div>
                 <div>
-                  <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                  <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['name']) : '' ?>">
-                </div>
-                <div>
-                  <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
+                  <label for="nik" class="block text-sm font-medium text-gray-700">NPWP</label>
                   <input type="text" id="nik" name="nik" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     value="<?= $action == 'edit' ? htmlspecialchars($farmer['nik']) : '' ?>">
                 </div>
                 <div>
-                  <label for="plot_kebun" class="block text-sm font-medium text-gray-700">Plot Kebun</label>
-                  <select id="plot_kebun" name="plot_kebun" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">Pilih Plot Kebun</option>
-                    <?php foreach ($dummyPlots as $plot): ?>
-                      <option value="<?= htmlspecialchars($plot) ?>" <?= $action == 'edit' && $farmer['plot_kebun'] == $plot ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($plot) ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
+                  <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                  <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['name']) : '' ?>">
                 </div>
-                <div>
-                  <label for="pelatihan" class="block text-sm font-medium text-gray-700">Pelatihan yang Diikuti</label>
-                  <select id="pelatihan" name="pelatihan" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    <option value="">Pilih Pelatihan</option>
-                    <?php foreach ($dummyTrainings as $training): ?>
-                      <option value="<?= htmlspecialchars($training) ?>" <?= $action == 'edit' && $farmer['pelatihan'] == $training ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($training) ?>
-                      </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-              </div>
-
-              <!-- Kolom Kanan -->
-              <div class="space-y-4">
                 <div>
                   <label for="gender" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
                   <select id="gender" name="gender" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -614,6 +607,37 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                   <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
                   <input type="date" id="tgl_lahir" name="tgl_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     value="<?= $action == 'edit' ? htmlspecialchars($farmer['tgl_lahir']) : '' ?>">
+                </div>
+                <div hidden>
+                  <label for="pelatihan" class="block text-sm font-medium text-gray-700">Pelatihan yang Diikuti</label>
+                  <select id="pelatihan" name="pelatihan" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Pilih Pelatihan</option>
+                    <?php foreach ($dummyTrainings as $training): ?>
+                      <option value="<?= htmlspecialchars($training) ?>" <?= $action == 'edit' && $farmer['pelatihan'] == $training ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($training) ?>
+                      </option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Kolom Kanan -->
+              <div class="space-y-4">
+                <div>
+                  <label for="ics" class="block text-sm font-medium text-gray-700">ICS</label>
+                  <select id="ics" name="ics" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Pilih ICS</option>
+                    <option value="A">ICS A</option>
+                    <option value="B">ICS B</option>
+                    <option value="C">ICS C</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="kelompokTani" class="block text-sm font-medium text-gray-700">Kelompok Tani</label>
+                  <select id="kelompokTani" name="kelompokTani" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Pilih Kelompok Tani</option>
+                  </select>
                 </div>
                 <div>
                   <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
@@ -633,7 +657,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
             </div>
 
             <div class="flex justify-end space-x-3">
-              <a href="<?= $action == 'add' ? 'petani.php' : 'petani.php?action=view&id=' . $farmer_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
+              <a href="<?= $action == 'add' ? 'petani' : 'petani?action=view&id=' . $farmer_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
                 Batal
               </a>
               <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">
@@ -899,9 +923,88 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
   function confirmDelete(farmerId) {
     if (confirm('Apakah Anda yakin ingin menghapus petani ini?')) {
       // Redirect ke action delete dengan parameter id
-      window.location.href = 'petani.php?action=delete&id=' + farmerId;
+      window.location.href = 'petani?action=delete&id=' + farmerId;
     }
   }
+
+  // Data Dummy Kelompok Tani berdasarkan ICS
+  const kelompokTaniData = {
+    "A": [{
+        value: "A1",
+        name: "Kelompok Tani A1"
+      },
+      {
+        value: "A2",
+        name: "Kelompok Tani A2"
+      }
+    ],
+    "B": [{
+        value: "B1",
+        name: "Kelompok Tani B1"
+      },
+      {
+        value: "B2",
+        name: "Kelompok Tani B2"
+      }
+    ],
+    "C": [{
+        value: "C1",
+        name: "Kelompok Tani C1"
+      },
+      {
+        value: "C2",
+        name: "Kelompok Tani C2"
+      }
+    ]
+  };
+
+  // Kelompok Tani yang tidak terkait dengan ICS (misalnya Kelompok Tani Umum)
+  const kelompokTaniUmum = [{
+      value: "U1",
+      name: "Kelompok Tani Umum 1"
+    },
+    {
+      value: "U2",
+      name: "Kelompok Tani Umum 2"
+    }
+  ];
+
+  // Mengambil elemen ICS dan Kelompok Tani
+  const icsSelect = document.getElementById('ics');
+  const kelompokTaniSelect = document.getElementById('kelompokTani');
+
+  // Fungsi untuk mengupdate pilihan Kelompok Tani berdasarkan ICS
+  function updateKelompokTaniOptions() {
+    const selectedICS = icsSelect.value;
+
+    // Kosongkan pilihan Kelompok Tani
+    kelompokTaniSelect.innerHTML = '<option value="">Pilih Kelompok Tani</option>';
+
+    if (selectedICS) {
+      // Jika ICS dipilih, tampilkan Kelompok Tani yang sesuai dengan ICS
+      const kelompokTaniList = kelompokTaniData[selectedICS] || [];
+      kelompokTaniList.forEach(kelompok => {
+        const option = document.createElement('option');
+        option.value = kelompok.value;
+        option.textContent = kelompok.name;
+        kelompokTaniSelect.appendChild(option);
+      });
+    } else {
+      // Jika ICS tidak dipilih, tampilkan Kelompok Tani yang tidak terkait dengan ICS
+      kelompokTaniUmum.forEach(kelompok => {
+        const option = document.createElement('option');
+        option.value = kelompok.value;
+        option.textContent = kelompok.name;
+        kelompokTaniSelect.appendChild(option);
+      });
+    }
+  }
+
+  // Menambahkan event listener pada dropdown ICS
+  icsSelect.addEventListener('change', updateKelompokTaniOptions);
+
+  // Panggil fungsi untuk mengupdate pilihan Kelompok Tani pada awalnya
+  updateKelompokTaniOptions();
 </script>
 
 <?php include 'footer.php'; ?>
