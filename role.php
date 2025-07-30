@@ -139,7 +139,7 @@ if ($farmer_id) {
                                     <td colspan="7" class="px-6 py-4 text-center text-gray-500">Tidak ada data role</td>
                                 </tr>
                             <?php else: ?>
-                                <?php foreach ($currentPageFarmers as $index => $f): ?>
+                                <?php foreach ($filteredRoles as $index => $f): ?>
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($f['name']) ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($f['number']) ?></td>
