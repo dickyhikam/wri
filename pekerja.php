@@ -524,20 +524,20 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
         </div>
         <div class="flex items-center space-x-6">
             <?php if ($action == 'list'): ?>
-                <a href="pekerja.php?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
+                <a href="pekerja?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-plus mr-2"></i> Tambah Pekerja
                 </a>
             <?php elseif ($action == 'view'): ?>
-                <a href="pekerja.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+                <a href="pekerja" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-arrow-left mr-2"></i> Kembali
                 </a>
                 <?php if ($subaction == ''): ?>
-                    <a href="pekerja.php?action=edit&id=<?= $worker_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                    <a href="pekerja?action=edit&id=<?= $worker_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
                         <i class="fas fa-edit mr-2"></i> Edit
                     </a>
                 <?php endif; ?>
             <?php elseif ($action == 'edit'): ?>
-                <a href="pekerja.php?action=view&id=<?= $worker_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+                <a href="pekerja?action=view&id=<?= $worker_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-times mr-2"></i> Batal
                 </a>
             <?php endif; ?>
@@ -666,10 +666,10 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="pekerja.php?action=view&id=<?= $w['pekerja_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Profil">
+                                            <a href="pekerja?action=view&id=<?= $w['pekerja_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Profil">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="pekerja.php?action=edit&id=<?= $w['pekerja_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
+                                            <a href="pekerja?action=edit&id=<?= $w['pekerja_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a href="#" class="text-red-600 hover:text-red-900" title="Hapus" onclick="alert('Fitur hapus hanya untuk demonstrasi. Data tidak akan benar-benar dihapus.'); return false;">
@@ -755,13 +755,13 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                             <!-- Tab Navigasi -->
                             <div class="mt-6 w-full">
                                 <nav class="flex flex-col space-y-2">
-                                    <a href="pekerja.php?action=view&id=<?= $worker_id ?>" class="px-4 py-2 rounded-lg <?= $subaction == '' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
+                                    <a href="pekerja?action=view&id=<?= $worker_id ?>" class="px-4 py-2 rounded-lg <?= $subaction == '' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
                                         <i class="fas fa-user mr-2"></i> Profil
                                     </a>
-                                    <a href="pekerja.php?action=view&id=<?= $worker_id ?>&subaction=contract" class="px-4 py-2 rounded-lg <?= $subaction == 'contract' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
+                                    <a href="pekerja?action=view&id=<?= $worker_id ?>&subaction=contract" class="px-4 py-2 rounded-lg <?= $subaction == 'contract' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
                                         <i class="fas fa-file-contract mr-2"></i> Kontrak Kerja
                                     </a>
-                                    <a href="pekerja.php?action=view&id=<?= $worker_id ?>&subaction=facility" class="px-4 py-2 rounded-lg <?= $subaction == 'facility' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
+                                    <a href="pekerja?action=view&id=<?= $worker_id ?>&subaction=facility" class="px-4 py-2 rounded-lg <?= $subaction == 'facility' ? 'bg-blue-100 text-blue-800' : 'text-gray-700 hover:bg-gray-100' ?>">
                                         <i class="fas fa-home mr-2"></i> Fasilitas
                                     </a>
                                 </nav>
@@ -1118,24 +1118,33 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label for="lahan_id" class="block text-sm font-medium text-gray-700">ID Lahan</label>
-                                    <input type="text" id="lahan_id" name="lahan_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['lahan_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-                                <div>
-                                    <label for="lahan_name" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
-                                    <input type="text" id="lahan_name" name="lahan_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['lahan_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-                                <div>
                                     <label for="farmer_id" class="block text-sm font-medium text-gray-700">ID Petani</label>
-                                    <input type="text" id="farmer_id" name="farmer_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['farmer_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <select id="farmer_id" name="farmer_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pilih ID Petani</option>
+                                        <!-- Dynamic options for Farmer ID -->
+                                    </select>
                                 </div>
+
                                 <div>
                                     <label for="farmer_name" class="block text-sm font-medium text-gray-700">Nama Petani</label>
                                     <input type="text" id="farmer_name" name="farmer_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['farmer_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
+
+                                <div>
+                                    <label for="lahan_id" class="block text-sm font-medium text-gray-700">ID Lahan</label>
+                                    <select id="lahan_id" name="lahan_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pilih ID Lahan</option>
+                                        <!-- Dynamic options for Lahan ID will be populated based on selected farmer -->
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="lahan_name" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
+                                    <input type="text" id="lahan_name" name="lahan_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['lahan_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
                             </div>
                             <div class="flex justify-end pt-6">
-                                <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mr-3" onclick="window.location.href='pekerja.php'">
+                                <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mr-3" onclick="window.location.href='pekerja'">
                                     Batal
                                 </button>
                                 <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">
@@ -1149,5 +1158,113 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
         <?php endif; ?>
     </section>
 </main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Dummy Data for Petani (Farmer) and Lahan (Land)
+        const petaniData = {
+            'P001': {
+                'name': 'Petani A',
+                'lahan_ids': ['L001', 'L002']
+            },
+            'P002': {
+                'name': 'Petani B',
+                'lahan_ids': ['L003']
+            },
+            'P003': {
+                'name': 'Petani C',
+                'lahan_ids': ['L004', 'L005']
+            }
+        };
+
+        const lahanData = {
+            'L001': {
+                'name': 'Lahan A',
+                'farmer_id': 'P001'
+            },
+            'L002': {
+                'name': 'Lahan B',
+                'farmer_id': 'P001'
+            },
+            'L003': {
+                'name': 'Lahan C',
+                'farmer_id': 'P002'
+            },
+            'L004': {
+                'name': 'Lahan D',
+                'farmer_id': 'P003'
+            },
+            'L005': {
+                'name': 'Lahan E',
+                'farmer_id': 'P003'
+            }
+        };
+
+        // Get the DOM elements
+        const lahanSelect = document.getElementById('lahan_id');
+        const farmerSelect = document.getElementById('farmer_id');
+        const lahanName = document.getElementById('lahan_name');
+        const farmerName = document.getElementById('farmer_name');
+
+        // Populate the Farmer dropdown
+        for (const [id, petani] of Object.entries(petaniData)) {
+            const option = document.createElement('option');
+            option.value = id;
+            option.textContent = petani.name;
+            farmerSelect.appendChild(option);
+        }
+        for (const [id, petani] of Object.entries(lahanData)) {
+            const option = document.createElement('option');
+            option.value = id;
+            option.textContent = petani.name;
+            lahanSelect.appendChild(option);
+        }
+
+        // Populate the Lahan dropdown based on selected farmer
+        farmerSelect.addEventListener('change', function() {
+            const selectedFarmerId = this.value;
+            lahanSelect.innerHTML = '<option value="">Pilih ID Lahan</option>'; // Reset Lahan dropdown
+
+            if (selectedFarmerId) {
+                // Populate Lahan dropdown with the lands of the selected farmer
+                const selectedPetani = petaniData[selectedFarmerId];
+                selectedPetani.lahan_ids.forEach(lahanId => {
+                    const option = document.createElement('option');
+                    option.value = lahanId;
+                    option.textContent = lahanData[lahanId].name;
+                    lahanSelect.appendChild(option);
+                });
+
+                // Set the farmer name based on selected farmer
+                farmerName.value = selectedPetani.name;
+            } else {
+                // Reset fields if no farmer is selected
+                lahanName.value = '';
+                farmerName.value = '';
+            }
+        });
+
+        // Populate the Farmer and Lahan fields based on selected land
+        lahanSelect.addEventListener('change', function() {
+            const selectedLahanId = this.value;
+            if (selectedLahanId) {
+                // Set the corresponding Farmer ID based on selected land
+                const selectedLahan = lahanData[selectedLahanId];
+                farmerSelect.value = selectedLahan.farmer_id;
+
+                // Set the Lahan name based on selected land
+                lahanName.value = selectedLahan.name;
+
+                // Set the Farmer name based on corresponding farmer
+                const selectedPetani = petaniData[selectedLahan.farmer_id];
+                farmerName.value = selectedPetani.name;
+            } else {
+                // Reset fields if no land is selected
+                farmerSelect.value = '';
+                farmerName.value = '';
+            }
+        });
+    });
+</script>
 
 <?php include 'footer.php'; ?>
