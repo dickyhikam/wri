@@ -109,7 +109,7 @@ $produksi_data = [
 // Data lahan
 $lahan = [
     101 => [
-        'name' => 'Lahan Blok A', 
+        'name' => 'Lahan Blok A',
         'farmer_name' => 'Petani Andi',
         'ics_name' => 'ICS Maju Jaya',
         'kecamatan' => 'Dayun',
@@ -117,7 +117,7 @@ $lahan = [
         'alamat' => 'Jl. Pertanian No. 10'
     ],
     102 => [
-        'name' => 'Lahan Blok B', 
+        'name' => 'Lahan Blok B',
         'farmer_name' => 'Petani Siti',
         'ics_name' => 'ICS Sejahtera',
         'kecamatan' => 'Dayun',
@@ -125,7 +125,7 @@ $lahan = [
         'alamat' => 'Jl. Perkebunan No. 5'
     ],
     103 => [
-        'name' => 'Lahan Blok C', 
+        'name' => 'Lahan Blok C',
         'farmer_name' => 'Petani Budi',
         'ics_name' => 'ICS Makmur',
         'kecamatan' => 'Kerinci Kanan',
@@ -133,7 +133,7 @@ $lahan = [
         'alamat' => 'Jl. Sawit No. 8'
     ],
     104 => [
-        'name' => 'Lahan Blok D', 
+        'name' => 'Lahan Blok D',
         'farmer_name' => 'Petani Rina',
         'ics_name' => 'ICS Maju Jaya',
         'kecamatan' => 'Kerinci Kanan',
@@ -141,7 +141,7 @@ $lahan = [
         'alamat' => 'Jl. Kelapa Sawit No. 12'
     ],
     105 => [
-        'name' => 'Lahan Blok E', 
+        'name' => 'Lahan Blok E',
         'farmer_name' => 'Petani Joko',
         'ics_name' => 'ICS Sejahtera',
         'kecamatan' => 'Dayun',
@@ -169,41 +169,41 @@ $filter_sort = isset($_GET['filter_sort']) ? $_GET['filter_sort'] : '';
 $filtered_produksi = $produksi_data;
 
 if ($filter_ics) {
-    $filtered_produksi = array_filter($filtered_produksi, function($p) use ($lahan, $filter_ics) {
+    $filtered_produksi = array_filter($filtered_produksi, function ($p) use ($lahan, $filter_ics) {
         return isset($lahan[$p['plot_id']]) && $lahan[$p['plot_id']]['ics_name'] == $filter_ics;
     });
 }
 
 if ($filter_kecamatan) {
-    $filtered_produksi = array_filter($filtered_produksi, function($p) use ($lahan, $filter_kecamatan) {
+    $filtered_produksi = array_filter($filtered_produksi, function ($p) use ($lahan, $filter_kecamatan) {
         return isset($lahan[$p['plot_id']]) && $lahan[$p['plot_id']]['kecamatan'] == $filter_kecamatan;
     });
 }
 
 if ($filter_kabupaten) {
-    $filtered_produksi = array_filter($filtered_produksi, function($p) use ($lahan, $filter_kabupaten) {
+    $filtered_produksi = array_filter($filtered_produksi, function ($p) use ($lahan, $filter_kabupaten) {
         return isset($lahan[$p['plot_id']]) && $lahan[$p['plot_id']]['kabupaten'] == $filter_kabupaten;
     });
 }
 
 if (isset($_GET['search']) && !empty(trim($_GET['search']))) {
     $search = strtolower(trim($_GET['search']));
-    $filtered_produksi = array_filter($filtered_produksi, function($p) use ($search, $lahan) {
+    $filtered_produksi = array_filter($filtered_produksi, function ($p) use ($search, $lahan) {
         if (!isset($lahan[$p['plot_id']])) {
             return false;
         }
-        return (strpos(strtolower($p['plot_id']), $search) !== false) || 
-               (strpos(strtolower($lahan[$p['plot_id']]['ics_name']), $search) !== false);
+        return (strpos(strtolower($p['plot_id']), $search) !== false) ||
+            (strpos(strtolower($lahan[$p['plot_id']]['ics_name']), $search) !== false);
     });
 }
 
 // Sorting data
 if ($filter_sort == 'highest') {
-    usort($filtered_produksi, function($a, $b) {
+    usort($filtered_produksi, function ($a, $b) {
         return $b['jumlah_panen'] - $a['jumlah_panen'];
     });
 } elseif ($filter_sort == 'lowest') {
-    usort($filtered_produksi, function($a, $b) {
+    usort($filtered_produksi, function ($a, $b) {
         return $a['jumlah_panen'] - $b['jumlah_panen'];
     });
 }
@@ -231,6 +231,7 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -238,11 +239,12 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body class="bg-gray-100">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <?php include 'sidebar.php'; ?>
-        
+        <?php include 'sidebar'; ?>
+
         <!-- Main Content -->
         <main class="flex-1 flex flex-col overflow-hidden">
             <header class="h-20 shadow-sm flex items-center justify-between px-8">
@@ -261,18 +263,18 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                 </div>
                 <div class="flex items-center space-x-6">
                     <?php if ($action === 'list'): ?>
-                        <a href="produksi.php?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
+                        <a href="produksi?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
                             <i class="fas fa-plus mr-2"></i> Tambah Data
                         </a>
                     <?php elseif ($action === 'view'): ?>
-                        <a href="produksi.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <a href="produksi" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
                             <i class="fas fa-arrow-left mr-2"></i> Kembali
                         </a>
-                        <a href="produksi.php?action=edit&id=<?= $id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <a href="produksi?action=edit&id=<?= $id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
                             <i class="fas fa-edit mr-2"></i> Edit
                         </a>
                     <?php elseif ($action === 'edit' || $action === 'add'): ?>
-                        <a href="produksi.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+                        <a href="produksi" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
                             <i class="fas fa-arrow-left mr-2"></i> Kembali
                         </a>
                     <?php endif; ?>
@@ -288,9 +290,9 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                 <input type="hidden" name="action" value="list">
                                 <div class="mb-4">
                                     <div class="relative">
-                                        <input type="text" id="search" name="search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>" 
-                                               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                                               placeholder="Cari berdasarkan ICS...">
+                                        <input type="text" id="search" name="search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>"
+                                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            placeholder="Cari berdasarkan ICS...">
                                         <button type="submit" class="absolute right-2 top-2 text-gray-500 hover:text-gray-700">
                                             <i class="fas fa-search"></i>
                                         </button>
@@ -308,7 +310,7 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    
+
                                     <!-- Filter Kecamatan -->
                                     <div>
                                         <select id="filter_kecamatan" name="filter_kecamatan" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -320,7 +322,7 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    
+
                                     <!-- Filter Kabupaten -->
                                     <div>
                                         <select id="filter_kabupaten" name="filter_kabupaten" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -332,7 +334,7 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    
+
                                     <!-- Filter Urutan -->
                                     <div>
                                         <select id="filter_sort" name="filter_sort" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -370,7 +372,7 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                             <td colspan="9" class="px-6 py-4 text-center text-gray-500">Tidak ada data produksi yang ditemukan</td>
                                         </tr>
                                     <?php else: ?>
-                                        <?php foreach ($paginatedProduksi as $index => $data): 
+                                        <?php foreach ($paginatedProduksi as $index => $data):
                                             $rowNumber = $startIndex + $index + 1;
                                             $lahan_info = $lahan[$data['plot_id']] ?? null;
                                         ?>
@@ -384,10 +386,10 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= number_format($data['jumlah_panen'], 0, ',', '.') ?></td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $data['luas'] ?></td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                    <a href="produksi.php?action=view&id=<?= $data['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Detail">
+                                                    <a href="produksi?action=view&id=<?= $data['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Detail">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
-                                                    <a href="produksi.php?action=edit&id=<?= $data['id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
+                                                    <a href="produksi?action=edit&id=<?= $data['id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <a href="#" class="text-red-600 hover:text-red-900" title="Hapus" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
@@ -404,10 +406,10 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                         <!-- Navigasi Halaman -->
                         <div class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
                             <div class="flex-1 flex justify-between sm:hidden">
-                                <a href="produksi.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                <a href="produksi?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                     Sebelumnya
                                 </a>
-                                <a href="produksi.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                <a href="produksi?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
                                     Berikutnya
                                 </a>
                             </div>
@@ -420,27 +422,27 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                 <div>
                                     <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
                                         <!-- Previous Page Link -->
-                                        <a href="produksi.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                        <a href="produksi?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
                                             <span class="sr-only">Sebelumnya</span>
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
 
                                         <!-- Page Numbers -->
-                                        <?php 
+                                        <?php
                                         $startPage = max(1, $currentPage - 2);
                                         $endPage = min($totalPages, $currentPage + 2);
-                                        
+
                                         if ($currentPage <= 3) {
                                             $endPage = min(5, $totalPages);
                                         }
-                                        
+
                                         if ($currentPage >= $totalPages - 2) {
                                             $startPage = max(1, $totalPages - 4);
                                         }
-                                        
+
                                         if ($startPage > 1) {
-                                            ?>
-                                            <a href="produksi.php?<?= http_build_query(array_merge($_GET, ['page' => 1])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        ?>
+                                            <a href="produksi?<?= http_build_query(array_merge($_GET, ['page' => 1])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                                 1
                                             </a>
                                             <?php if ($startPage > 2): ?>
@@ -448,33 +450,33 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                                     ...
                                                 </span>
                                             <?php endif; ?>
-                                            <?php
+                                        <?php
                                         }
-                                        
+
                                         for ($i = $startPage; $i <= $endPage; $i++) {
-                                            ?>
-                                            <a href="produksi.php?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium <?= $i == $currentPage ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50' ?>">
+                                        ?>
+                                            <a href="produksi?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium <?= $i == $currentPage ? 'bg-blue-100 text-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50' ?>">
                                                 <?= $i ?>
                                             </a>
-                                            <?php
+                                        <?php
                                         }
-                                        
+
                                         if ($endPage < $totalPages) {
-                                            ?>
+                                        ?>
                                             <?php if ($endPage < $totalPages - 1): ?>
                                                 <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
                                                     ...
                                                 </span>
                                             <?php endif; ?>
-                                            <a href="produksi.php?<?= http_build_query(array_merge($_GET, ['page' => $totalPages])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                            <a href="produksi?<?= http_build_query(array_merge($_GET, ['page' => $totalPages])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
                                                 <?= $totalPages ?>
                                             </a>
-                                            <?php
+                                        <?php
                                         }
                                         ?>
 
                                         <!-- Next Page Link -->
-                                        <a href="produksi.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                        <a href="produksi?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage == $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
                                             <span class="sr-only">Berikutnya</span>
                                             <i class="fas fa-chevron-right"></i>
                                         </a>
@@ -493,7 +495,7 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                     <p class="text-sm text-gray-500">PROD-<?= $selected_produksi['id'] ?></p>
                                 </div>
                             </div>
-                            
+
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                                 <!-- Informasi Dasar -->
                                 <div class="space-y-4">
@@ -514,20 +516,20 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="bg-gray-50 p-4 rounded-lg">
                                         <h3 class="font-medium text-gray-700 mb-3">Lokasi Lahan</h3>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-500">Alamat</label>
                                             <p class="mt-1 text-sm text-gray-900">
-                                                <?= $lahan[$selected_produksi['plot_id']]['alamat'] ?? '-' ?>, 
-                                                <?= $lahan[$selected_produksi['plot_id']]['kecamatan'] ?? '-' ?>, 
+                                                <?= $lahan[$selected_produksi['plot_id']]['alamat'] ?? '-' ?>,
+                                                <?= $lahan[$selected_produksi['plot_id']]['kecamatan'] ?? '-' ?>,
                                                 <?= $lahan[$selected_produksi['plot_id']]['kabupaten'] ?? '-' ?>
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Detail Produksi -->
                                 <div class="space-y-4">
                                     <div class="bg-gray-50 p-4 rounded-lg">
@@ -557,13 +559,13 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="bg-gray-50 p-4 rounded-lg">
                                         <h3 class="font-medium text-gray-700 mb-3">Catatan</h3>
                                         <p class="text-sm text-gray-900"><?= $selected_produksi['keterangan'] ?: 'Tidak ada catatan' ?></p>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Orang yang Terlibat -->
                                 <div class="md:col-span-2 space-y-4">
                                     <div class="bg-gray-50 p-4 rounded-lg">
@@ -589,7 +591,7 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
-                                            
+
                                             <div>
                                                 <label class="block text-sm font-medium text-gray-500 mb-2">Pekerja</label>
                                                 <div class="space-y-2">
@@ -737,8 +739,8 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                                             </div>
                                             <div id="lokasi-info-edit">
                                                 Lokasi: <span id="lokasi-edit">
-                                                    <?= $lahan[$selected_produksi['plot_id']]['alamat'] ?? '' ?>, 
-                                                    <?= $lahan[$selected_produksi['plot_id']]['kecamatan'] ?? '' ?>, 
+                                                    <?= $lahan[$selected_produksi['plot_id']]['alamat'] ?? '' ?>,
+                                                    <?= $lahan[$selected_produksi['plot_id']]['kecamatan'] ?? '' ?>,
                                                     <?= $lahan[$selected_produksi['plot_id']]['kabupaten'] ?? '' ?>
                                                 </span>
                                             </div>
@@ -830,7 +832,7 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
                         <div class="p-6">
                             <h2 class="text-xl font-bold text-gray-800 mb-6">Halaman Tidak Ditemukan</h2>
                             <p class="text-gray-600">Maaf, halaman yang Anda cari tidak tersedia.</p>
-                            <a href="produksi.php" class="mt-4 inline-block text-blue-600 hover:text-blue-800">Kembali ke Daftar Produksi</a>
+                            <a href="produksi" class="mt-4 inline-block text-blue-600 hover:text-blue-800">Kembali ke Daftar Produksi</a>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -843,21 +845,21 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
         document.getElementById('lahan_id')?.addEventListener('change', function() {
             const selectedLahanId = this.value;
             const lahanData = <?= json_encode($lahan) ?>;
-            
+
             const petaniInfoDiv = document.getElementById('petani-info-add');
             const petaniNameSpan = document.getElementById('petani-name-add');
             const icsInfoDiv = document.getElementById('ics-info-add');
             const icsNameSpan = document.getElementById('ics-name-add');
             const lokasiInfoDiv = document.getElementById('lokasi-info-add');
             const lokasiSpan = document.getElementById('lokasi-add');
-            
+
             if (selectedLahanId && lahanData[selectedLahanId]) {
                 petaniInfoDiv.classList.remove('hidden');
                 petaniNameSpan.textContent = lahanData[selectedLahanId]['farmer_name'];
-                
+
                 icsInfoDiv.classList.remove('hidden');
                 icsNameSpan.textContent = lahanData[selectedLahanId]['ics_name'];
-                
+
                 lokasiInfoDiv.classList.remove('hidden');
                 lokasiSpan.textContent = `${lahanData[selectedLahanId]['alamat']}, ${lahanData[selectedLahanId]['kecamatan']}, ${lahanData[selectedLahanId]['kabupaten']}`;
             } else {
@@ -871,11 +873,11 @@ $paginatedProduksi = array_slice($filtered_produksi, $startIndex, $itemsPerPage)
         document.getElementById('lahan_id_edit')?.addEventListener('change', function() {
             const selectedLahanId = this.value;
             const lahanData = <?= json_encode($lahan) ?>;
-            
+
             const petaniNameSpan = document.getElementById('petani-name-edit');
             const icsNameSpan = document.getElementById('ics-name-edit');
             const lokasiSpan = document.getElementById('lokasi-edit');
-            
+
             if (selectedLahanId && lahanData[selectedLahanId]) {
                 petaniNameSpan.textContent = lahanData[selectedLahanId]['farmer_name'];
                 icsNameSpan.textContent = lahanData[selectedLahanId]['ics_name'];

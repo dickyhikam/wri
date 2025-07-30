@@ -1,4 +1,3 @@
-
 <?php
 // Include header
 include 'header.php';
@@ -181,7 +180,7 @@ $filter_tahun = isset($_GET['filter_tahun']) ? intval($_GET['filter_tahun']) : '
 // Apply filters
 $filtered_perawatans = $perawatans;
 if ($filter_jenis) {
-    $filtered_perawatans = array_filter($filtered_perawatans, function($perawatan) use ($filter_jenis) {
+    $filtered_perawatans = array_filter($filtered_perawatans, function ($perawatan) use ($filter_jenis) {
         foreach ($perawatan['perawatan_detil'] as $detail) {
             if ($detail['jenis_pekerjaan_id'] == $filter_jenis) {
                 return true;
@@ -191,12 +190,12 @@ if ($filter_jenis) {
     });
 }
 if ($filter_lahan) {
-    $filtered_perawatans = array_filter($filtered_perawatans, function($perawatan) use ($filter_lahan) {
+    $filtered_perawatans = array_filter($filtered_perawatans, function ($perawatan) use ($filter_lahan) {
         return $perawatan['plot_id'] == $filter_lahan;
     });
 }
 if ($filter_tahun) {
-    $filtered_perawatans = array_filter($filtered_perawatans, function($perawatan) use ($filter_tahun) {
+    $filtered_perawatans = array_filter($filtered_perawatans, function ($perawatan) use ($filter_tahun) {
         return $perawatan['tahun_tanam'] == $filter_tahun;
     });
 }
@@ -240,16 +239,16 @@ sort($tahun_tanam_list);
         <div class="flex items-center space-x-6">
             <?php if ($action === 'list'): ?>
                 <!-- Tombol Tambah Data -->
-                <a href="perawatan.php?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
+                <a href="perawatan?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-plus mr-2"></i> Tambah Data
                 </a>
             <?php elseif ($action === 'view'): ?>
                 <!-- Tombol Kembali ke Daftar -->
-                <a href="perawatan.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+                <a href="perawatan" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-arrow-left mr-2"></i> Kembali
                 </a>
                 <!-- Tombol Edit -->
-                <a href="perawatan.php?action=edit&id=<?= $id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                <a href="perawatan?action=edit&id=<?= $id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-edit mr-2"></i> Edit
                 </a>
                 <!-- Tombol Hapus -->
@@ -258,7 +257,7 @@ sort($tahun_tanam_list);
                 </button>
             <?php elseif ($action === 'edit'): ?>
                 <!-- Tombol Kembali ke Daftar -->
-                <a href="perawatan.php?action=view&id=<?= $id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+                <a href="perawatan?action=view&id=<?= $id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
                     <i class="fas fa-times mr-2"></i> Batal
                 </a>
             <?php endif; ?>
@@ -270,7 +269,7 @@ sort($tahun_tanam_list);
             <!-- Halaman Daftar Perawatan -->
             <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
                 <div class="p-4 bg-gray-50 border-b">
-                    <form method="get" action="perawatan.php" class="flex flex-col gap-4">
+                    <form method="get" action="perawatan" class="flex flex-col gap-4">
                         <input type="hidden" name="action" value="list">
                         <!-- Search bar -->
                         <div class="flex-1">
@@ -340,10 +339,10 @@ sort($tahun_tanam_list);
                                         <td class="px-6 py-4 whitespace-nowrap"><?= $perawatan['luas'] ?> ha</td>
                                         <td class="px-6 py-4 whitespace-nowrap">Rp <?= number_format($perawatan['total_upah'], 0, ',', '.') ?></td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                            <a href="perawatan.php?action=view&id=<?= $perawatan['perawatan_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Detail">
+                                            <a href="perawatan?action=view&id=<?= $perawatan['perawatan_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Detail">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="perawatan.php?action=edit&id=<?= $perawatan['perawatan_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
+                                            <a href="perawatan?action=edit&id=<?= $perawatan['perawatan_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a href="#" onclick="confirmDelete('<?= $perawatan['perawatan_id'] ?>')" class="text-red-600 hover:text-red-900" title="Hapus">
@@ -359,10 +358,10 @@ sort($tahun_tanam_list);
                 <!-- Pagination -->
                 <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                     <div class="flex-1 flex justify-between sm:hidden">
-                        <a href="perawatan.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                        <a href="perawatan?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
                             Sebelumnya
                         </a>
-                        <a href="perawatan.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                        <a href="perawatan?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
                             Selanjutnya
                         </a>
                     </div>
@@ -374,31 +373,31 @@ sort($tahun_tanam_list);
                         </div>
                         <div>
                             <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                                <a href="perawatan.php?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                <a href="perawatan?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
                                     <span class="sr-only">Sebelumnya</span>
                                     <i class="fas fa-chevron-left"></i>
                                 </a>
-                                <?php 
+                                <?php
                                 $startPage = max(1, $currentPage - 2);
                                 $endPage = min($totalPages, $currentPage + 2);
                                 if ($startPage > 1) {
-                                    echo '<a href="perawatan.php?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
+                                    echo '<a href="perawatan?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
                                     if ($startPage > 2) {
                                         echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
                                     }
                                 }
                                 for ($i = $startPage; $i <= $endPage; $i++) {
                                     $active = $i == $currentPage ? 'bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50';
-                                    echo '<a href="perawatan.php?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
+                                    echo '<a href="perawatan?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $active . '">' . $i . '</a>';
                                 }
                                 if ($endPage < $totalPages) {
                                     if ($endPage < $totalPages - 1) {
                                         echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
                                     }
-                                    echo '<a href="perawatan.php?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
+                                    echo '<a href="perawatan?' . http_build_query(array_merge($_GET, ['page' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
                                 }
                                 ?>
-                                <a href="perawatan.php?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                <a href="perawatan?<?= http_build_query(array_merge($_GET, ['page' => min($totalPages, $currentPage + 1)])) ?>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
                                     <span class="sr-only">Selanjutnya</span>
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
@@ -502,186 +501,56 @@ sort($tahun_tanam_list);
                 </div>
 
                 <!-- Footer Card dengan Tombol Aksi -->
-                
-        <?php elseif ($action === 'add'): ?>
-            <!-- Form Tambah Perawatan -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-6">Tambah Data Perawatan</h2>
-                    <form id="addForm" method="post">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="perawatan_id" class="block text-sm font-medium text-gray-700">ID Perawatan</label>
-                                <input type="text" id="perawatan_id" name="perawatan_id" readonly 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value="PRW-<?= count($perawatans) + 1 ?>">
-                            </div>
-                            <div>
-                                <label for="lahan_id" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
-                                <select id="lahan_id" name="lahan_id" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    <option value="">Pilih Lahan</option>
-                                    <?php foreach ($lahan as $id => $data): ?>
-                                        <option value="<?= $id ?>"><?= $data['name'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <div id="petani-info" class="mt-2 text-sm text-gray-500 hidden">
-                                    Petani: <span id="petani-name"></span>
+
+            <?php elseif ($action === 'add'): ?>
+                <!-- Form Tambah Perawatan -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Tambah Data Perawatan</h2>
+                        <form id="addForm" method="post">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="perawatan_id" class="block text-sm font-medium text-gray-700">ID Perawatan</label>
+                                    <input type="text" id="perawatan_id" name="perawatan_id" readonly
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        value="PRW-<?= count($perawatans) + 1 ?>">
                                 </div>
-                            </div>
-                            <div>
-                                <label for="tahun_tanam" class="block text-sm font-medium text-gray-700">Tahun Tanam</label>
-                                <input type="number" id="tahun_tanam" name="tahun_tanam" min="1900" max="2100" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label for="luas" class="block text-sm font-medium text-gray-700">Luas (ha)</label>
-                                <input type="number" step="0.01" id="luas" name="luas" min="0" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label for="total_upah" class="block text-sm font-medium text-gray-700">Total Upah (Rp)</label>
-                                <input type="number" id="total_upah" name="total_upah" min="0" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
-                                <input type="text" id="keterangan" name="keterangan" 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-                        </div>
-                        <h3 class="text-lg font-medium text-gray-900 mt-8 mb-4">Detail Kegiatan Perawatan</h3>
-                        <div id="detail-container">
-                            <!-- Kontainer untuk satu baris detail lengkap -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                                <!-- Baris 1: Jenis Pekerjaan & Pekerja -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Jenis Pekerjaan</label>
-                                        <select name="jenis_pekerjaan_id[]" required
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                            <option value="">Pilih Jenis</option>
-                                            <?php foreach ($jenis_pekerjaan as $id => $jenis): ?>
-                                                <option value="<?= $id ?>"><?= $jenis['name'] ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Pekerja</label>
-                                        <select name="pekerja_id[]" required onchange="updatePekerjaId(this)"
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                            <option value="">Pilih Pekerja</option>
-                                            <?php foreach ($pekerja as $id => $data): ?>
-                                                <option value="<?= $id ?>"><?= $data['name'] ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                <div>
+                                    <label for="lahan_id" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
+                                    <select id="lahan_id" name="lahan_id" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pilih Lahan</option>
+                                        <?php foreach ($lahan as $id => $data): ?>
+                                            <option value="<?= $id ?>"><?= $data['name'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <div id="petani-info" class="mt-2 text-sm text-gray-500 hidden">
+                                        Petani: <span id="petani-name"></span>
                                     </div>
                                 </div>
-                                <!-- Baris 2: ID Pekerja & Tanggal -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">ID Pekerja</label>
-                                        <input type="text" name="pekerja_id_display[]" readonly
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Tanggal</label>
-                                        <input type="date" name="date[]" required
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
+                                <div>
+                                    <label for="tahun_tanam" class="block text-sm font-medium text-gray-700">Tahun Tanam</label>
+                                    <input type="number" id="tahun_tanam" name="tahun_tanam" min="1900" max="2100" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                <!-- Baris 3: Jenis Lain & Jumlah -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Jenis Lain</label>
-                                        <input type="text" name="jenis_lain[]"
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Jumlah</label>
-                                        <input type="number" name="jml[]" min="1" required
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
+                                <div>
+                                    <label for="luas" class="block text-sm font-medium text-gray-700">Luas (ha)</label>
+                                    <input type="number" step="0.01" id="luas" name="luas" min="0" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                <!-- Baris 4: Upah & Tombol Hapus -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700">Upah (Rp)</label>
-                                        <input type="number" name="upah[]" min="0" required
-                                            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
-                                    <div>
-                                        <!-- Placeholder untuk tombol hapus jika diperlukan -->
-                                    </div>
+                                <div>
+                                    <label for="total_upah" class="block text-sm font-medium text-gray-700">Total Upah (Rp)</label>
+                                    <input type="number" id="total_upah" name="total_upah" min="0" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
+                                    <input type="text" id="keterangan" name="keterangan"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
                             </div>
-                        </div>
-                        <button type="button" onclick="tambahDetail()" class="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
-                            <i class="fas fa-plus mr-2"></i> Tambah Detail
-                        </button>
-                        <div class="mt-6 flex justify-end space-x-3">
-                            <a href="perawatan.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
-                                Batal
-                            </a>
-                            <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">Simpan Perawatan</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        <?php elseif ($action === 'edit' && $selected_perawatan): ?>
-            <!-- Form Edit Perawatan -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-6">Edit Data Perawatan #PRW-<?= $selected_perawatan['perawatan_id'] ?></h2>
-                    <form id="editForm">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="perawatan_id" class="block text-sm font-medium text-gray-700">ID Perawatan</label>
-                                <input type="text" id="perawatan_id" name="perawatan_id" readonly 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value="PRW-<?= $selected_perawatan['perawatan_id'] ?>">
-                            </div>
-                            <div>
-                                <label for="lahan_id" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
-                                <select id="lahan_id" name="lahan_id" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    <option value="">Pilih Lahan</option>
-                                    <?php foreach ($lahan as $id => $data): ?>
-                                        <option value="<?= $id ?>" <?= ($id == $selected_perawatan['plot_id']) ? 'selected' : '' ?>><?= $data['name'] ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <div id="petani-info" class="mt-2 text-sm text-gray-500">
-                                    Petani: <span id="petani-name"><?= $lahan[$selected_perawatan['plot_id']]['farmer_name'] ?></span>
-                                </div>
-                            </div>
-                            <div>
-                                <label for="tahun_tanam" class="block text-sm font-medium text-gray-700">Tahun Tanam</label>
-                                <input type="number" id="tahun_tanam" name="tahun_tanam" min="1900" max="2100" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value="<?= $selected_perawatan['tahun_tanam'] ?>">
-                            </div>
-                            <div>
-                                <label for="luas" class="block text-sm font-medium text-gray-700">Luas (ha)</label>
-                                <input type="number" step="0.01" id="luas" name="luas" min="0" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value="<?= $selected_perawatan['luas'] ?>">
-                            </div>
-                            <div>
-                                <label for="total_upah" class="block text-sm font-medium text-gray-700">Total Upah (Rp)</label>
-                                <input type="number" id="total_upah" name="total_upah" min="0" required 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value="<?= $selected_perawatan['total_upah'] ?>">
-                            </div>
-                            <div>
-                                <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
-                                <input type="text" id="keterangan" name="keterangan" 
-                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                    value="<?= $selected_perawatan['keterangan'] ?>">
-                            </div>
-                        </div>
-                        <h3 class="text-lg font-medium text-gray-900 mt-8 mb-4">Detail Kegiatan Perawatan</h3>
-                        <div id="detail-container">
-                            <?php foreach ($selected_perawatan['perawatan_detil'] as $index => $detail): ?>
+                            <h3 class="text-lg font-medium text-gray-900 mt-8 mb-4">Detail Kegiatan Perawatan</h3>
+                            <div id="detail-container">
                                 <!-- Kontainer untuk satu baris detail lengkap -->
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
                                     <!-- Baris 1: Jenis Pekerjaan & Pekerja -->
@@ -692,7 +561,7 @@ sort($tahun_tanam_list);
                                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                                 <option value="">Pilih Jenis</option>
                                                 <?php foreach ($jenis_pekerjaan as $id => $jenis): ?>
-                                                    <option value="<?= $id ?>" <?= (isset($detail['jenis_pekerjaan_id']) && $id == $detail['jenis_pekerjaan_id']) ? 'selected' : '' ?>><?= $jenis['name'] ?></option>
+                                                    <option value="<?= $id ?>"><?= $jenis['name'] ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
@@ -702,7 +571,7 @@ sort($tahun_tanam_list);
                                                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                                 <option value="">Pilih Pekerja</option>
                                                 <?php foreach ($pekerja as $id => $data): ?>
-                                                    <option value="<?= $id ?>" <?= (isset($detail['pekerja_id']) && $id == $detail['pekerja_id']) ? 'selected' : '' ?>><?= $data['name'] ?></option>
+                                                    <option value="<?= $id ?>"><?= $data['name'] ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
@@ -712,14 +581,12 @@ sort($tahun_tanam_list);
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">ID Pekerja</label>
                                             <input type="text" name="pekerja_id_display[]" readonly
-                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                                value="<?= isset($detail['pekerja_id']) ? htmlspecialchars($detail['pekerja_id']) : '' ?>">
+                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Tanggal</label>
                                             <input type="date" name="date[]" required
-                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                                value="<?= isset($detail['date']) ? htmlspecialchars($detail['date']) : '' ?>">
+                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                         </div>
                                     </div>
                                     <!-- Baris 3: Jenis Lain & Jumlah -->
@@ -727,56 +594,188 @@ sort($tahun_tanam_list);
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Jenis Lain</label>
                                             <input type="text" name="jenis_lain[]"
-                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                                value="<?= isset($detail['jenis_lain']) ? htmlspecialchars($detail['jenis_lain']) : '' ?>">
+                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                         </div>
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Jumlah</label>
                                             <input type="number" name="jml[]" min="1" required
-                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                                value="<?= isset($detail['jml']) ? htmlspecialchars($detail['jml']) : '' ?>">
+                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                         </div>
                                     </div>
-                                    <!-- Baris 4: Upah & Tombol Hapus (jika bukan baris pertama) -->
+                                    <!-- Baris 4: Upah & Tombol Hapus -->
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700">Upah (Rp)</label>
                                             <input type="number" name="upah[]" min="0" required
-                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                                value="<?= isset($detail['upah']) ? htmlspecialchars($detail['upah']) : '' ?>">
+                                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                         </div>
                                         <div>
-                                            <?php if ($index > 0): ?>
-                                                <button type="button" onclick="hapusDetail(this)" class="mt-6 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg">
-                                                    <i class="fas fa-trash"></i> Hapus
-                                                </button>
-                                            <?php endif; ?>
+                                            <!-- Placeholder untuk tombol hapus jika diperlukan -->
                                         </div>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
-                        </div>
-                        <button type="button" onclick="tambahDetail()" class="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
-                            <i class="fas fa-plus mr-2"></i> Tambah Detail
-                        </button>
-                        <div class="mt-6 flex justify-end space-x-3">
-                            <a href="perawatan.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
-                                Batal
-                            </a>
-                            <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">Simpan Perubahan</button>
-                        </div>
-                    </form>
+                            </div>
+                            <button type="button" onclick="tambahDetail()" class="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-plus mr-2"></i> Tambah Detail
+                            </button>
+                            <div class="mt-6 flex justify-end space-x-3">
+                                <a href="perawatan" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
+                                    Batal
+                                </a>
+                                <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">Simpan Perawatan</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        <?php else: ?>
-            <!-- Halaman tidak valid -->
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-6">Halaman Tidak Ditemukan</h2>
-                    <p class="text-gray-600">Maaf, halaman yang Anda cari tidak tersedia.</p>
+            <?php elseif ($action === 'edit' && $selected_perawatan): ?>
+                <!-- Form Edit Perawatan -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Edit Data Perawatan #PRW-<?= $selected_perawatan['perawatan_id'] ?></h2>
+                        <form id="editForm">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="perawatan_id" class="block text-sm font-medium text-gray-700">ID Perawatan</label>
+                                    <input type="text" id="perawatan_id" name="perawatan_id" readonly
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        value="PRW-<?= $selected_perawatan['perawatan_id'] ?>">
+                                </div>
+                                <div>
+                                    <label for="lahan_id" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
+                                    <select id="lahan_id" name="lahan_id" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pilih Lahan</option>
+                                        <?php foreach ($lahan as $id => $data): ?>
+                                            <option value="<?= $id ?>" <?= ($id == $selected_perawatan['plot_id']) ? 'selected' : '' ?>><?= $data['name'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <div id="petani-info" class="mt-2 text-sm text-gray-500">
+                                        Petani: <span id="petani-name"><?= $lahan[$selected_perawatan['plot_id']]['farmer_name'] ?></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="tahun_tanam" class="block text-sm font-medium text-gray-700">Tahun Tanam</label>
+                                    <input type="number" id="tahun_tanam" name="tahun_tanam" min="1900" max="2100" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        value="<?= $selected_perawatan['tahun_tanam'] ?>">
+                                </div>
+                                <div>
+                                    <label for="luas" class="block text-sm font-medium text-gray-700">Luas (ha)</label>
+                                    <input type="number" step="0.01" id="luas" name="luas" min="0" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        value="<?= $selected_perawatan['luas'] ?>">
+                                </div>
+                                <div>
+                                    <label for="total_upah" class="block text-sm font-medium text-gray-700">Total Upah (Rp)</label>
+                                    <input type="number" id="total_upah" name="total_upah" min="0" required
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        value="<?= $selected_perawatan['total_upah'] ?>">
+                                </div>
+                                <div>
+                                    <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
+                                    <input type="text" id="keterangan" name="keterangan"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                        value="<?= $selected_perawatan['keterangan'] ?>">
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 mt-8 mb-4">Detail Kegiatan Perawatan</h3>
+                            <div id="detail-container">
+                                <?php foreach ($selected_perawatan['perawatan_detil'] as $index => $detail): ?>
+                                    <!-- Kontainer untuk satu baris detail lengkap -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                                        <!-- Baris 1: Jenis Pekerjaan & Pekerja -->
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Jenis Pekerjaan</label>
+                                                <select name="jenis_pekerjaan_id[]" required
+                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                                    <option value="">Pilih Jenis</option>
+                                                    <?php foreach ($jenis_pekerjaan as $id => $jenis): ?>
+                                                        <option value="<?= $id ?>" <?= (isset($detail['jenis_pekerjaan_id']) && $id == $detail['jenis_pekerjaan_id']) ? 'selected' : '' ?>><?= $jenis['name'] ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Pekerja</label>
+                                                <select name="pekerja_id[]" required onchange="updatePekerjaId(this)"
+                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                                    <option value="">Pilih Pekerja</option>
+                                                    <?php foreach ($pekerja as $id => $data): ?>
+                                                        <option value="<?= $id ?>" <?= (isset($detail['pekerja_id']) && $id == $detail['pekerja_id']) ? 'selected' : '' ?>><?= $data['name'] ?></option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!-- Baris 2: ID Pekerja & Tanggal -->
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">ID Pekerja</label>
+                                                <input type="text" name="pekerja_id_display[]" readonly
+                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                                    value="<?= isset($detail['pekerja_id']) ? htmlspecialchars($detail['pekerja_id']) : '' ?>">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Tanggal</label>
+                                                <input type="date" name="date[]" required
+                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                                    value="<?= isset($detail['date']) ? htmlspecialchars($detail['date']) : '' ?>">
+                                            </div>
+                                        </div>
+                                        <!-- Baris 3: Jenis Lain & Jumlah -->
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Jenis Lain</label>
+                                                <input type="text" name="jenis_lain[]"
+                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                                    value="<?= isset($detail['jenis_lain']) ? htmlspecialchars($detail['jenis_lain']) : '' ?>">
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Jumlah</label>
+                                                <input type="number" name="jml[]" min="1" required
+                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                                    value="<?= isset($detail['jml']) ? htmlspecialchars($detail['jml']) : '' ?>">
+                                            </div>
+                                        </div>
+                                        <!-- Baris 4: Upah & Tombol Hapus (jika bukan baris pertama) -->
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700">Upah (Rp)</label>
+                                                <input type="number" name="upah[]" min="0" required
+                                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                                    value="<?= isset($detail['upah']) ? htmlspecialchars($detail['upah']) : '' ?>">
+                                            </div>
+                                            <div>
+                                                <?php if ($index > 0): ?>
+                                                    <button type="button" onclick="hapusDetail(this)" class="mt-6 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg">
+                                                        <i class="fas fa-trash"></i> Hapus
+                                                    </button>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <button type="button" onclick="tambahDetail()" class="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                                <i class="fas fa-plus mr-2"></i> Tambah Detail
+                            </button>
+                            <div class="mt-6 flex justify-end space-x-3">
+                                <a href="perawatan" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
+                                    Batal
+                                </a>
+                                <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">Simpan Perubahan</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        <?php endif; ?>
+            <?php else: ?>
+                <!-- Halaman tidak valid -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Halaman Tidak Ditemukan</h2>
+                        <p class="text-gray-600">Maaf, halaman yang Anda cari tidak tersedia.</p>
+                    </div>
+                </div>
+            <?php endif; ?>
     </section>
 </main>
 <script>
@@ -880,7 +879,7 @@ sort($tahun_tanam_list);
     // Fungsi untuk konfirmasi hapus
     function confirmDelete(perawatanId) {
         if (confirm('Apakah Anda yakin ingin menghapus data perawatan ini?')) {
-            window.location.href = 'perawatan.php?action=delete&id=' + perawatanId;
+            window.location.href = 'perawatan?action=delete&id=' + perawatanId;
         }
     }
     // Fungsi untuk tab
@@ -921,4 +920,3 @@ sort($tahun_tanam_list);
     });
 </script>
 <?php include 'footer.php'; ?>
-```

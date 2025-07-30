@@ -1,33 +1,33 @@
 <?php
-// transaksi_panen.php
+// transaksi_panen
 include 'header.php';
 
 // Simulasi data dummy
 $dummyTransaksi = [
-    [
-        'id' => 1,
-        'tanggal' => '2023-05-15',
-        'lahan' => 'Lahan A',
-        'petani' => 'Budi Santoso',
-        'ics' => 'ICS-001',
-        'mills' => 'Mills X',
-        'volume' => 1500,
-        'harga' => 5000,
-        'total' => 7500000,
-        'status' => 'Selesai'
-    ],
-    [
-        'id' => 2,
-        'tanggal' => '2023-05-20',
-        'lahan' => 'Lahan B',
-        'petani' => 'Siti Rahma',
-        'ics' => 'ICS-002',
-        'mills' => 'Mills Y',
-        'volume' => 2000,
-        'harga' => 5200,
-        'total' => 10400000,
-        'status' => 'Proses'
-    ]
+  [
+    'id' => 1,
+    'tanggal' => '2023-05-15',
+    'lahan' => 'Lahan A',
+    'petani' => 'Budi Santoso',
+    'ics' => 'ICS-001',
+    'mills' => 'Mills X',
+    'volume' => 1500,
+    'harga' => 5000,
+    'total' => 7500000,
+    'status' => 'Selesai'
+  ],
+  [
+    'id' => 2,
+    'tanggal' => '2023-05-20',
+    'lahan' => 'Lahan B',
+    'petani' => 'Siti Rahma',
+    'ics' => 'ICS-002',
+    'mills' => 'Mills Y',
+    'volume' => 2000,
+    'harga' => 5200,
+    'total' => 10400000,
+    'status' => 'Proses'
+  ]
 ];
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
@@ -36,12 +36,12 @@ $id = isset($_GET['id']) ? $_GET['id'] : 0;
 // Simulasi data yang dipilih
 $selectedData = null;
 if ($id) {
-    foreach ($dummyTransaksi as $data) {
-        if ($data['id'] == $id) {
-            $selectedData = $data;
-            break;
-        }
+  foreach ($dummyTransaksi as $data) {
+    if ($data['id'] == $id) {
+      $selectedData = $data;
+      break;
     }
+  }
 }
 ?>
 
@@ -50,7 +50,7 @@ if ($id) {
   <header class="h-20 shadow-sm flex items-center justify-between px-8">
     <div class="flex items-center space-x-4">
       <h1 class="text-2xl font-bold text-gray-800">
-        <?php 
+        <?php
         if ($action == 'add') echo "Tambah Transaksi Panen";
         elseif ($action == 'view') echo "Detail Transaksi: " . ($selectedData ? 'TRX-' . str_pad($selectedData['id'], 4, '0', STR_PAD_LEFT) : '');
         elseif ($action == 'edit') echo "Edit Transaksi: " . ($selectedData ? 'TRX-' . str_pad($selectedData['id'], 4, '0', STR_PAD_LEFT) : '');
@@ -60,31 +60,31 @@ if ($id) {
     </div>
     <div class="flex items-center space-x-6">
       <?php if ($action == 'list'): ?>
-        <a href="transaksi.php?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="transaksi?action=add" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-plus mr-2"></i> Tambah Transaksi
         </a>
       <?php elseif ($action == 'view'): ?>
-        <a href="transaksi.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="transaksi" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-arrow-left mr-2"></i> Kembali
         </a>
-        <a href="transaksi.php?action=edit&id=<?= $id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="transaksi?action=edit&id=<?= $id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-edit mr-2"></i> Edit
         </a>
         <button onclick="confirmDelete('<?= $id ?>')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-trash-alt mr-2"></i> Hapus
         </button>
       <?php elseif ($action == 'edit'): ?>
-        <a href="transaksi.php?action=view&id=<?= $id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="transaksi?action=view&id=<?= $id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-times mr-2"></i> Batal
         </a>
       <?php elseif ($action == 'add'): ?>
-        <a href="transaksi.php" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <a href="transaksi" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-arrow-left mr-2"></i> Kembali
         </a>
       <?php endif; ?>
     </div>
   </header>
-  
+
   <!-- Main Content -->
   <section class="flex-1 overflow-y-auto p-8 bg-gray-50">
     <?php if ($action == 'list'): ?>
@@ -93,11 +93,11 @@ if ($id) {
         <div class="p-4 bg-gray-50 border-b">
           <form method="get" class="flex flex-col gap-4">
             <input type="hidden" name="action" value="list">
-            
+
             <div class="flex-1">
               <input type="text" name="search" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Cari transaksi...">
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <select name="status_filter" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -117,7 +117,7 @@ if ($id) {
             </div>
           </form>
         </div>
-        
+
         <div class="overflow-x-auto">
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -163,10 +163,10 @@ if ($id) {
                     </span>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <a href="transaksi.php?action=view&id=<?= $transaksi['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3">
+                    <a href="transaksi?action=view&id=<?= $transaksi['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3">
                       <i class="fas fa-eye"></i>
                     </a>
-                    <a href="transaksi.php?action=edit&id=<?= $transaksi['id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3">
+                    <a href="transaksi?action=edit&id=<?= $transaksi['id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3">
                       <i class="fas fa-edit"></i>
                     </a>
                     <a href="#" onclick="confirmDelete('<?= $transaksi['id'] ?>')" class="text-red-600 hover:text-red-900">
@@ -178,7 +178,7 @@ if ($id) {
             </tbody>
           </table>
         </div>
-        
+
         <!-- Pagination -->
         <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
           <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
@@ -205,7 +205,7 @@ if ($id) {
           </div>
         </div>
       </div>
-      
+
     <?php elseif ($action == 'add' || $action == 'edit'): ?>
       <!-- Form Tambah/Edit Transaksi -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden">
@@ -262,7 +262,7 @@ if ($id) {
               <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md"><?= ($action == 'edit') ? 'Catatan transaksi panen' : '' ?></textarea>
             </div>
             <div class="flex justify-end space-x-3">
-              <a href="<?= ($action == 'edit') ? 'transaksi.php?action=view&id='.$id : 'transaksi.php' ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
+              <a href="<?= ($action == 'edit') ? 'transaksi?action=view&id=' . $id : 'transaksi' ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
                 Batal
               </a>
               <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">
@@ -272,7 +272,7 @@ if ($id) {
           </form>
         </div>
       </div>
-      
+
     <?php elseif ($action == 'view' && $selectedData): ?>
       <!-- Detail Transaksi - Updated Layout to Match Farmer Style -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden">
@@ -290,7 +290,7 @@ if ($id) {
             <?= $selectedData['status'] ?>
           </span>
         </div>
-        
+
         <!-- Main Content -->
         <div class="p-6">
           <!-- Tab Navigation -->
@@ -301,7 +301,7 @@ if ($id) {
               </button>
             </nav>
           </div>
-          
+
           <!-- Informasi Utama -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
@@ -321,7 +321,7 @@ if ($id) {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h4 class="text-md font-medium text-gray-900 mb-4">Detail Panen</h4>
               <div class="space-y-4">
@@ -340,7 +340,7 @@ if ($id) {
               </div>
             </div>
           </div>
-          
+
           <!-- Informasi Keuangan -->
           <div class="bg-gray-50 rounded-lg p-4 mb-6">
             <h4 class="text-md font-medium text-gray-900 mb-4">Ringkasan Keuangan</h4>
@@ -351,7 +351,7 @@ if ($id) {
               </div>
             </div>
           </div>
-          
+
           <!-- Catatan dan Dokumen -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -360,7 +360,7 @@ if ($id) {
                 <p class="text-sm text-gray-700">Catatan transaksi panen</p>
               </div>
             </div>
-            
+
             <div>
               <h4 class="text-md font-medium text-gray-900 mb-2">Dokumen</h4>
               <div class="border-2 border-dashed border-gray-300 rounded-md p-4 text-center">
@@ -381,13 +381,13 @@ if ($id) {
 </main>
 
 <script>
-function confirmDelete(id) {
+  function confirmDelete(id) {
     if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
-        // Simulasi penghapusan data
-        alert('Transaksi dengan ID ' + id + ' telah dihapus');
-        window.location.href = 'transaksi.php';
+      // Simulasi penghapusan data
+      alert('Transaksi dengan ID ' + id + ' telah dihapus');
+      window.location.href = 'transaksi';
     }
-}
+  }
 </script>
 
 <?php include 'footer.php'; ?>

@@ -44,7 +44,7 @@ $name_menu = [
   'pelatihan' => 'Pelatihan',
   'sertifikasi' => 'Sertifikasi & Audit',
   'pekerja' => 'Pekerja',
-  'transaksi' => 'Transaksi',
+  'transaksi' => 'Transaksi Produksi',
   'mitra' => 'Mitra & Organisasi',
   'nkt' => 'HCV/NKT',
   'kelompok_tani' => 'Kelompok Tani',
@@ -158,6 +158,14 @@ $name_menu = [
           <a href="nkt" @click="currentMenu = 'nkt'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'HCV/NKT') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-chart-line w-5 mr-3 text-[#f0ab00]"></i>
             HCV
+          </a>
+        </div>
+
+        <!-- Transaksi Produksi -->
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?>>
+          <a href="transaksi" @click="currentMenu = 'nkt'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'Transaksi Produksi') ? 'sidebar-item active' : ''; ?>">
+            <i class="fas fa-sack-dollar w-5 mr-3 text-[#f0ab00]"></i>
+            Transaksi Produksi
           </a>
         </div>
 
