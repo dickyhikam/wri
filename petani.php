@@ -10,7 +10,7 @@ $dummyFarmers = [
     'npwp' => '01.234.567.8-912.345',
     'gender' => 'Male',
     'tempat_lahir' => 'Berumbung Baru',
-    'tgl_lahir' => '01/03/1945',
+    'tgl_lahir' => '1945-01-03',
     'alamat' => 'Alamat',
     'village_id' => 1,
     'village_name' => 'Berumbung Baru',
@@ -36,7 +36,7 @@ $dummyFarmers = [
     'npwp' => '09.876.543.2-109.876',
     'gender' => 'Male',
     'tempat_lahir' => 'Indramayu',
-    'tgl_lahir' => '20/06/1989',
+    'tgl_lahir' => '1989-06-20',
     'alamat' => 'Alamat',
     'village_id' => 2,
     'village_name' => 'Berumbung Baru',
@@ -330,7 +330,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
         <a href="petani?action=edit&id=<?= $farmer_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-edit mr-2"></i> Edit
         </a>
-        <button onclick="confirmDelete('<?= $farmer_id ?>')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center">
+        <button onclick="openDeletelModal('<?= $farmer_id ?>')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-trash-alt mr-2"></i> Hapus
         </button>
       <?php elseif ($action == 'edit'): ?>
@@ -471,10 +471,10 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                       <a href="petani?action=view&id=<?= $f['farmer_id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3" title="Lihat Profil">
                         <i class="fas fa-eye"></i>
                       </a>
-                      <a href="petani?action=edit&id=<?= $f['farmer_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
+                      <a href="petani?action=edit&id=<?= $f['farmer_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit" hidden>
                         <i class="fas fa-edit"></i>
                       </a>
-                      <a href="#" onclick="confirmDelete('<?= $f['farmer_id'] ?>')" class="text-red-600 hover:text-red-900" title="Hapus">
+                      <a href="#" onclick="openDeletelModal('<?= $f['farmer_id'] ?>')" class="text-red-600 hover:text-red-900" title="Hapus">
                         <i class="fas fa-trash-alt"></i>
                       </a>
                     </td>
@@ -545,16 +545,20 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
 
     <?php elseif ($action == 'add' || $action == 'edit'): ?>
 
+      <!-- HTML Section for NIK Input -->
       <div class="bg-white rounded-xl shadow-md overflow-hidden">
         <div class="p-6">
-          <div class="flex items-center space-x-2"> <!-- Flexbox untuk membuat elemen sejajar -->
-            <div class="flex-1"> <!-- Inputan mengambil ruang yang tersisa -->
-              <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
-              <div class="flex items-center"> <!-- Flex untuk menyelaraskan input dan tombol -->
-                <input type="text" id="nik" name="nik" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  value="<?= $action == 'edit' ? htmlspecialchars($farmer['nik']) : '' ?>">
-                <button type="button" class="ml-2 bg-yellow-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-600 h-full">
-                  Cari
+          <div class="flex items-center space-x-2">
+            <div class="flex-1">
+              <label for="nik" class="block text-sm font-medium text-gray-700">NIK <span class="text-red-500">*</span></label>
+              <div class="flex items-center">
+                <input type="text" id="nik" name="nik" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" oninput="onlyNumber(this)" />
+                <button type="button" id="cariNIKBtn" onclick="searchNIK()" class="ml-2 bg-yellow-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-yellow-400 h-full">
+                  <span id="btnNIKText">Cari</span> <!-- Teks tombol -->
+                  <svg id="loadingNIKSpinner" class="hidden w-5 h-5 animate-spin mr-2 text-white bg-yellow-500 hover:bg-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
+                  </svg>
                 </button>
               </div>
             </div>
@@ -564,7 +568,7 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
 
       <br>
       <!-- Form Tambah/Edit Petani -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+      <div id="farmer-info" style="display: none;" class="bg-white rounded-xl shadow-md overflow-hidden">
         <div class="p-6">
           <form method="post" enctype="multipart/form-data" class="space-y-6">
             <input type="hidden" name="<?= $action == 'add' ? 'add_farmer' : 'update_farmer' ?>" value="1">
@@ -576,37 +580,32 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
               <!-- Kolom Kiri -->
               <div class="space-y-4">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700">ID Petani</label>
-                  <input type="text" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100"
+                  <label class="block text-sm font-medium text-gray-700">ID Petani <span class="text-red-500">*</span></label>
+                  <input type="text" id="farmer_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100"
                     value="<?= $action == 'edit' ? htmlspecialchars($farmer['farmer_id']) : generateNewFarmerId() ?>" readonly>
                 </div>
                 <div>
-                  <label for="nik" class="block text-sm font-medium text-gray-700">NPWP</label>
-                  <input type="text" id="nik" name="nik" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['nik']) : '' ?>">
+                  <label for="npwp" class="block text-sm font-medium text-gray-700">NPWP <span class="text-red-500">*</span></label>
+                  <input type="text" id="npwp" name="npwp" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" oninput="onlyNumber(this)"
+                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['npwp']) : '' ?>">
                 </div>
                 <div>
-                  <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                  <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap <span class="text-red-500">*</span></label>
+                  <input type="text" id="name" name="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     value="<?= $action == 'edit' ? htmlspecialchars($farmer['name']) : '' ?>">
                 </div>
                 <div>
-                  <label for="gender" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
-                  <select id="gender" name="gender" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                  <label for="gender" class="block text-sm font-medium text-gray-700">Jenis Kelamin <span class="text-red-500">*</span></label>
+                  <select id="gender" name="gender" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">Pilih Jenis Kelamin</option>
                     <option value="Male" <?= $action == 'edit' && $farmer['gender'] == 'Male' ? 'selected' : '' ?>>Laki-laki</option>
                     <option value="Female" <?= $action == 'edit' && $farmer['gender'] == 'Female' ? 'selected' : '' ?>>Perempuan</option>
                   </select>
                 </div>
                 <div>
-                  <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir</label>
+                  <label for="tempat_lahir" class="block text-sm font-medium text-gray-700">Tempat Lahir <span class="text-red-500">*</span></label>
                   <input type="text" id="tempat_lahir" name="tempat_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                     value="<?= $action == 'edit' ? htmlspecialchars($farmer['tempat_lahir']) : '' ?>">
-                </div>
-                <div>
-                  <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
-                  <input type="date" id="tgl_lahir" name="tgl_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['tgl_lahir']) : '' ?>">
                 </div>
                 <div hidden>
                   <label for="pelatihan" class="block text-sm font-medium text-gray-700">Pelatihan yang Diikuti</label>
@@ -634,13 +633,13 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                 </div>
 
                 <div>
-                  <label for="kelompokTani" class="block text-sm font-medium text-gray-700">Kelompok Tani</label>
+                  <label for="kelompokTani" class="block text-sm font-medium text-gray-700">Kelompok Tani <span class="text-red-500">*</span></label>
                   <select id="kelompokTani" name="kelompokTani" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     <option value="">Pilih Kelompok Tani</option>
                   </select>
                 </div>
                 <div>
-                  <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
+                  <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap <span class="text-red-500">*</span></label>
                   <textarea id="alamat" name="alamat" rows="2" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"><?= $action == 'edit' ? htmlspecialchars($farmer['alamat']) : '' ?></textarea>
                 </div>
                 <div>
@@ -653,15 +652,22 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                     </div>
                   <?php endif; ?>
                 </div>
+                <div>
+                  <label for="tgl_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir <span class="text-red-500">*</span></label>
+                  <input type="date" id="tgl_lahir" name="tgl_lahir" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    value="<?= $action == 'edit' ? htmlspecialchars($farmer['tgl_lahir']) : '' ?>">
+                </div>
               </div>
             </div>
 
             <div class="flex justify-end space-x-3">
-              <a href="<?= $action == 'add' ? 'petani' : 'petani?action=view&id=' . $farmer_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">
-                Batal
-              </a>
-              <button type="submit" class="bg-[#f0ab00] hover:bg-[#e09900] text-white px-4 py-2 rounded-lg">
-                Simpan
+              <a href="<?= $action == 'add' ? 'petani' : 'petani?action=view&id=' . $farmer_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">Batal</a>
+              <button type="button" id="savePetaniBtn" onclick="savePetaniData()" class="ml-2 bg-yellow-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-yellow-400 h-full">
+                <span id="btnPetaniText">Simpan</span> <!-- Teks tombol -->
+                <svg id="loadingPetaniSpinner" class="hidden w-5 h-5 animate-spin mr-2 text-white bg-yellow-500 hover:bg-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
+                </svg>
               </button>
             </div>
           </form>
@@ -896,6 +902,47 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
   </section>
 </main>
 
+<!-- Modal Hapus Data -->
+<div id="deleteModal" class="modal hidden fixed z-10 inset-0 overflow-y-auto">
+  <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    </div>
+    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+        <div class="sm:flex sm:items-start">
+          <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-600 sm:mx-0 sm:h-10 sm:w-10">
+            <i class="fas fa-trash-alt text-white"></i>
+          </div>
+          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+            <h3 id="deleteModalTitle" class="text-lg leading-6 font-medium text-gray-900">Konfirmasi Hapus Data</h3>
+            <div class="mt-2">
+              <p id="deleteModalContent" class="text-sm text-gray-500">
+                Apakah Anda yakin ingin menghapus data ini? Setelah Anda menekan "Hapus", data tidak akan muncul di dalam table.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+        <button type="button" id="deleteDataBtn" class="w-full inline-flex justify-center items-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 sm:ml-3 sm:w-auto sm:text-sm" onclick="deleteData()">
+          <span id="btnText">Hapus</span> <!-- Teks tombol -->
+          <svg id="loadingSpinner" class="hidden w-5 h-5 animate-spin mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
+          </svg>
+        </button>
+
+        <button type="button" onclick="closeDeleteParcelModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+          Batal
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
   // Fungsi untuk tab
   document.querySelectorAll('.tab-link').forEach(link => {
@@ -919,13 +966,124 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
     });
   });
 
-  // Fungsi untuk konfirmasi hapus
-  function confirmDelete(farmerId) {
-    if (confirm('Apakah Anda yakin ingin menghapus petani ini?')) {
-      // Redirect ke action delete dengan parameter id
-      window.location.href = 'petani?action=delete&id=' + farmerId;
+  // Function to populate the Kelompok Tani dropdown based on the ICS
+  function populateKelompokTani() {
+    const ics = document.getElementById('ics').value;
+    const kelompokTaniSelect = document.getElementById('kelompokTani');
+
+    // Clear the current options
+    kelompokTaniSelect.innerHTML = '<option value="">Pilih Kelompok Tani</option>';
+
+    if (ics) {
+      // Get Kelompok Tani data based on ICS
+      const kelompokTaniOptions = kelompokTaniData[ics];
+
+      // Populate the options dynamically
+      kelompokTaniOptions.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.name;
+        kelompokTaniSelect.appendChild(optionElement);
+      });
     }
   }
+
+  // Dummy data (converted from PHP to JavaScript)
+  const farmersData = <?php echo json_encode($dummyFarmers); ?>;
+
+  // Function to search for NIK and show data
+  function searchNIK() {
+    const nik = document.getElementById('nik').value;
+    const farmerInfoDiv = document.getElementById('farmer-info');
+
+    // Menampilkan loading spinner dan menonaktifkan tombol
+    const saveBtn = document.getElementById("cariNIKBtn");
+    const loadingSpinner = document.getElementById("loadingNIKSpinner");
+    const btnText = document.getElementById("btnNIKText");
+
+    if (!nik) {
+      showSweetAlert('error', 'Pencarian Gagal', 'NIK tidak boleh kosong. Mohon untuk mengisi NIK terlebih dahulu.', false, '');
+      return;
+    }
+
+    if (nik.length !== 16) {
+      showSweetAlert('error', 'Pencarian Gagal', 'NIK harus terdiri dari 16 digit. Pastikan NIK yang dimasukkan sudah benar.', false, '');
+      return;
+    }
+
+    // Find farmer data by NIK
+    const farmer = farmersData.find(f => f.nik === nik);
+
+    // Menonaktifkan tombol dan menampilkan spinner saat proses upload
+    saveBtn.disabled = true;
+    btnText.style.display = 'none'; // Menyembunyikan teks tombol
+    loadingSpinner.style.display = 'inline-block'; // Menampilkan spinner
+
+    // Simulasi upload data (misalnya dengan setTimeout)
+    setTimeout(() => {
+
+      // Menyembunyikan spinner dan mengaktifkan kembali tombol
+      loadingSpinner.style.display = 'none';
+      btnText.style.display = 'inline'; // Menampilkan kembali teks tombol
+      saveBtn.disabled = false; // Mengaktifkan tombol kembali
+
+      if (farmer) {
+        // Data found successfully
+        showSweetAlert('success', 'Data Ditemukan', 'Data petani berhasil ditemukan dan bisa dilakukan edit data.', true, '');
+
+        // Show the farmer data and fill the form with the farmer details
+        document.getElementById('farmer_id').value = farmer.farmer_id;
+        document.getElementById('npwp').value = farmer.npwp;
+        document.getElementById('name').value = farmer.name;
+        document.getElementById('gender').value = farmer.gender;
+        document.getElementById('tempat_lahir').value = farmer.tempat_lahir;
+        document.getElementById('tgl_lahir').value = farmer.tgl_lahir;
+        document.getElementById('alamat').value = farmer.alamat;
+
+        // Set the ICS and Kelompok Tani
+        const icsValue = farmer.ics_id === 1 ? 'A' : farmer.ics_id === 2 ? 'B' : 'C';
+        document.getElementById('ics').value = icsValue;
+        populateKelompokTani(); // Populate Kelompok Tani options based on ICS
+
+        // Set the Kelompok Tani based on the farmer's group
+        const kelompokTaniValue = farmer.group_id === 1 ? 'A1' : farmer.group_id === 2 ? 'B1' : 'C1';
+        document.getElementById('kelompokTani').value = kelompokTaniValue;
+
+        farmerInfoDiv.style.display = 'block'; // Show the form with the farmer data
+      } else {
+        // Data not found, prompt user to add new data
+        showSweetAlert('warning', 'Data Tidak Ditemukan', 'Data petani tidak ditemukan. Silakan tambahkan data petani baru.', true, '');
+
+        // Extract the first 6 digits (140806)
+        const extractedData = nik.substring(0, 6);
+
+        // Add a dot every two digits (e.g., 140806 -> 14.08.06)
+        const formattedData = extractedData.replace(/(\d{2})(?=\d)/g, '$1.');
+
+        // If no matching data is found, clear the form and display it
+        document.getElementById('farmer_id').value = formattedData + '.1001.0001';
+        document.getElementById('npwp').value = '';
+        document.getElementById('name').value = '';
+        document.getElementById('gender').value = '';
+        document.getElementById('tempat_lahir').value = '';
+        document.getElementById('tgl_lahir').value = '';
+        document.getElementById('alamat').value = '';
+        document.getElementById('ics').value = '';
+        document.getElementById('kelompokTani').value = '';
+
+        farmerInfoDiv.style.display = 'block'; // Just show the form
+      }
+
+    }, 3000); // Waktu simulasi upload (3 detik)
+  }
+
+  // Fungsi untuk konfirmasi hapus
+  // function confirmDelete(farmerId) {
+  //   if (confirm('Apakah Anda yakin ingin menghapus petani ini?')) {
+  //     // Redirect ke action delete dengan parameter id
+  //     window.location.href = 'petani?action=delete&id=' + farmerId;
+  //   }
+  // }
 
   // Data Dummy Kelompok Tani berdasarkan ICS
   const kelompokTaniData = {
@@ -976,9 +1134,28 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
   // Fungsi untuk mengupdate pilihan Kelompok Tani berdasarkan ICS
   function updateKelompokTaniOptions() {
     const selectedICS = icsSelect.value;
+    const farmer_id = document.getElementById('farmer_id').value;
+
+    // Split farmer_id to get the first part (ICS part)
+    const farmerParts = farmer_id.split('.'); // This will give us an array of parts
+    const firstPart = farmerParts[0]; // This is either the ICS or a number
 
     // Kosongkan pilihan Kelompok Tani
     kelompokTaniSelect.innerHTML = '<option value="">Pilih Kelompok Tani</option>';
+
+    // Check if the first part is a letter
+    if (/[A-Za-z]/.test(firstPart)) {
+      // If the first part is a letter (ICS), replace it with the selected ICS
+      if (selectedICS) {
+        document.getElementById('farmer_id').value = selectedICS + '.' + farmerParts.slice(1).join('.');
+      } else {
+        // If no ICS is selected, remove the first part (the letter)
+        document.getElementById('farmer_id').value = farmerParts.slice(1).join('.');
+      }
+    } else {
+      // If ICS is selected, replace the first part with the selected ICS
+      document.getElementById('farmer_id').value = selectedICS + '.' + farmer_id;
+    }
 
     if (selectedICS) {
       // Jika ICS dipilih, tampilkan Kelompok Tani yang sesuai dengan ICS
@@ -1005,6 +1182,125 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
 
   // Panggil fungsi untuk mengupdate pilihan Kelompok Tani pada awalnya
   updateKelompokTaniOptions();
+
+  function savePetaniData() {
+    const farmer_id = document.getElementById("farmer_id");
+    const npwp = document.getElementById("npwp");
+    const name = document.getElementById("name");
+    const gender = document.getElementById("gender");
+    const tempat_lahir = document.getElementById("tempat_lahir");
+    const tgl_lahir = document.getElementById("tgl_lahir");
+    const alamat = document.getElementById("alamat");
+    const kelompokTani = document.getElementById("kelompokTani");
+
+    // Menampilkan loading spinner dan menonaktifkan tombol
+    const saveBtn = document.getElementById("savePetaniBtn");
+    const loadingSpinner = document.getElementById("loadingPetaniSpinner");
+    const btnText = document.getElementById("btnPetaniText");
+
+    // Validate required fields
+    if (!farmer_id.value) {
+      showSweetAlert('error', 'Form Gagal', 'ID Petani harus diisi.', false, '');
+      return;
+    }
+
+    if (!npwp.value) {
+      showSweetAlert('error', 'Form Gagal', 'NPWP harus diisi.', false, '');
+      return;
+    }
+    if (npwp.value.length !== 16) {
+      showSweetAlert('error', 'Form Gagal', 'NPWP harus terdiri dari 16 karakter.', false, '');
+      return;
+    }
+    if (!/^\d{16}$/.test(npwp.value)) {
+      showSweetAlert('error', 'Form Gagal', 'NPWP hanya boleh berisi angka.', false, '');
+      return;
+    }
+
+    if (!name.value) {
+      showSweetAlert('error', 'Form Gagal', 'Nama lengkap harus diisi.', false, '');
+      return;
+    }
+
+    if (!gender.value) {
+      showSweetAlert('error', 'Form Gagal', 'Jenis Kelamin harus diisi.', false, '');
+      return;
+    }
+
+    if (!tempat_lahir.value) {
+      showSweetAlert('error', 'Form Gagal', 'Tempat lahir harus diisi.', false, '');
+      return;
+    }
+
+    if (!tgl_lahir.value) {
+      showSweetAlert('error', 'Form Gagal', 'Tanggal lahir harus diisi.', false, '');
+      return;
+    }
+
+    if (!alamat.value) {
+      showSweetAlert('error', 'Form Gagal', 'Alamat harus diisi.', false, '');
+      return;
+    }
+
+    if (!kelompokTani.value) {
+      showSweetAlert('error', 'Form Gagal', 'Kelompok Tani harus dipilih.', false, '');
+      return;
+    }
+
+    // Menonaktifkan tombol dan menampilkan spinner saat proses upload
+    saveBtn.disabled = true;
+    btnText.style.display = 'none'; // Menyembunyikan teks tombol
+    loadingSpinner.style.display = 'inline-block'; // Menampilkan spinner
+
+    // Simulasi upload data (misalnya dengan setTimeout)
+    setTimeout(() => {
+      // Proses upload selesai
+      showSweetAlert('success', 'Berhasil Disimpan', 'Data petani berhasil disimpan ke dalam database.', true, 'petani');
+
+      // Menyembunyikan spinner dan mengaktifkan kembali tombol
+      loadingSpinner.style.display = 'none';
+      btnText.style.display = 'inline'; // Menampilkan kembali teks tombol
+      saveBtn.disabled = false; // Mengaktifkan tombol kembali
+
+      // Pindah halaman setelah delay
+      setTimeout(() => {
+        // Ganti dengan URL halaman yang sesuai
+        window.location.href = 'petani'; // Misalnya, ke halaman dashboard
+      }, 2000); // Pindah halaman setelah 2 detik
+    }, 3000); // Waktu simulasi upload (3 detik)
+  }
+
+  // Fungsi untuk menghapus data
+  function deleteData() {
+    const deleteBtn = document.getElementById("deleteDataBtn");
+    const loadingSpinner = document.getElementById("loadingSpinner");
+    const btnText = document.getElementById("btnText");
+
+    // Menonaktifkan tombol dan menampilkan spinner
+    deleteBtn.disabled = true; // Menonaktifkan tombol
+    btnText.style.display = 'none'; // Menyembunyikan teks tombol
+    loadingSpinner.style.display = 'inline-block'; // Menampilkan spinner loading
+
+    // Proses penghapusan data
+    setTimeout(() => {
+      // Simulasi penghapusan data selesai
+      showSweetAlert('success', 'Penghapusan Berhasil', 'Data telah berhasil dihapus.', true, '');
+      closeDeletelModal()
+
+      // Menyembunyikan spinner dan mengaktifkan kembali tombol
+      loadingSpinner.style.display = 'none'; // Menyembunyikan spinner
+      btnText.style.display = 'inline'; // Menampilkan kembali teks tombol
+      deleteBtn.disabled = false; // Mengaktifkan kembali tombol
+    }, 3000); // Waktu tunggu simulasi (3 detik)
+  }
+
+  function closeDeletelModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+  }
+
+  function openDeletelModal(id = null) {
+    document.getElementById('deleteModal').classList.remove('hidden');
+  }
 </script>
 
 <?php include 'footer.php'; ?>

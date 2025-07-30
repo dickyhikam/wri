@@ -1021,8 +1021,8 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
             </div>
             <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button type="button" id="saveMillsBtn" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#f0ab00] text-base font-medium text-white hover:bg-[#e09900] sm:ml-3 sm:w-auto sm:text-sm" onclick="uploadParcelData()">
-                    Simpan
-                    <svg id="loadingSpinner" class="hidden w-5 h-5 animate-spin mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <span id="btnParcelText">Simpan</span> <!-- Teks tombol -->
+                    <svg id="loadingParcelSpinner" class="hidden w-5 h-5 animate-spin mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
                     </svg>
@@ -1197,11 +1197,11 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
 
         // Menampilkan loading spinner dan menonaktifkan tombol
         const saveBtn = document.getElementById("saveMillsBtn");
-        const loadingSpinner = document.getElementById("loadingSpinner");
-        const btnText = document.getElementById("btnText");
+        const loadingSpinner = document.getElementById("loadingParcelSpinner");
+        const btnText = document.getElementById("btnParcelText");
 
         if (!file) {
-            showSweetAlert('error', 'Upload Gagal', 'Harap unggah file Excel terlebih dahulu.', false);
+            showSweetAlert('error', 'Upload Gagal', 'Harap unggah file Excel terlebih dahulu.', false, '');
             return;
         }
 
@@ -1209,13 +1209,13 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
 
         // Validasi format file
         if (!allowedExtensions.exec(file.name)) {
-            showSweetAlert('error', 'Format Salah', 'Harap unggah file dengan ekstensi .xls atau .xlsx', false);
+            showSweetAlert('error', 'Format Salah', 'Harap unggah file dengan ekstensi .xls atau .xlsx', false, '');
             return;
         }
 
         // Validasi ukuran file (maksimal 10MB)
         if (file.size > 10 * 1024 * 1024) {
-            showSweetAlert('error', 'Ukuran File Terlalu Besar', 'Ukuran file terlalu besar. Maksimal 10MB.', false);
+            showSweetAlert('error', 'Ukuran File Terlalu Besar', 'Ukuran file terlalu besar. Maksimal 10MB.', false, '');
             return;
         }
 
@@ -1227,7 +1227,7 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
         // Simulasi upload data (misalnya dengan setTimeout)
         setTimeout(() => {
             // Proses upload selesai
-            showSweetAlert('success', 'Upload Berhasil', 'Data parcel telah berhasil di-upload dan diverifikasi.', true);
+            showSweetAlert('success', 'Upload Berhasil', 'Data parcel telah berhasil di-upload dan diverifikasi.', true, 'parcel');
 
             // Menyembunyikan spinner dan mengaktifkan kembali tombol
             loadingSpinner.style.display = 'none';

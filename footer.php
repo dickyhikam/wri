@@ -13,6 +13,12 @@
  <script>
    // Update tahun secara otomatis
    document.getElementById('year').textContent = new Date().getFullYear();
+
+   // Function to remove non-numeric characters from an input
+   function onlyNumber(inputElement) {
+     // Remove any non-numeric characters
+     inputElement.value = inputElement.value.replace(/\D/g, '');
+   }
  </script>
  </body>
 
