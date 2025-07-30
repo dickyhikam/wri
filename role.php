@@ -94,54 +94,47 @@ if ($farmer_id) {
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td>Test</td>
-                                <td>Test</td>
-                                <td>Test</td>
-                                <td>Test</td>
-                                <td>Test</td>
-                            </tr>
                             <?php
                             // Filter data berdasarkan dropdown
                             $filteredRoles = $dummyRoles;
-                            if (isset($_GET['ics_filter']) && $_GET['ics_filter'] != '') {
-                                $filteredRoles = array_filter($filteredRoles, function ($f) {
-                                    return $f['ics_id'] == $_GET['ics_filter'];
-                                });
-                            }
-                            if (isset($_GET['group_filter']) && $_GET['group_filter'] != '') {
-                                $filteredRoles = array_filter($filteredRoles, function ($f) {
-                                    return $f['group_id'] == $_GET['group_filter'];
-                                });
-                            }
-                            if (isset($_GET['status_filter']) && $_GET['status_filter'] != '') {
-                                $filteredRoles = array_filter($filteredRoles, function ($f) {
-                                    return $f['status'] == $_GET['status_filter'];
-                                });
-                            }
-                            if (isset($_GET['gender_filter']) && $_GET['gender_filter'] != '') {
-                                $filteredRoles = array_filter($filteredRoles, function ($f) {
-                                    return $f['gender'] == $_GET['gender_filter'];
-                                });
-                            }
-                            if (isset($_GET['search']) && $_GET['search'] != '') {
-                                $search = strtolower($_GET['search']);
-                                $filteredRoles = array_filter($filteredRoles, function ($f) use ($search) {
-                                    return strpos(strtolower($f['name']), $search) !== false;
-                                });
-                            }
+                            // if (isset($_GET['ics_filter']) && $_GET['ics_filter'] != '') {
+                            //     $filteredRoles = array_filter($filteredRoles, function ($f) {
+                            //         return $f['ics_id'] == $_GET['ics_filter'];
+                            //     });
+                            // }
+                            // if (isset($_GET['group_filter']) && $_GET['group_filter'] != '') {
+                            //     $filteredRoles = array_filter($filteredRoles, function ($f) {
+                            //         return $f['group_id'] == $_GET['group_filter'];
+                            //     });
+                            // }
+                            // if (isset($_GET['status_filter']) && $_GET['status_filter'] != '') {
+                            //     $filteredRoles = array_filter($filteredRoles, function ($f) {
+                            //         return $f['status'] == $_GET['status_filter'];
+                            //     });
+                            // }
+                            // if (isset($_GET['gender_filter']) && $_GET['gender_filter'] != '') {
+                            //     $filteredRoles = array_filter($filteredRoles, function ($f) {
+                            //         return $f['gender'] == $_GET['gender_filter'];
+                            //     });
+                            // }
+                            // if (isset($_GET['search']) && $_GET['search'] != '') {
+                            //     $search = strtolower($_GET['search']);
+                            //     $filteredRoles = array_filter($filteredRoles, function ($f) use ($search) {
+                            //         return strpos(strtolower($f['name']), $search) !== false;
+                            //     });
+                            // }
 
                             // Pagination logic
-                            $totalFarmers = count($filteredRoles);
-                            $totalPages = ceil($totalFarmers / $perPage);
-                            $currentPage = min($currentPage, $totalPages); // Ensure we don't go past the last page
+                            // $totalFarmers = count($filteredRoles);
+                            // $totalPages = ceil($totalFarmers / $perPage);
+                            // $currentPage = min($currentPage, $totalPages); // Ensure we don't go past the last page
 
                             // Get current page's farmers
-                            $offset = ($currentPage - 1) * $perPage;
-                            $currentPageFarmers = array_slice($filteredRoles, $offset, $perPage);
-                            echo count($filteredRoles) . '|' . empty($currentPageFarmers);
+                            // $offset = ($currentPage - 1) * $perPage;
+                            // $currentPageFarmers = array_slice($filteredRoles, $offset, $perPage);
+                            // echo count($filteredRoles) . '|' . empty($currentPageFarmers);
                             ?>
-                            <?php if (empty($currentPageFarmers)): ?>
+                            <?php if (empty($filteredRoles)): ?>
                                 <tr>
                                     <td colspan="7" class="px-6 py-4 text-center text-gray-500">Tidak ada data role</td>
                                 </tr>
@@ -173,7 +166,7 @@ if ($farmer_id) {
                 </div>
 
                 <!-- Pagination -->
-                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6" style="display: none;">
                     <div class="flex-1 flex justify-between sm:hidden">
                         <a href="role?<?= http_build_query(array_merge($_GET, ['page' => max(1, $currentPage - 1)])) ?>" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
                             Sebelumnya
