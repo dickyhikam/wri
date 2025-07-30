@@ -97,7 +97,6 @@ if ($farmer_id) {
                             <?php
                             // Filter data berdasarkan dropdown
                             $filteredRoles = $dummyRoles;
-                            echo count($dummyRoles);
                             if (isset($_GET['ics_filter']) && $_GET['ics_filter'] != '') {
                                 $filteredRoles = array_filter($filteredRoles, function ($f) {
                                     return $f['ics_id'] == $_GET['ics_filter'];
@@ -133,6 +132,7 @@ if ($farmer_id) {
                             // Get current page's farmers
                             $offset = ($currentPage - 1) * $perPage;
                             $currentPageFarmers = array_slice($filteredRoles, $offset, $perPage);
+                            echo count($filteredRoles) . '|' . empty($currentPageFarmers);
                             ?>
                             <?php if (empty($currentPageFarmers)): ?>
                                 <tr>
