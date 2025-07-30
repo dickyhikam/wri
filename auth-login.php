@@ -251,14 +251,15 @@ session_start();
 
             // Simpan email ke session
             $_SESSION['email'] = $email;
+            $_SESSION['role'] = $userFound['akun']['role'];
 
             if ($isValid) {
                 // Cek apakah akun aktif
                 if ($userFound['is_active'] == 1) {
                     $_SESSION['userFound'] = $userFound;
-                    $menu = $userFound['akun']['role'] == 'User' ? 'index-user' : 'index';
+
                     // Jika akun aktif
-                    echo "<script>showSweetAlert('success', 'Login Berhasil', 'Selamat datang, " . $userFound['profile']['name'] . ". Anda berhasil login.', true, '" . $menu . "');</script>";
+                    echo "<script>showSweetAlert('success', 'Login Berhasil', 'Selamat datang, " . $userFound['profile']['name'] . ". Anda berhasil login. Cek email yang terdaftar untuk melihat code OTP.', true, 'auth-login-otp');</script>";
                     echo "<script>setTimeout(function(){ window.location.href = 'index'; }, 2000);</script>";
                 } else {
                     // Jika akun tidak aktif
