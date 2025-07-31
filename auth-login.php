@@ -206,6 +206,16 @@ session_start();
     </script>
 
     <?php
+    // Jumlah percobaan login
+    if (!isset($_SESSION['login_attempts'])) {
+        $_SESSION['login_attempts'] = 0;  // Inisialisasi jika belum ada
+    }
+
+    if ($_SESSION['login_attempts'] >= 5) {
+        echo "<script>showSweetAlert('error', 'Akun Terkunci', 'Anda telah melakukan percobaan login yang salah 5 kali. Akun Anda terkunci.', false, '');</script>";
+        exit; // Menghentikan proses jika sudah mencapai 5 kali percobaan
+    }
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
@@ -254,6 +264,9 @@ session_start();
             $_SESSION['role'] = $userFound['akun']['role'];
 
             if ($isValid) {
+                // Reset jumlah percobaan login jika login berhasil
+                $_SESSION['login_attempts'] = 0; // Reset percobaan login
+
                 // Cek apakah akun aktif
                 if ($userFound['is_active'] == 1) {
                     $_SESSION['userFound'] = $userFound;
@@ -266,7 +279,16 @@ session_start();
                     echo "<script>showSweetAlert('warning', 'Akun Tidak Aktif', 'Akun Anda tidak aktif. Silakan hubungi admin untuk informasi lebih lanjut.', false, '');</script>";
                 }
             } else {
-                echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false, '');</script>";
+                // Jika login gagal, increment percobaan login
+                $_SESSION['login_attempts']++;
+
+                // Jika login gagal 5 kali, tampilkan pesan dan blokir
+                if ($_SESSION['login_attempts'] >= 5) {
+                    echo "<script>showSweetAlert('error', 'Akun Terkunci', 'Anda telah melakukan percobaan login yang salah 5 kali. Akun Anda terkunci.', false, '');</script>";
+                    exit;
+                }
+
+                echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan. Percobaan " . $_SESSION['login_attempts'] . " dari 5.', false, '');</script>";
             }
         } elseif (file_exists($jsonFileUser)) {
             $data = json_decode(file_get_contents($jsonFileUser), true);
@@ -288,16 +310,29 @@ session_start();
             $_SESSION['email'] = $email;
 
             if ($isValid) {
+                // Reset jumlah percobaan login jika login berhasil
+                $_SESSION['login_attempts'] = 0; // Reset percobaan login
+
                 echo "<script>showSweetAlert('success', 'Login Berhasil', 'Email Anda terdaftar, namun belum diverifikasi. Silakan cek kotak masuk Anda untuk menyelesaikan proses verifikasi.', true, 'auth-register-verif');</script>";
                 // Mengalihkan pengguna ke halaman verifikasi email atau halaman lain setelah pemberitahuan
                 echo "<script>setTimeout(function(){ window.location.href = 'auth-register-verif'; }, 2000);</script>";
             } else {
+                // Jika login gagal, increment percobaan login
+                $_SESSION['login_attempts']++;
+
+                // Jika login gagal 5 kali, tampilkan pesan dan blokir
+                if ($_SESSION['login_attempts'] >= 5) {
+                    echo "<script>showSweetAlert('error', 'Akun Terkunci', 'Anda telah melakukan percobaan login yang salah 5 kali. Akun Anda terkunci.', false, '');</script>";
+                    exit;
+                }
+
                 echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false, '');</script>";
             }
         } else {
             echo "<script>showSweetAlert('error', 'Login Gagal', 'Email atau kata sandi tidak ditemukan.', false, '');</script>";
         }
     }
+
     ?>
 </body>
 

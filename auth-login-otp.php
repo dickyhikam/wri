@@ -156,7 +156,11 @@
             startCountdown(); // Restart the countdown
         });
 
-        // Form submission handler
+        // Cek percobaan OTP sebelumnya
+        if (!sessionStorage.getItem('otpAttempts')) {
+            sessionStorage.setItem('otpAttempts', 0); // Inisialisasi percobaan OTP
+        }
+
         document.getElementById('otpVerificationForm').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
 
@@ -168,14 +172,32 @@
 
             const otpCode = otp1 + otp2 + otp3 + otp4 + otp5;
 
+            // Cek jumlah percobaan OTP
+            let otpAttempts = parseInt(sessionStorage.getItem('otpAttempts'));
+
+            if (otpAttempts >= 5) {
+                showSweetAlert('error', 'Akun Terkunci', 'Anda telah melakukan percobaan OTP yang salah 5 kali. Akun Anda terkunci.', false, 'auth-login');
+                return;
+            }
+
             if (otpCode.length === 5) {
                 if (otpCode === '12345') {
+                    // Reset percobaan OTP setelah sukses
+                    sessionStorage.setItem('otpAttempts', 0);
                     showSweetAlert('success', 'OTP Verified', 'Your OTP has been successfully verified!', true, userRole);
                     setTimeout(function() {
                         window.location.href = "index"; // Redirect to your dashboard or homepage
                     }, 2000);
                 } else {
-                    showSweetAlert('error', 'Invalid OTP', 'The OTP you entered is incorrect. Please try again.', false, '');
+                    // Increment percobaan OTP
+                    otpAttempts++;
+                    sessionStorage.setItem('otpAttempts', otpAttempts); // Simpan jumlah percobaan
+
+                    if (otpAttempts >= 5) {
+                        showSweetAlert('error', 'Akun Terkunci', 'Anda telah melakukan percobaan OTP yang salah 5 kali. Akun Anda terkunci.', false, '');
+                    } else {
+                        showSweetAlert('error', 'Invalid OTP', 'The OTP you entered is incorrect. Please try again.', false, '');
+                    }
                     document.getElementById('otpVerificationForm').reset();
                 }
             } else {
