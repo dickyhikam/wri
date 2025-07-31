@@ -1009,22 +1009,30 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
+                                    <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap <span class="text-red-500">*</span></label>
                                     <input type="text" id="name" name="name" value="<?= $action == 'edit' ? htmlspecialchars($worker['name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
                                 <div>
-                                    <label for="nik" class="block text-sm font-medium text-gray-700">NIK</label>
+                                    <label for="nik" class="block text-sm font-medium text-gray-700">NIK <span class="text-red-500">*</span></label>
                                     <input type="text" id="nik" name="nik" value="<?= $action == 'edit' ? htmlspecialchars($worker['nik']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
-                                <div>
+                                <div style="display: none;">
                                     <label for="npwp" class="block text-sm font-medium text-gray-700">NPWP</label>
                                     <input type="text" id="npwp" name="npwp" value="<?= $action == 'edit' ? htmlspecialchars($worker['npwp']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
                                 <div>
-                                    <label for="gender" class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+                                    <label for="gender" class="block text-sm font-medium text-gray-700">Jenis Kelamin <span class="text-red-500">*</span></label>
                                     <select id="gender" name="gender" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                         <option value="Male" <?= $action == 'edit' && $worker['gender'] == 'Male' ? 'selected' : '' ?>>Laki-laki</option>
                                         <option value="Female" <?= $action == 'edit' && $worker['gender'] == 'Female' ? 'selected' : '' ?>>Perempuan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="agama" class="block text-sm font-medium text-gray-700">Agama</label>
+                                    <select id="agama" name="agama" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <?php foreach ($religions as $religion): ?>
+                                            <option value="<?= $religion ?>" <?= $action == 'edit' && $worker['agama'] == $religion ? 'selected' : '' ?>><?= $religion ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div>
@@ -1036,14 +1044,6 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                     <input type="date" id="tgl_lahir" name="tgl_lahir" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_lahir']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 </div>
                                 <div>
-                                    <label for="agama" class="block text-sm font-medium text-gray-700">Agama</label>
-                                    <select id="agama" name="agama" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <?php foreach ($religions as $religion): ?>
-                                            <option value="<?= $religion ?>" <?= $action == 'edit' && $worker['agama'] == $religion ? 'selected' : '' ?>><?= $religion ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div>
                                     <label for="status_perkawinan" class="block text-sm font-medium text-gray-700">Status Perkawinan</label>
                                     <select id="status_perkawinan" name="status_perkawinan" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                         <?php foreach ($maritalStatuses as $status): ?>
@@ -1051,98 +1051,109 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="border-b border-gray-200 pb-4 mt-6">
-                                <h3 class="text-lg font-medium text-gray-900">Informasi Pekerjaan</h3>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="pekerja_id" class="block text-sm font-medium text-gray-700">ID Pekerja</label>
-                                    <input type="text" id="pekerja_id" name="pekerja_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['pekerja_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-                                <div>
-                                    <label for="position" class="block text-sm font-medium text-gray-700">Jabatan</label>
-                                    <select id="position" name="position" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <?php foreach ($positions as $pos): ?>
-                                            <option value="<?= $pos ?>" <?= $action == 'edit' && $worker['position'] == $pos ? 'selected' : '' ?>><?= $pos ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="tgl_mulai" class="block text-sm font-medium text-gray-700">Tanggal Mulai Bekerja</label>
-                                    <input type="text" id="tgl_mulai" name="tgl_mulai" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_mulai']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-                                <div>
-                                    <label for="upah" class="block text-sm font-medium text-gray-700">Upah</label>
-                                    <input type="text" id="upah" name="upah" value="<?= $action == 'edit' ? number_format($worker['upah'], 0, ',', '.') : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-                                <div>
-                                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                                    <select id="status" name="status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="Active" <?= $action == 'edit' && $worker['status'] == 'Active' ? 'selected' : '' ?>>Active</option>
-                                        <option value="Inactive" <?= $action == 'edit' && $worker['status'] == 'Inactive' ? 'selected' : '' ?>>Inactive</option>
-                                    </select>
-                                </div>
                                 <div>
                                     <label for="foto" class="block text-sm font-medium text-gray-700">Foto Profil</label>
                                     <input type="file" id="foto" name="foto" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                                 </div>
                             </div>
+
                             <div class="border-b border-gray-200 pb-4 mt-6">
                                 <h3 class="text-lg font-medium text-gray-900">Alamat</h3>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
                                 <div>
-                                    <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap</label>
-                                    <textarea id="alamat" name="alamat" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"><?= $action == 'edit' ? htmlspecialchars($worker['alamat']) : '' ?></textarea>
+                                    <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap <span class="text-red-500">*</span></label>
+                                    <textarea id="alamat" name="alamat" rows="2" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"><?= $action == 'edit' ? htmlspecialchars($worker['alamat']) : '' ?></textarea>
                                 </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                                 <div>
-                                    <label for="village_name" class="block text-sm font-medium text-gray-700">Desa</label>
-                                    <select id="village_name" name="village_name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <?php foreach ($villages as $v): ?>
-                                            <option value="<?= $v['village'] ?>" <?= $action == 'edit' && $worker['desa'] == $v['village'] ? 'selected' : '' ?>><?= $v['village'] ?></option>
-                                        <?php endforeach; ?>
+                                    <label for="province_id" class="block text-sm font-medium text-gray-700">Provinsi</label>
+                                    <select id="province_id" name="province_id"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pilih Provinsi</option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="kecamatan" class="block text-sm font-medium text-gray-700">Kecamatan</label>
-                                    <input type="text" id="kecamatan" name="kecamatan" value="<?= $action == 'edit' ? htmlspecialchars($worker['kecamatan']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <label for="city_id" class="block text-sm font-medium text-gray-700">Kota</label>
+                                    <select id="city_id" name="city_id"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pilih Kota</option>
+                                    </select>
                                 </div>
                                 <div>
-                                    <label for="kabupaten" class="block text-sm font-medium text-gray-700">Kabupaten</label>
-                                    <input type="text" id="kabupaten" name="kabupaten" value="<?= $action == 'edit' ? htmlspecialchars($worker['kabupaten']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <label for="subdistrict_id" class="block text-sm font-medium text-gray-700">Kecamatan</label>
+                                    <select id="subdistrict_id" name="subdistrict_id"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pilih Kecamatan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="village_id" class="block text-sm font-medium text-gray-700">Desa</label>
+                                    <select id="village_id" name="village_id"
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        <option value="">Pilih Desa</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="border-b border-gray-200 pb-4 mt-6">
-                                <h3 class="text-lg font-medium text-gray-900">Informasi Lahan</h3>
+                                <h3 class="text-lg font-medium text-gray-900">Kontrak Kerja</h3>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="farmer_id" class="block text-sm font-medium text-gray-700">ID Petani</label>
-                                    <select id="farmer_id" name="farmer_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih ID Petani</option>
-                                        <!-- Dynamic options for Farmer ID -->
-                                    </select>
-                                </div>
+                            <div class="grid grid-cols-1 md:grid-cols-1" id="form-container">
+                                <div class="form-block grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div style="display: none;">
+                                        <label for="pekerja_id" class="block text-sm font-medium text-gray-700">ID Pekerja</label>
+                                        <input type="text" id="pekerja_id" name="pekerja_id" value="<?= $action == 'edit' ? htmlspecialchars($worker['pekerja_id']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="farmer_id" class="block text-sm font-medium text-gray-700">Petani</label>
+                                        <select id="farmer_id" name="farmer_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="">Pilih Petani</option>
+                                            <!-- Dynamic options for Farmer ID -->
+                                        </select>
+                                    </div>
 
-                                <div>
-                                    <label for="farmer_name" class="block text-sm font-medium text-gray-700">Nama Petani</label>
-                                    <input type="text" id="farmer_name" name="farmer_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['farmer_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                </div>
+                                    <div style="display: none;">
+                                        <label for="farmer_name" class="block text-sm font-medium text-gray-700">Nama Petani</label>
+                                        <input type="text" id="farmer_name" name="farmer_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['farmer_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
 
-                                <div>
-                                    <label for="lahan_id" class="block text-sm font-medium text-gray-700">ID Lahan</label>
-                                    <select id="lahan_id" name="lahan_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih ID Lahan</option>
-                                        <!-- Dynamic options for Lahan ID will be populated based on selected farmer -->
-                                    </select>
-                                </div>
+                                    <div>
+                                        <label for="lahan_id" class="block text-sm font-medium text-gray-700">Lahan</label>
+                                        <select id="lahan_id" name="lahan_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="">Pilih Lahan</option>
+                                            <!-- Dynamic options for Lahan ID will be populated based on selected farmer -->
+                                        </select>
+                                    </div>
 
-                                <div>
-                                    <label for="lahan_name" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
-                                    <input type="text" id="lahan_name" name="lahan_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['lahan_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <div style="display: none;">
+                                        <label for="lahan_name" class="block text-sm font-medium text-gray-700">Nama Lahan</label>
+                                        <input type="text" id="lahan_name" name="lahan_name" value="<?= $action == 'edit' ? htmlspecialchars($worker['lahan_name']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="tgl_mulai" class="block text-sm font-medium text-gray-700">Tanggal Mulai Bekerja</label>
+                                        <input type="date" id="tgl_mulai" name="tgl_mulai" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_mulai']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="tgl_mulai" class="block text-sm font-medium text-gray-700">Tanggal Terakhir Bekerja</label>
+                                        <input type="date" id="tgl_akhir" name="tgl_akhir" value="<?= $action == 'edit' ? htmlspecialchars($worker['tgl_akhir']) : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="upah" class="block text-sm font-medium text-gray-700">Upah</label>
+                                        <input type="text" id="upah" name="upah" value="<?= $action == 'edit' ? number_format($worker['upah'], 0, ',', '.') : '' ?>" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                                        <select id="status" name="status" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="Active" <?= $action == 'edit' && $worker['status'] == 'Active' ? 'selected' : '' ?>>Aktif</option>
+                                            <option value="Inactive" <?= $action == 'edit' && $worker['status'] == 'Inactive' ? 'selected' : '' ?>>Non-Aktif</option>
+                                        </select>
+                                    </div>
+                                    <br>
                                 </div>
                             </div>
+
+                            <button type="button" onclick="addForm()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Kontrak Kerja Baru</button>
                             <div class="flex justify-end pt-6">
                                 <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg mr-3" onclick="window.location.href='pekerja'">
                                     Batal
@@ -1160,6 +1171,254 @@ $paginatedWorkers = array_slice($filteredWorkers, $startIndex, $itemsPerPage);
 </main>
 
 <script>
+    let formContainer = document.getElementById("form-container");
+
+    function addForm() {
+        let newForm = document.querySelector(".form-block").cloneNode(true);
+
+        // Add a delete button for the new form
+        let deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.textContent = "Hapus";
+        deleteButton.classList.add("mt-2", "px-4", "py-2", "bg-red-500", "text-white", "rounded");
+        deleteButton.onclick = function() {
+            formContainer.removeChild(newForm);
+        };
+
+        newForm.appendChild(deleteButton);
+
+        // Add a horizontal line (HR) separator
+        let separator = document.createElement("hr");
+        separator.classList.add("my-4", "border-t", "border-gray-300");
+        newForm.appendChild(separator);
+
+        formContainer.appendChild(newForm);
+    }
+
+    // Dummy data for Provinces, Cities, Districts, and Villages
+    const provinces = [{
+            code: "11",
+            name: "Aceh"
+        },
+        {
+            code: "51",
+            name: "Bali"
+        },
+        {
+            code: "36",
+            name: "Banten"
+        },
+        {
+            code: "17",
+            name: "Bengkulu"
+        },
+        {
+            code: "34",
+            name: "Daerah Istimewa Yogyakarta"
+        },
+    ];
+
+    const cities = {
+        "11": [{
+                code: "1101",
+                name: "Banda Aceh"
+            },
+            {
+                code: "1102",
+                name: "Sabang"
+            }
+        ],
+        "51": [{
+                code: "5101",
+                name: "Denpasar"
+            },
+            {
+                code: "5102",
+                name: "Badung"
+            }
+        ],
+        "36": [{
+                code: "3601",
+                name: "Serang"
+            },
+            {
+                code: "3602",
+                name: "Cilegon"
+            }
+        ],
+        "17": [{
+                code: "1701",
+                name: "Bengkulu City"
+            },
+            {
+                code: "1702",
+                name: "Rejang Lebong"
+            }
+        ],
+        "34": [{
+                code: "3401",
+                name: "Yogyakarta"
+            },
+            {
+                code: "3402",
+                name: "Sleman"
+            }
+        ],
+    };
+
+    const districts = {
+        "1101": [{
+                code: "110101",
+                name: "Banda Aceh Timur"
+            },
+            {
+                code: "110102",
+                name: "Kuta Alam"
+            }
+        ],
+        "5101": [{
+                code: "510101",
+                name: "Denpasar Barat"
+            },
+            {
+                code: "510102",
+                name: "Denpasar Timur"
+            }
+        ],
+        "3601": [{
+                code: "360101",
+                name: "Serang Kota"
+            },
+            {
+                code: "360102",
+                name: "Cikande"
+            }
+        ],
+        "1701": [{
+                code: "170101",
+                name: "Bengkulu Utara"
+            },
+            {
+                code: "170102",
+                name: "Bengkulu Selatan"
+            }
+        ],
+        "3401": [{
+                code: "340101",
+                name: "Yogyakarta Kota"
+            },
+            {
+                code: "340102",
+                name: "Sleman Barat"
+            }
+        ],
+    };
+
+    const villages = {
+        "110101": [{
+                code: "11010101",
+                name: "Paya Bili"
+            },
+            {
+                code: "11010102",
+                name: "Kuta Alam Selatan"
+            }
+        ],
+        "510101": [{
+                code: "51010101",
+                name: "Pemecutan Klod"
+            },
+            {
+                code: "51010102",
+                name: "Pemecutan Kaja"
+            }
+        ],
+        "360101": [{
+                code: "36010101",
+                name: "Cigode"
+            },
+            {
+                code: "36010102",
+                name: "Kedung Hutan"
+            }
+        ],
+        "170101": [{
+                code: "17010101",
+                name: "Pahlawan"
+            },
+            {
+                code: "17010102",
+                name: "Kampung Baru"
+            }
+        ],
+        "340101": [{
+                code: "34010101",
+                name: "Catur Tunggal"
+            },
+            {
+                code: "34010102",
+                name: "Sleman Tengah"
+            }
+        ],
+    };
+
+    // Populate Province Dropdown
+    const provinceSelect = document.getElementById('province_id');
+    provinces.forEach(province => {
+        const option = document.createElement('option');
+        option.value = province.code;
+        option.textContent = province.name;
+        provinceSelect.appendChild(option);
+    });
+
+    // Event listener for Province selection
+    document.getElementById('province_id').addEventListener('change', function() {
+        const provinceId = this.value;
+        if (provinceId) {
+            // Populate City Dropdown based on selected Province
+            const citySelect = document.getElementById('city_id');
+            citySelect.innerHTML = '<option value="">Pilih Kota</option>';
+            cities[provinceId].forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.code;
+                option.textContent = city.name;
+                citySelect.appendChild(option);
+            });
+        }
+    });
+
+    // Event listener for City selection
+    document.getElementById('city_id').addEventListener('change', function() {
+        const cityId = this.value;
+        if (cityId) {
+            // Populate District Dropdown based on selected City
+            const subdistrictSelect = document.getElementById('subdistrict_id');
+            subdistrictSelect.innerHTML = '<option value="">Pilih Kecamatan</option>';
+            districts[cityId].forEach(district => {
+                const option = document.createElement('option');
+                option.value = district.code;
+                option.textContent = district.name;
+                subdistrictSelect.appendChild(option);
+            });
+        }
+    });
+
+    // Event listener for District selection
+    document.getElementById('subdistrict_id').addEventListener('change', function() {
+        const districtId = this.value;
+        if (districtId) {
+            // Populate Village Dropdown based on selected District
+            const villageSelect = document.getElementById('village_id');
+            villageSelect.innerHTML = '<option value="">Pilih Desa</option>';
+            villages[districtId].forEach(village => {
+                const option = document.createElement('option');
+                option.value = village.code;
+                option.textContent = village.name;
+                villageSelect.appendChild(option);
+            });
+        }
+    });
+
     document.addEventListener("DOMContentLoaded", function() {
         // Dummy Data for Petani (Farmer) and Lahan (Land)
         const petaniData = {

@@ -284,6 +284,7 @@ session_start();
 
                 // Jika login gagal 5 kali, tampilkan pesan dan blokir
                 if ($_SESSION['login_attempts'] >= 5) {
+                    $_SESSION['login_attempts'] = 0; // Reset percobaan login
                     echo "<script>showSweetAlert('error', 'Akun Terkunci', 'Anda telah melakukan percobaan login yang salah 5 kali. Akun Anda terkunci.', false, '');</script>";
                     exit;
                 }

@@ -211,11 +211,11 @@ $name_menu = [
           </div>
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
             <a href="ics" @click="currentMenu = 'queryBuilder'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'ICS & Fasilitator') ? 'sidebar-item active' : ''; ?>">List Data</a>
-            <a href="analitik" @click="currentMenu = 'analyticsDashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Galery') ? 'sidebar-item active' : ''; ?>">Galery</a>
-            <a href="#" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Fasilitas') ? 'sidebar-item active' : ''; ?>">Fasilitas</a>
-            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Organisasi') ? 'sidebar-item active' : ''; ?>">Organisasi</a>
+            <a href="galery" @click="currentMenu = 'analyticsDashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Galery') ? 'sidebar-item active' : ''; ?>">Galery</a>
+            <a href="fasilitas" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Fasilitas') ? 'sidebar-item active' : ''; ?>">Fasilitas</a>
+            <a href="organisasi" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Organisasi') ? 'sidebar-item active' : ''; ?>">Organisasi</a>
             <a href="pelatihan" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Pelatihan') ? 'sidebar-item active' : ''; ?>">Pelatihan</a>
-            <a href="#" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Aktivity') ? 'sidebar-item active' : ''; ?>">Aktivity</a>
+            <a href="aktivitas" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Aktivity') ? 'sidebar-item active' : ''; ?>">Aktivitas</a>
           </div>
         </div>
 
