@@ -2,6 +2,26 @@
 
 include 'header.php';
 
+// Cek apakah role bukan 'Super Admin'
+if ($user['akun']['role'] == 'User') {
+    // Menampilkan alert menggunakan SweetAlert
+    echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Akses Ditolak',
+                text: 'Anda tidak memiliki akses untuk halaman ini.',
+                confirmButtonText: 'OK',
+                background: '#f3f4f6',
+                backdrop: 'rgba(0, 0, 0, 1)',
+                allowOutsideClick: false, // Disable clicking outside the modal
+                allowEscapeKey: false, // Disable closing with the Escape key
+            }).then(function() {
+                // Setelah alert ditutup, arahkan pengguna ke halaman login
+                window.history.back(); // Kembali ke halaman sebelumnya
+            });
+          </script>";
+}
+
 // Simulasi data dummy untuk role
 $dummyRoles = [
     [

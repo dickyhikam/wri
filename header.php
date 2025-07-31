@@ -451,7 +451,9 @@ $name_menu = [
                 text: 'Anda belum melakukan login. Silakan login terlebih dahulu.',
                 confirmButtonText: 'OK',
                 background: '#f3f4f6',
-                backdrop: 'rgba(0, 0, 0, 1)'
+                backdrop: 'rgba(0, 0, 0, 1)',
+                allowOutsideClick: false, // Disable clicking outside the modal
+                allowEscapeKey: false, // Disable closing with the Escape key
             }).then(function() {
                 // Setelah alert ditutup, arahkan pengguna ke halaman login
                 window.location.href = 'auth-login'; // Arahkan ke halaman login
