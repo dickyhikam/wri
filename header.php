@@ -56,7 +56,7 @@ $name_menu = [
   'keselamatan' => 'Kecelakaan Kerja',
   'profile' => 'Profile',
   'user' => 'User',
-  'pelatihan' => 'Pelatihan'
+  'akses-menu' => 'Akses Menu'
 ];
 ?>
 
