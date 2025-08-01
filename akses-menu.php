@@ -10,6 +10,25 @@ $dummyRoles = [
         'number' => 1,
         'approval' => 'Ya',
         'status' => 'Active',
+        'accessible_menus' => [ // semua menu & submenu
+            '550e8400-e29b-41d4-a716-446655440000',
+            '550e8400-e29b-41d4-a716-446655440001',
+            '550e8400-e29b-41d4-a716-446655440002',
+            '550e8400-e29b-41d4-a716-446655440003',
+            '550e8400-e29b-41d4-a716-446655440004',
+            '550e8400-e29b-41d4-a716-446655440005',
+            '550e8400-e29b-41d4-a716-446655440006',
+            '550e8400-e29b-41d4-a716-446655440007',
+            '550e8400-e29b-41d4-a716-446655440008',
+            '550e8400-e29b-41d4-a716-446655440009',
+            '550e8400-e29b-41d4-a716-446655440010',
+            '550e8400-e29b-41d4-a716-446655440011',
+        ],
+        'accessible_columns' => [
+            '550e8400-e29b-41d4-a716-446655440003' => ['nama_petani', 'nik', 'alamat'],
+            '550e8400-e29b-41d4-a716-446655440000' => ['judul', 'status'],
+            '550e8400-e29b-41d4-a716-446655440011' => ['tanggal', 'produk'],
+        ]
     ],
     [
         'role_id' => 2,
@@ -17,6 +36,15 @@ $dummyRoles = [
         'number' => 2,
         'approval' => 'Tidak',
         'status' => 'Inactive',
+        'accessible_menus' => [
+            '550e8400-e29b-41d4-a716-446655440000',
+            '550e8400-e29b-41d4-a716-446655440003',
+            '550e8400-e29b-41d4-a716-446655440004',
+        ],
+        'accessible_columns' => [
+            '550e8400-e29b-41d4-a716-446655440003' => ['nama_petani', 'telepon'],
+            '550e8400-e29b-41d4-a716-446655440004' => ['id_lahan', 'luas'],
+        ]
     ],
     [
         'role_id' => 3,
@@ -24,6 +52,12 @@ $dummyRoles = [
         'number' => 3,
         'approval' => 'Tidak',
         'status' => 'Active',
+        'accessible_menus' => [
+            '550e8400-e29b-41d4-a716-446655440003',
+        ],
+        'accessible_columns' => [
+            '550e8400-e29b-41d4-a716-446655440003' => ['nama_petani'],
+        ]
     ],
     [
         'role_id' => 4,
@@ -31,6 +65,14 @@ $dummyRoles = [
         'number' => 4,
         'approval' => 'Tidak',
         'status' => 'Active',
+        'accessible_menus' => [
+            '550e8400-e29b-41d4-a716-446655440000',
+            '550e8400-e29b-41d4-a716-446655440011',
+        ],
+        'accessible_columns' => [
+            '550e8400-e29b-41d4-a716-446655440000' => ['judul'],
+            '550e8400-e29b-41d4-a716-446655440011' => ['produk', 'volume'],
+        ]
     ],
 ];
 
@@ -43,7 +85,7 @@ $dummyMenus = [
         'url' => '#',
         'icon' => 'fa-database',
         'order' => 1,
-        'visibility' => 'Super Admin',
+        'columns' => ['judul', 'status', 'tanggal'],
         'submenus' => [
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440001',
@@ -53,6 +95,7 @@ $dummyMenus = [
                 'icon' => 'fa-cogs',
                 'order' => 1,
                 'visibility' => 'Super Admin',
+                'columns' => ['kode_menu', 'nama_menu', 'icon'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440002',
@@ -61,7 +104,8 @@ $dummyMenus = [
                 'url' => 'parcel',
                 'icon' => 'fa-box',
                 'order' => 2,
-                'visibility' => 'Admin',
+                'visibility' => 'Super Admin',
+                'columns' => ['kode_parcel', 'lokasi', 'luas'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440003',
@@ -71,58 +115,110 @@ $dummyMenus = [
                 'icon' => 'fa-users',
                 'order' => 3,
                 'visibility' => 'All',
+                'columns' => ['nama_petani', 'nik', 'alamat', 'telepon'],
             ],
+            [
+                'menu_id' => '550e8400-e29b-41d4-a716-446655440004',
+                'name' => 'Lahan/Persil',
+                'parent_id' => 1,
+                'url' => 'lahan',
+                'icon' => 'fa-map-marker-alt',
+                'order' => 4,
+                'visibility' => 'All',
+                'columns' => ['id_lahan', 'lokasi', 'luas'],
+            ],
+            [
+                'menu_id' => '550e8400-e29b-41d4-a716-446655440005',
+                'name' => 'Pekerja',
+                'parent_id' => 1,
+                'url' => 'pekerja',
+                'icon' => 'fa-users',
+                'order' => 5,
+                'visibility' => 'All',
+                'columns' => ['nama', 'jabatan', 'kontak'],
+            ],
+            [
+                'menu_id' => '550e8400-e29b-41d4-a716-446655440006',
+                'name' => 'Mitra & Organisasi',
+                'parent_id' => 1,
+                'url' => 'mitra',
+                'icon' => 'fa-handshake',
+                'order' => 6,
+                'visibility' => 'All',
+                'columns' => ['nama_mitra', 'jenis', 'wilayah'],
+            ],
+            [
+                'menu_id' => '550e8400-e29b-41d4-a716-446655440007',
+                'name' => 'Kelompok Tani',
+                'parent_id' => 1,
+                'url' => 'kelompok_tani',
+                'icon' => 'fa-users',
+                'order' => 7,
+                'visibility' => 'All',
+                'columns' => ['nama_kelompok', 'jumlah_anggota', 'desa'],
+            ]
         ]
     ],
     [
-        'menu_id' => '550e8400-e29b-41d4-a716-446655440004',
+        'menu_id' => '550e8400-e29b-41d4-a716-446655440008',
         'name' => 'WorkPlan',
         'parent_id' => null,
         'url' => 'workplan',
         'icon' => 'fa-project-diagram',
         'order' => 2,
         'visibility' => 'All',
+        'columns' => ['pekerjaan', 'tanggal_mulai', 'tanggal_selesai'],
     ],
     [
-        'menu_id' => '550e8400-e29b-41d4-a716-446655440005',
+        'menu_id' => '550e8400-e29b-41d4-a716-446655440009',
         'name' => 'Audit',
         'parent_id' => null,
         'url' => 'sertifikasi',
         'icon' => 'fa-user-secret',
         'order' => 3,
-        'visibility' => 'Admin',
+        'visibility' => 'All',
+        'columns' => ['tanggal_audit', 'auditor', 'hasil'],
+    ],
+    [
+        'menu_id' => '550e8400-e29b-41d4-a716-446655440010',
+        'name' => 'HCV',
+        'parent_id' => null,
+        'url' => 'nkt',
+        'icon' => 'fa-chart-line',
+        'order' => 4,
+        'visibility' => 'All',
+        'columns' => ['lokasi', 'kategori_hcv', 'luas_area'],
+    ],
+    [
+        'menu_id' => '550e8400-e29b-41d4-a716-446655440011',
+        'name' => 'Transaksi Produksi',
+        'parent_id' => null,
+        'url' => 'transaksi',
+        'icon' => 'fa-sack-dollar',
+        'order' => 5,
+        'visibility' => 'All',
+        'columns' => ['tanggal', 'produk', 'volume', 'harga'],
     ],
 ];
 
 // Fungsi untuk mendapatkan menu berdasarkan role
-function getMenuForRole($role)
+function findMenuById($menuId, $menus)
 {
-    global $dummyMenus;
-    $accessibleMenus = [];
-
-    foreach ($dummyMenus as $menu) {
-        // Super Admin dapat mengakses semua menu
-        if ($role === 'Super Admin') {
-            $accessibleMenus[] = $menu;
-            if (isset($menu['submenus'])) {
-                $accessibleMenus = array_merge($accessibleMenus, $menu['submenus']);
-            }
-        } else {
-            // Role lainnya hanya bisa mengakses menu yang visibility-nya sesuai dengan role
-            if ($menu['visibility'] === 'All' || $menu['visibility'] === $role) {
-                $accessibleMenus[] = $menu;
-                if (isset($menu['submenus'])) {
-                    foreach ($menu['submenus'] as $submenu) {
-                        if ($submenu['visibility'] === 'All' || $submenu['visibility'] === $role) {
-                            $accessibleMenus[] = $submenu;
-                        }
-                    }
+    foreach ($menus as $menu) {
+        if ($menu['menu_id'] === $menuId) {
+            return $menu;
+        }
+        if (!empty($menu['submenus'])) {
+            foreach ($menu['submenus'] as $submenu) {
+                if ($submenu['menu_id'] === $menuId) {
+                    return $submenu;
                 }
             }
         }
     }
-    return $accessibleMenus;
+    return null;
 }
+
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 // Ambil data role dari form (jika ada)
@@ -179,33 +275,47 @@ if ($action == 'edit' && $role_id) {
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Menu yang Dapat Diakses</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kolom Tabel yang Dapat Diakses</th>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             <?php foreach ($dummyRoles as $role): ?>
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap font-semibold"><?= htmlspecialchars($role['name']) ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <ul class="list-disc pl-6">
-                                            <?php
-                                            // Menampilkan menu-menu yang dapat diakses oleh role
-                                            $accessibleMenus = getMenuForRole($role['name']);
-                                            foreach ($accessibleMenus as $menu):
-                                            ?>
-                                                <li class="text-gray-700"><?= htmlspecialchars($menu['name']) ?></li>
-                                                <?php if (isset($menu['submenus'])): ?>
-                                                    <ul class="list-inside pl-4">
-                                                        <?php foreach ($menu['submenus'] as $submenu): ?>
-                                                            <li class="text-gray-600"><?= htmlspecialchars($submenu['name']) ?></li>
-                                                        <?php endforeach; ?>
-                                                    </ul>
+                                    <!-- Kolom Role -->
+                                    <td class="px-6 py-4 font-semibold text-gray-800"><?= htmlspecialchars($role['name']) ?></td>
+
+                                    <!-- Kolom Menu -->
+                                    <td class="px-6 py-4 align-top">
+                                        <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                            <?php foreach ($role['accessible_menus'] ?? [] as $menuId): ?>
+                                                <?php $menu = findMenuById($menuId, $dummyMenus); ?>
+                                                <?php if ($menu): ?>
+                                                    <li><?= htmlspecialchars($menu['name']) ?></li>
                                                 <?php endif; ?>
                                             <?php endforeach; ?>
                                         </ul>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="akses-menu?action=edit&id=<?= $role['role_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
+
+                                    <!-- Kolom Tabel -->
+                                    <td class="px-6 py-4 align-top">
+                                        <ul class="list-none space-y-2 text-sm">
+                                            <?php foreach ($role['accessible_columns'] ?? [] as $menuId => $columns): ?>
+                                                <?php $menu = findMenuById($menuId, $dummyMenus); ?>
+                                                <?php if ($menu): ?>
+                                                    <li>
+                                                        <span class="font-medium text-gray-700"><?= htmlspecialchars($menu['name']) ?>:</span>
+                                                        <span class="text-gray-600"><?= implode(', ', array_map('htmlspecialchars', $columns)) ?></span>
+                                                    </li>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </td>
+
+                                    <!-- Aksi -->
+                                    <td class="px-6 py-4 text-sm text-gray-500">
+                                        <a href="akses-menu?action=edit&id=<?= $role['role_id'] ?>"
+                                            class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                     </td>
@@ -296,27 +406,64 @@ if ($action == 'edit' && $role_id) {
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Menu yang Dapat Diakses <span class="text-red-500">*</span></label>
                             <div class="space-y-2 mt-2">
-                                <?php
-                                // Menampilkan semua menu dan submenu yang dapat dipilih
-                                foreach ($dummyMenus as $menu):
-                                ?>
-                                    <div>
-                                        <input type="checkbox" id="menu_<?= $menu['menu_id'] ?>" name="accessible_menus[]" value="<?= $menu['menu_id'] ?>"
-                                            <?= ($action == 'edit' && in_array($menu['menu_id'], $role['accessible_menus'] ?? [])) ? 'checked' : '' ?>>
-                                        <label for="menu_<?= $menu['menu_id'] ?>" class="ml-2 text-gray-700"><?= htmlspecialchars($menu['name']) ?></label>
-                                    </div>
-                                    <?php if (isset($menu['submenus'])): ?>
-                                        <?php foreach ($menu['submenus'] as $submenu): ?>
-                                            <div class="ml-6">
-                                                <input type="checkbox" id="submenu_<?= $submenu['menu_id'] ?>" name="accessible_menus[]" value="<?= $submenu['menu_id'] ?>"
-                                                    <?= ($action == 'edit' && in_array($submenu['menu_id'], $role['accessible_menus'] ?? [])) ? 'checked' : '' ?>>
-                                                <label for="submenu_<?= $submenu['menu_id'] ?>" class="ml-2 text-gray-600"><?= htmlspecialchars($submenu['name']) ?></label>
-                                            </div>
+                                <table class="w-full table-auto border border-collapse border-gray-300 text-sm">
+                                    <thead class="bg-gray-100">
+                                        <tr>
+                                            <th class="border p-2 text-left">Menu / Submenu</th>
+                                            <th class="border p-2 text-center">Akses Menu</th>
+                                            <th class="border p-2 text-left">Kolom Tabel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($dummyMenus as $menu): ?>
+                                            <!-- Menu Utama -->
+                                            <tr class="border-t">
+                                                <td class="border p-2 font-semibold text-gray-800"><?= htmlspecialchars($menu['name']) ?></td>
+                                                <td class="border p-2 text-center">
+                                                    <input type="checkbox" id="menu_<?= $menu['menu_id'] ?>" class="menu-checkbox" name="accessible_menus[]" value="<?= $menu['menu_id'] ?>" data-menu-id="<?= $menu['menu_id'] ?>" <?= ($action == 'edit' && in_array($menu['menu_id'], $role['accessible_menus'] ?? [])) ? 'checked' : '' ?>>
+                                                </td>
+                                                <td class="border p-2">
+                                                    <?php if (!empty($menu['columns'])): ?>
+                                                        <?php foreach ($menu['columns'] as $column): ?>
+                                                            <label class="inline-flex items-center mr-4">
+                                                                <input type="checkbox"
+                                                                    name="accessible_columns[<?= $menu['menu_id'] ?>][]"
+                                                                    value="<?= $column ?>"
+                                                                    <?= ($action == 'edit' && in_array($column, $role['accessible_columns'][$menu['menu_id']] ?? [])) ? 'checked' : '' ?>>
+                                                                <span class="ml-1"><?= htmlspecialchars($column) ?></span>
+                                                            </label>
+                                                        <?php endforeach; ?>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Submenu -->
+                                            <?php if (isset($menu['submenus'])): ?>
+                                                <?php foreach ($menu['submenus'] as $submenu): ?>
+                                                    <tr class="border-t bg-gray-50">
+                                                        <td class="border p-2 pl-6 text-gray-700">└─ <?= htmlspecialchars($submenu['name']) ?></td>
+                                                        <td class="border p-2 text-center">
+                                                            <input type="checkbox" id="submenu_<?= $submenu['menu_id'] ?>" class="submenu-checkbox" name="accessible_menus[]" value="<?= $submenu['menu_id'] ?>" data-parent="<?= $menu['menu_id'] ?>" <?= ($action == 'edit' && in_array($submenu['menu_id'], $role['accessible_menus'] ?? [])) ? 'checked' : '' ?>>
+                                                        </td>
+                                                        <td class="border p-2">
+                                                            <?php if (!empty($submenu['columns'])): ?>
+                                                                <?php foreach ($submenu['columns'] as $column): ?>
+                                                                    <label class="inline-flex items-center mr-4">
+                                                                        <input type="checkbox"
+                                                                            name="accessible_columns[<?= $submenu['menu_id'] ?>][]"
+                                                                            value="<?= $column ?>"
+                                                                            <?= ($action == 'edit' && in_array($column, $role['accessible_columns'][$submenu['menu_id']] ?? [])) ? 'checked' : '' ?>>
+                                                                        <span class="ml-1"><?= htmlspecialchars($column) ?></span>
+                                                                    </label>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
-                                    <?php endif; ?>
-                                <?php
-                                endforeach;
-                                ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
@@ -377,5 +524,46 @@ if ($action == 'edit' && $role_id) {
             window.location.href = 'akses-menu'; // Redirect back to the list page
         }, 3000); // Simulated 3 second delay
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuCheckboxes = document.querySelectorAll('.menu-checkbox');
+        const submenuCheckboxes = document.querySelectorAll('.submenu-checkbox');
+
+        // SUBMENU → Check/Uncheck parent
+        submenuCheckboxes.forEach(submenu => {
+            submenu.addEventListener('change', function() {
+                const parentId = this.dataset.parent;
+                const parentCheckbox = document.querySelector(`#menu_${parentId}`);
+
+                if (this.checked) {
+                    parentCheckbox.checked = true;
+                } else {
+                    const siblings = document.querySelectorAll(`.submenu-checkbox[data-parent="${parentId}"]`);
+                    const allUnchecked = Array.from(siblings).every(sib => !sib.checked);
+                    if (allUnchecked && parentCheckbox) {
+                        parentCheckbox.checked = false;
+                    }
+                }
+            });
+        });
+
+        // PARENT → Uncheck all children
+        menuCheckboxes.forEach(menu => {
+            menu.addEventListener('change', function() {
+                const menuId = this.dataset.menuId;
+                const children = document.querySelectorAll(`.submenu-checkbox[data-parent="${menuId}"]`);
+                children.forEach(child => {
+                    child.checked = this.checked;
+                });
+
+                // Opsional: uncheck juga kolom kolom menu induk
+                if (!this.checked) {
+                    // uncheck all related column checkboxes (menu columns)
+                    const columnCheckboxes = document.querySelectorAll(`input[name^="accessible_columns[${menuId}]"]`);
+                    columnCheckboxes.forEach(cb => cb.checked = false);
+                }
+            });
+        });
+    });
 </script>
 <?php include 'footer.php'; ?>
