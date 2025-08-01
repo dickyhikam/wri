@@ -17,6 +17,7 @@ $dummyMenus = [
         'url' => '#',
         'icon' => 'fa-database',
         'order' => 1,
+        'columns' => ['judul', 'status', 'tanggal'],
         'submenus' => [
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440001',
@@ -26,6 +27,7 @@ $dummyMenus = [
                 'icon' => 'fa-cogs',
                 'order' => 1,
                 'visibility' => 'Super Admin',
+                'columns' => ['kode_menu', 'nama_menu', 'icon'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440002',
@@ -35,6 +37,7 @@ $dummyMenus = [
                 'icon' => 'fa-box',
                 'order' => 2,
                 'visibility' => 'Super Admin',
+                'columns' => ['kode_parcel', 'lokasi', 'luas'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440003',
@@ -44,6 +47,7 @@ $dummyMenus = [
                 'icon' => 'fa-users',
                 'order' => 3,
                 'visibility' => 'All',
+                'columns' => ['nama_petani', 'nik', 'alamat', 'telepon'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440004',
@@ -53,6 +57,7 @@ $dummyMenus = [
                 'icon' => 'fa-map-marker-alt',
                 'order' => 4,
                 'visibility' => 'All',
+                'columns' => ['id_lahan', 'lokasi', 'luas'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440005',
@@ -62,6 +67,7 @@ $dummyMenus = [
                 'icon' => 'fa-users',
                 'order' => 5,
                 'visibility' => 'All',
+                'columns' => ['nama', 'jabatan', 'kontak'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440006',
@@ -71,6 +77,7 @@ $dummyMenus = [
                 'icon' => 'fa-handshake',
                 'order' => 6,
                 'visibility' => 'All',
+                'columns' => ['nama_mitra', 'jenis', 'wilayah'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440007',
@@ -80,6 +87,7 @@ $dummyMenus = [
                 'icon' => 'fa-users',
                 'order' => 7,
                 'visibility' => 'All',
+                'columns' => ['nama_kelompok', 'jumlah_anggota', 'desa'],
             ]
         ]
     ],
@@ -91,6 +99,7 @@ $dummyMenus = [
         'icon' => 'fa-project-diagram',
         'order' => 2,
         'visibility' => 'All',
+        'columns' => ['pekerjaan', 'tanggal_mulai', 'tanggal_selesai'],
     ],
     [
         'menu_id' => '550e8400-e29b-41d4-a716-446655440009',
@@ -100,6 +109,7 @@ $dummyMenus = [
         'icon' => 'fa-user-secret',
         'order' => 3,
         'visibility' => 'All',
+        'columns' => ['tanggal_audit', 'auditor', 'hasil'],
     ],
     [
         'menu_id' => '550e8400-e29b-41d4-a716-446655440010',
@@ -109,6 +119,7 @@ $dummyMenus = [
         'icon' => 'fa-chart-line',
         'order' => 4,
         'visibility' => 'All',
+        'columns' => ['lokasi', 'kategori_hcv', 'luas_area'],
     ],
     [
         'menu_id' => '550e8400-e29b-41d4-a716-446655440011',
@@ -118,6 +129,7 @@ $dummyMenus = [
         'icon' => 'fa-sack-dollar',
         'order' => 5,
         'visibility' => 'All',
+        'columns' => ['tanggal', 'produk', 'volume', 'harga'],
     ],
     [
         'menu_id' => '550e8400-e29b-41d4-a716-446655440012',
@@ -127,6 +139,7 @@ $dummyMenus = [
         'icon' => 'fa-warehouse',
         'order' => 6,
         'visibility' => 'All',
+        'columns' => ['judul', 'deskripsi', 'status'],
         'submenus' => [
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440013',
@@ -136,6 +149,7 @@ $dummyMenus = [
                 'icon' => 'fa-tools',
                 'order' => 1,
                 'visibility' => 'All',
+                'columns' => ['id_kegiatan', 'nama_alat', 'biaya'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440014',
@@ -145,6 +159,7 @@ $dummyMenus = [
                 'icon' => 'fa-cogs',
                 'order' => 2,
                 'visibility' => 'All',
+                'columns' => ['jenis_produk', 'jumlah', 'lokasi'],
             ]
         ]
     ],
@@ -156,6 +171,7 @@ $dummyMenus = [
         'icon' => 'fa-user-shield',
         'order' => 7,
         'visibility' => 'All',
+        'columns' => ['judul_insiden', 'lokasi', 'tanggal'],
         'submenus' => [
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440016',
@@ -165,6 +181,7 @@ $dummyMenus = [
                 'icon' => 'fa-trash-alt',
                 'order' => 1,
                 'visibility' => 'All',
+                'columns' => ['jenis_limbah', 'volume', 'penanganan'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440017',
@@ -174,6 +191,7 @@ $dummyMenus = [
                 'icon' => 'fa-exclamation-triangle',
                 'order' => 2,
                 'visibility' => 'All',
+                'columns' => ['jenis_kecelakaan', 'korban', 'penyebab'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440018',
@@ -183,6 +201,7 @@ $dummyMenus = [
                 'icon' => 'fa-hand-holding-heart',
                 'order' => 3,
                 'visibility' => 'All',
+                'columns' => ['tema', 'jumlah_peserta', 'materi'],
             ]
         ]
     ],
@@ -194,6 +213,7 @@ $dummyMenus = [
         'icon' => 'fa-users',
         'order' => 8,
         'visibility' => 'All',
+        'columns' => ['nama_program', 'periode', 'status'],
         'submenus' => [
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440020',
@@ -203,6 +223,7 @@ $dummyMenus = [
                 'icon' => 'fa-list',
                 'order' => 1,
                 'visibility' => 'All',
+                'columns' => ['id', 'nama', 'status'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440021',
@@ -212,6 +233,7 @@ $dummyMenus = [
                 'icon' => 'fa-image',
                 'order' => 2,
                 'visibility' => 'All',
+                'columns' => ['gambar', 'judul', 'keterangan'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440022',
@@ -221,6 +243,7 @@ $dummyMenus = [
                 'icon' => 'fa-cogs',
                 'order' => 3,
                 'visibility' => 'All',
+                'columns' => ['nama_fasilitas', 'jumlah', 'lokasi'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440023',
@@ -230,6 +253,7 @@ $dummyMenus = [
                 'icon' => 'fa-university',
                 'order' => 4,
                 'visibility' => 'All',
+                'columns' => ['nama_organisasi', 'struktur', 'fungsi'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440024',
@@ -239,6 +263,7 @@ $dummyMenus = [
                 'icon' => 'fa-chalkboard-teacher',
                 'order' => 5,
                 'visibility' => 'All',
+                'columns' => ['topik', 'peserta', 'pemateri'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440025',
@@ -248,6 +273,7 @@ $dummyMenus = [
                 'icon' => 'fa-running',
                 'order' => 6,
                 'visibility' => 'All',
+                'columns' => ['nama_aktivitas', 'waktu', 'output'],
             ]
         ]
     ],
@@ -259,6 +285,7 @@ $dummyMenus = [
         'icon' => 'fa-users-cog',
         'order' => 9,
         'visibility' => 'Super Admin',
+        'columns' => ['username', 'email', 'role'],
         'submenus' => [
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440027',
@@ -268,6 +295,7 @@ $dummyMenus = [
                 'icon' => 'fa-user',
                 'order' => 1,
                 'visibility' => 'Super Admin',
+                'columns' => ['nama_user', 'akses', 'status'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440028',
@@ -277,6 +305,7 @@ $dummyMenus = [
                 'icon' => 'fa-file-alt',
                 'order' => 2,
                 'visibility' => 'Super Admin',
+                'columns' => ['tanggal', 'aktivitas', 'ip_address'],
             ]
         ]
     ],
@@ -288,6 +317,7 @@ $dummyMenus = [
         'icon' => 'fa-cogs',
         'order' => 10,
         'visibility' => 'Super Admin',
+        'columns' => ['setting', 'value', 'status'],
         'submenus' => [
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440030',
@@ -297,6 +327,7 @@ $dummyMenus = [
                 'icon' => 'fa-bars',
                 'order' => 1,
                 'visibility' => 'Super Admin',
+                'columns' => ['judul_menu', 'icon', 'urutan'],
             ],
             [
                 'menu_id' => '550e8400-e29b-41d4-a716-446655440031',
@@ -306,10 +337,12 @@ $dummyMenus = [
                 'icon' => 'fa-key',
                 'order' => 2,
                 'visibility' => 'Super Admin',
+                'columns' => ['role', 'menu', 'izin'],
             ]
         ]
     ]
 ];
+
 
 // Simulasi action
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
@@ -354,7 +387,7 @@ foreach ($dummyMenus as $dummyMenu) {
                     <i class="fas fa-plus mr-2"></i> Tambah Menu
                 </a>
             <?php elseif ($action == 'edit'): ?>
-                <a href="menu" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+                <a href="menu" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center hidden">
                     <i class="fas fa-times mr-2"></i> Batal
                 </a>
             <?php endif; ?>
@@ -499,10 +532,11 @@ foreach ($dummyMenus as $dummyMenu) {
                                 value="<?= $action == 'edit' ? htmlspecialchars($menu['name']) : '' ?>">
                         </div>
 
-                        <!-- URL -->
+                        <!-- Link -->
                         <div>
                             <label for="url" class="block text-sm font-medium text-gray-700">Link <span class="text-red-500">*</span></label>
-                            <input type="text" id="url" name="url" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            <input type="text" id="url" name="url" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 value="<?= $action == 'edit' ? htmlspecialchars($menu['url']) : '' ?>">
                         </div>
 
@@ -513,36 +547,63 @@ foreach ($dummyMenus as $dummyMenu) {
                                 value="<?= $action == 'edit' ? htmlspecialchars($menu['icon']) : '' ?>">
                         </div>
 
-                        <!-- Type (Menu Type: Master Menu or Submenu) -->
+                        <!-- Tipe -->
                         <div>
                             <label for="type" class="block text-sm font-medium text-gray-700">Tipe <span class="text-red-500">*</span></label>
-                            <select id="type" name="type" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <select id="type" name="type" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                                 <option value="master" <?= $action == 'edit' && $menu['parent_id'] == null ? 'selected' : '' ?>>Master Menu</option>
                                 <option value="submenu" <?= $action == 'edit' && $menu['parent_id'] != null ? 'selected' : '' ?>>Submenu</option>
                             </select>
                         </div>
 
-                        <!-- Parent Menu (Only shown for Submenus) -->
-                        <?php if ($action == 'edit' && $menu['parent_id'] != null): ?>
-                            <div>
-                                <label for="parent_id" class="block text-sm font-medium text-gray-700">Menu Induk <span class="text-red-500">*</span></label>
-                                <select id="parent_id" name="parent_id" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    <?php foreach ($dummyMenus as $parentMenu): ?>
-                                        <?php if ($parentMenu['parent_id'] == null): ?>
-                                            <option value="<?= $parentMenu['menu_id'] ?>" <?= $parentMenu['menu_id'] == $menu['parent_id'] ? 'selected' : '' ?>>
-                                                <?= htmlspecialchars($parentMenu['name']) ?>
-                                            </option>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        <?php endif; ?>
+                        <!-- Menu Induk -->
+                        <div id="parentMenuWrapper" style="display: none;">
+                            <label for="parent_id" class="block text-sm font-medium text-gray-700">Menu Induk <span class="text-red-500">*</span></label>
+                            <select id="parent_id" name="parent_id" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <?php foreach ($dummyMenus as $parentMenu): ?>
+                                    <?php if ($parentMenu['parent_id'] == null): ?>
+                                        <option value="<?= $parentMenu['menu_id'] ?>" <?= $action == 'edit' && $parentMenu['menu_id'] == $menu['parent_id'] ? 'selected' : '' ?>>
+                                            <?= htmlspecialchars($parentMenu['name']) ?>
+                                        </option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
                         <!-- Order -->
                         <div>
                             <label for="order" class="block text-sm font-medium text-gray-700">Urutan <span class="text-red-500">*</span></label>
                             <input type="number" id="order" name="order" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                                 value="<?= $action == 'edit' ? htmlspecialchars($menu['order']) : '' ?>">
+                        </div>
+
+                        <!-- Kolom Tabel (Dinamis) -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Kolom Tabel <span class="text-red-500">*</span></label>
+
+                            <!-- Wrapper untuk semua input kolom -->
+                            <div id="kolomTableWrapper" class="space-y-2 mt-1">
+                                <?php if ($action == 'edit' && isset($menu['columns']) && is_array($menu['columns'])): ?>
+                                    <?php foreach ($menu['columns'] as $column): ?>
+                                        <div class="flex gap-2 items-center">
+                                            <input type="text" name="kolom_table[]" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                                placeholder="Nama Kolom" value="<?= htmlspecialchars($column) ?>">
+                                            <button type="button" onclick="removeKolomInput(this)" class="text-red-500 font-bold text-xl px-2">×</button>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <!-- Jika bukan edit atau kolom kosong -->
+                                    <div class="flex gap-2 items-center">
+                                        <input type="text" name="kolom_table[]" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                            placeholder="Nama Kolom">
+                                        <button type="button" onclick="removeKolomInput(this)" class="text-red-500 font-bold text-xl px-2">×</button>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Tombol tambah input -->
+                            <button type="button" onclick="addKolomInput()" class="mt-2 text-sm text-blue-600 hover:underline">+ Tambah Kolom</button>
                         </div>
 
                         <br>
@@ -568,6 +629,28 @@ foreach ($dummyMenus as $dummyMenu) {
     </section>
 </main>
 <script>
+    function addKolomInput() {
+        const wrapper = document.getElementById('kolomTableWrapper');
+        const div = document.createElement('div');
+        div.className = 'flex gap-2 items-center';
+
+        div.innerHTML = `
+            <input type="text" name="kolom_table[]" class="flex-1 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Nama Kolom">
+            <button type="button" onclick="removeKolomInput(this)" class="text-red-500 font-bold text-xl px-2">×</button>
+        `;
+
+        wrapper.appendChild(div);
+    }
+
+    function removeKolomInput(button) {
+        const wrapper = document.getElementById('kolomTableWrapper');
+
+        // Opsional: jika semua baris dihapus, tambahkan otomatis satu baris kosong
+        if (wrapper.children.length > 1) {
+            button.parentNode.remove();
+        }
+    }
+
     function saveMenuData() {
         const name = document.getElementById("name");
         const url = document.getElementById("url");
@@ -627,5 +710,28 @@ foreach ($dummyMenus as $dummyMenu) {
             }, 2000); // Redirect after 2 seconds
         }, 3000); // Simulated upload time (3 seconds)
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const typeSelect = document.getElementById("type");
+        const parentMenuWrapper = document.getElementById("parentMenuWrapper");
+        // const urlInput = document.getElementById("url");
+
+        function toggleSubmenuOptions() {
+            if (typeSelect.value === "submenu") {
+                parentMenuWrapper.style.display = "block";
+                // urlInput.value = "#";
+                // urlInput.setAttribute("disabled", true);
+            } else {
+                parentMenuWrapper.style.display = "none";
+                // urlInput.removeAttribute("disabled");
+                // urlInput.value = "";
+            }
+        }
+
+        typeSelect.addEventListener("change", toggleSubmenuOptions);
+
+        // Trigger on load (edit mode)
+        toggleSubmenuOptions();
+    });
 </script>
 <?php include 'footer.php'; ?>
