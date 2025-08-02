@@ -324,15 +324,28 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
           <i class="fas fa-plus mr-2"></i> Tambah Petani
         </a>
       <?php elseif ($action == 'view'): ?>
-        <a href="petani" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
-          <i class="fas fa-arrow-left mr-2"></i> Kembali
-        </a>
-        <a href="petani?action=edit&id=<?= $farmer_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
-          <i class="fas fa-edit mr-2"></i> Edit
-        </a>
-        <button onclick="openDeletelModal('<?= $farmer_id ?>')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center">
-          <i class="fas fa-trash-alt mr-2"></i> Hapus
-        </button>
+        <div class="flex gap-3 flex-wrap mb-4">
+          <!-- Tombol Kembali -->
+          <a href="petani" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Kembali
+          </a>
+
+          <!-- Tombol Edit -->
+          <a href="petani?action=edit&id=<?= $farmer_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-edit mr-2"></i> Edit
+          </a>
+
+          <!-- Tombol Hapus -->
+          <button onclick="openDeletelModal('<?= $farmer_id ?>')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-trash-alt mr-2"></i> Hapus
+          </button>
+
+          <!-- Tombol Print PDF -->
+          <a href="petani_pdf?action=print&id=<?= $farmer_id ?>" target="_blank"
+            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="fas fa-file-pdf mr-2"></i> Cetak PDF
+          </a>
+        </div>
       <?php elseif ($action == 'edit'): ?>
         <a href="petani?action=view&id=<?= $farmer_id ?>" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg flex items-center">
           <i class="fas fa-times mr-2"></i> Batal
@@ -474,8 +487,11 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                       <a href="petani?action=edit&id=<?= $f['farmer_id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3" title="Edit" hidden>
                         <i class="fas fa-edit"></i>
                       </a>
-                      <a href="#" onclick="openDeletelModal('<?= $f['farmer_id'] ?>')" class="text-red-600 hover:text-red-900" title="Hapus">
+                      <a href="#" onclick="openDeletelModal('<?= $f['farmer_id'] ?>')" class="text-red-600 hover:text-red-900 mr-3" title="Hapus">
                         <i class="fas fa-trash-alt"></i>
+                      </a>
+                      <a href="petani_pdf?action=print&id=<?= $farmer_id ?>" target="_blank" class="text-black-600 hover:text-black-900">
+                        <i class="fas fa-file-pdf mr-2"></i>
                       </a>
                     </td>
                   </tr>

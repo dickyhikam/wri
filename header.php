@@ -111,11 +111,30 @@ $name_menu = [
       <!-- Navigation -->
       <nav class="flex-1 overflow-y-auto py-4 space-y-1 text-sm">
         <!-- Dashboard -->
-        <div>
-          <a href="<?php echo ($user['akun']['role'] == 'User') ? 'index-user' : 'index'; ?>" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == '' || $name_menu[$modified_uri] == 'Dashboard' || $name_menu[$modified_uri] == 'Dashboard User') ? 'sidebar-item active' : ''; ?>">
+        <div <?php echo ($user['akun']['role'] == 'User') ? '' : 'hidden'; ?>>
+          <a href="index-user" @click="currentMenu = 'dashboard'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'Dashboard User') ? 'sidebar-item active' : ''; ?>">
             <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
             Dashboard
           </a>
+        </div>
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?> class="menu-collapse" :class="{'collapsed': !menuCollapse.dashboard, 'sidebar-item active': currentMenu === 'Role' || currentMenu === 'Parcel Data' || currentMenu === 'Petani' || currentMenu === 'Lahan/Persil' || currentMenu === 'Pekerja' || currentMenu === 'Mitra & Organisasi' || currentMenu === 'Kelompok Tani'}">
+          <div @click="menuCollapse.dashboard = !menuCollapse.dashboard" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
+            <div class="flex items-center">
+              <i class="fas fa-tachometer-alt w-5 mr-3 text-[#f0ab00]"></i>
+              Dashboard
+            </div>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.dashboard}"></i>
+          </div>
+          <div class="submenu pl-14 pr-6 py-2 space-y-1">
+            <a href="index" @click="currentMenu = 'dashboard'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Dashboard') ? 'sidebar-item active' : ''; ?>">Utama</a>
+            <a href="dashboard_petani" @click="currentMenu = 'role'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Dashboard Petani') ? 'sidebar-item active' : ''; ?>">Petani</a>
+            <a href="dashboard_training" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Dashboard Training') ? 'sidebar-item active' : ''; ?>">Training</a>
+            <a href="dashboard_bmp" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Dashboard BMP') ? 'sidebar-item active' : ''; ?>">BMP</a>
+            <a href="dashboard_k3" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Dashboard K3') ? 'sidebar-item active' : ''; ?>">K3</a>
+            <a href="dashboard_hcv" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Dashboard HCV') ? 'sidebar-item active' : ''; ?>">HCV</a>
+            <a href="dashboard_supply_chain" @click="currentMenu = 'partners'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Dashboard Supply Chain') ? 'sidebar-item active' : ''; ?>">Supply Chain</a>
+            <a href="dashboard_interactive_map" @click="currentMenu = 'farmers_gt'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Dashboard Interactive MAP') ? 'sidebar-item active' : ''; ?>">Interactive MAP</a>
+          </div>
         </div>
 
         <!-- Master Data -->
@@ -217,6 +236,23 @@ $name_menu = [
             <a href="organisasi" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Organisasi') ? 'sidebar-item active' : ''; ?>">Organisasi</a>
             <a href="pelatihan" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Pelatihan') ? 'sidebar-item active' : ''; ?>">Pelatihan</a>
             <a href="aktivitas" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Aktivity') ? 'sidebar-item active' : ''; ?>">Aktivitas</a>
+          </div>
+        </div>
+
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?> class="menu-collapse" :class="{'collapsed': !menuCollapse.report, 'sidebar-item active': currentMenu === 'Role' || currentMenu === 'Parcel Data' || currentMenu === 'Petani' || currentMenu === 'Lahan/Persil' || currentMenu === 'Pekerja' || currentMenu === 'Mitra & Organisasi' || currentMenu === 'Kelompok Tani'}">
+          <div @click="menuCollapse.report = !menuCollapse.report" class="sidebar-item flex items-center justify-between px-6 py-3 cursor-pointer">
+            <div class="flex items-center">
+              <i class="fas fa-file-invoice w-5 mr-3 text-[#f0ab00]"></i>
+              Report
+            </div>
+            <i class="fas fa-chevron-down text-xs transition-transform duration-300" :class="{'transform rotate-180': menuCollapse.report}"></i>
+          </div>
+          <div class="submenu pl-14 pr-6 py-2 space-y-1">
+            <a href="report_transaksi" @click="currentMenu = 'role'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Report Transaksi') ? 'sidebar-item active' : ''; ?>">Transaksi</a>
+            <a href="report_training" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Report Training') ? 'sidebar-item active' : ''; ?>">Training</a>
+            <a href="report_bmp" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Report BMP') ? 'sidebar-item active' : ''; ?>">BMP</a>
+            <a href="report_k3" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Report K3') ? 'sidebar-item active' : ''; ?>">K3</a>
+            <a href="report_hcv" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Report HCV') ? 'sidebar-item active' : ''; ?>">HCV</a>
           </div>
         </div>
 
