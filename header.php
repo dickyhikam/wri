@@ -57,7 +57,8 @@ $name_menu = [
   'profile' => 'Profile',
   'user' => 'User',
   'akses-menu' => 'Akses Menu',
-  'menu' => 'Menu'
+  'menu' => 'Menu',
+  'region' => 'Region'
 ];
 ?>
 
@@ -149,6 +150,7 @@ $name_menu = [
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
             <a <?php echo ($user['akun']['role'] == 'Super Admin') ? '' : 'style="display:none;"'; ?> href="role" @click="currentMenu = 'role'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Role') ? 'sidebar-item active' : ''; ?>">Role</a>
             <a <?php echo ($user['akun']['role'] == 'Super Admin') ? '' : 'style="display:none;"'; ?> href="parcel" @click="currentMenu = 'parcel'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Parcel Data') ? 'sidebar-item active' : ''; ?>">Parcel Data</a>
+            <a <?php echo ($user['akun']['role'] == 'Super Admin') ? '' : 'style="display:none;"'; ?> href="region" @click="currentMenu = 'region'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Region') ? 'sidebar-item active' : ''; ?>">Region</a>
             <a href="petani" @click="currentMenu = 'farmers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Petani') ? 'sidebar-item active' : ''; ?>">Petani</a>
             <a href="lahan" @click="currentMenu = 'plots'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Lahan/Persil') ? 'sidebar-item active' : ''; ?>">Lahan/Persil</a>
             <a href="pekerja" @click="currentMenu = 'workers'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Pekerja') ? 'sidebar-item active' : ''; ?>">Pekerja</a>
