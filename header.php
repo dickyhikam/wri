@@ -32,11 +32,22 @@ if (strpos($modified_uri, '?') !== false) {
   $modified_uri = strtok($modified_uri, '?');
 }
 
-
 $name_menu = [
   '' => 'Dashboard',
   'index' => 'Dashboard',
   'index-user' => 'Dashboard User',
+  'dashboard_petani' => 'Dashboard Petani',
+  'dashboard_training' => 'Dashboard Training',
+  'dashboard_bmp' => 'Dashboard BMP',
+  'dashboard_k3' => 'Dashboard K3',
+  'dashboard_hcv' => 'Dashboard HCV',
+  'dashboard_supply_chain' => 'Dashboard Supply Chain',
+  'dashboard_interactive_map' => 'Dashboard Interactive MAP',
+  'report_transaksi' => 'Dashboard Transaksi',
+  'report_training' => 'Dashboard Training',
+  'report_bmp' => 'Dashboard BMP',
+  'report_k3' => 'Dashboard K3',
+  'report_hcv' => 'Dashboard HCV',
   'petani' => 'Petani',
   'lahan' => 'Lahan/Persil',
   'parcel' => 'Parcel Data',
