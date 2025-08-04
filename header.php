@@ -71,7 +71,8 @@ $name_menu = [
   'menu' => 'Menu',
   'region' => 'Region',
   'external' => 'Data External',
-  'geoserver' => 'Geoserver'
+  'geoserver' => 'Geoserver',
+  'custom-query' => 'Custom Query'
 ];
 ?>
 
@@ -313,6 +314,7 @@ $name_menu = [
           <div class="submenu pl-14 pr-6 py-2 space-y-1">
             <a href="menu" @click="currentMenu = 'menu'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Menu') ? 'sidebar-item active' : ''; ?>">Menu</a>
             <a href="akses-menu" @click="currentMenu = 'aksesMenu'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Akses Menu') ? 'sidebar-item active' : ''; ?>">Akses Menu</a>
+            <a href="custom-query" @click="currentMenu = 'menu'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Custom Query') ? 'sidebar-item active' : ''; ?>">Custom Query</a>
           </div>
         </div>
 
