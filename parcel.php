@@ -285,6 +285,47 @@ $paginatedParcels = array_slice($filtered_parcels, $startIndex, $itemsPerPage, t
                                 <i class="fas fa-filter mr-2"></i> Filter
                             </button>
                         </div>
+                        <div class="col-span-4">
+                            <label class="text-sm font-medium text-gray-600 mb-1 block">Pilih Kolom Yang Ditampilkan</label>
+                            <div class="flex flex-wrap gap-4">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="columnCheckbox" data-column="no" checked>
+                                    <span class="ml-2">No</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="columnCheckbox" data-column="parcelId" checked>
+                                    <span class="ml-2">Parcel ID</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="columnCheckbox" data-column="rspo" checked>
+                                    <span class="ml-2">RSPO</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="columnCheckbox" data-column="namaPetani" checked>
+                                    <span class="ml-2">Nama Petani</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="columnCheckbox" data-column="idLahan" checked>
+                                    <span class="ml-2">ID Lahan</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="columnCheckbox" data-column="kecamatan" checked>
+                                    <span class="ml-2">Kecamatan</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="columnCheckbox" data-column="luasHa" checked>
+                                    <span class="ml-2">Luas (Ha)</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="columnCheckbox" data-column="status" checked>
+                                    <span class="ml-2">Status</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="columnCheckbox" data-column="aksi" checked>
+                                    <span class="ml-2">Aksi</span>
+                                </label>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="overflow-x-auto">

@@ -409,6 +409,84 @@ $currentPage = max(1, $currentPage); // Ensure page is at least 1
                 <i class="fas fa-filter mr-2"></i> Filter
               </button>
             </div>
+
+            <div class="col-span-4">
+              <label class="text-sm font-medium text-gray-600 mb-1 block">Pilih Kolom Yang Ditampilkan</label>
+              <div class="flex flex-wrap gap-4">
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="farmerId" checked>
+                  <span class="ml-2">Farmer ID</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="name" checked>
+                  <span class="ml-2">Nama</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="nik" checked>
+                  <span class="ml-2">NIK</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="npwp" checked>
+                  <span class="ml-2">NPWP</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="gender" checked>
+                  <span class="ml-2">Gender</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="tempatLahir" checked>
+                  <span class="ml-2">Tempat Lahir</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="tglLahir" checked>
+                  <span class="ml-2">Tanggal Lahir</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="alamat" checked>
+                  <span class="ml-2">Alamat</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="villageName" checked>
+                  <span class="ml-2">Desa</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="kecamatanName" checked>
+                  <span class="ml-2">Kecamatan</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="kabupatenName" checked>
+                  <span class="ml-2">Kabupaten</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="kodeWilayah" checked>
+                  <span class="ml-2">Kode Wilayah</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="tglMasukGr" checked>
+                  <span class="ml-2">Tgl Masuk Gabungan</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="status" checked>
+                  <span class="ml-2">Status</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="icsName" checked>
+                  <span class="ml-2">ICS</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="groupName" checked>
+                  <span class="ml-2">Kelompok</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="plotKebun" checked>
+                  <span class="ml-2">Plot Kebun</span>
+                </label>
+                <label class="flex items-center">
+                  <input type="checkbox" class="columnCheckbox" data-column="pelatihan" checked>
+                  <span class="ml-2">Pelatihan</span>
+                </label>
+              </div>
+            </div>
           </form>
         </div>
         <div class="overflow-x-auto">

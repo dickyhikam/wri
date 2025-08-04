@@ -195,6 +195,44 @@
                                     <i class="fas fa-filter mr-2"></i> Filter
                                 </button>
                             </div>
+
+                            <div class="col-span-4">
+                                <label class="text-sm font-medium text-gray-600 mb-1 block">Pilih Kolom Yang Ditampilkan</label>
+                                <div class="flex flex-wrap gap-4">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="columnCheckbox" data-column="nama" checked>
+                                        <span class="ml-2">Nama Kebun</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="columnCheckbox" data-column="petani" checked>
+                                        <span class="ml-2">Petani</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="columnCheckbox" data-column="ics" checked>
+                                        <span class="ml-2">ICS</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="columnCheckbox" data-column="luas" checked>
+                                        <span class="ml-2">Luas (Ha)</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="columnCheckbox" data-column="lokasi" checked>
+                                        <span class="ml-2">Lokasi</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="columnCheckbox" data-column="status" checked>
+                                        <span class="ml-2">Status</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="columnCheckbox" data-column="tahunTanam" checked>
+                                        <span class="ml-2">Tahun Tanam</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="columnCheckbox" data-column="statusKepemilikan" checked>
+                                        <span class="ml-2">Status Kepemilikan</span>
+                                    </label>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="overflow-x-auto">
