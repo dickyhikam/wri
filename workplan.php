@@ -9,18 +9,18 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Notification -->
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6" role="alert" style="display: none;" id="notification">
         <span class="block sm:inline" id="notification-message"></span>
     </div>
-    
+
     <!-- Determine current page -->
     <?php
     $page = isset($_GET['page']) ? $_GET['page'] : 'activities';
     $action = isset($_GET['action']) ? $_GET['action'] : 'list';
     $id = isset($_GET['id']) ? $_GET['id'] : null;
-    
+
     // Sample data for activities (parent and child)
     $activities = [
         'ACT-001' => [
@@ -90,6 +90,30 @@
         ]
     ];
 
+    $timesheet = [
+        'TMS-001' => [
+            'id' => 'TMS-001',
+            'child_activity_id' => 'ACT-001-1',
+            'img' => 'https://ngestiharjo.bantulkab.go.id/assets/files/artikel/sedang_1581608524photo_2020-02-13_22-41-22.jpg',
+            'remark' => 'Persiapan awal kegiatan sosialisasi SOP',
+            'created_at' => '2023-01-15 09:30:00'
+        ],
+        'TMS-002' => [
+            'id' => 'TMS-002',
+            'child_activity_id' => 'ACT-001-1',
+            'img' => 'https://prcfindonesia.org/wp-content/uploads/2016/03/Kegiatan-Sosialisasi-Nanga-Sangan.jpg',
+            'remark' => 'Penyelesaian kegiatan dokumen K3',
+            'created_at' => '2023-02-05 11:20:00'
+        ],
+        'TMS-003' => [
+            'id' => 'TMS-003',
+            'child_activity_id' => 'ACT-001-2',
+            'img' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz-dckjEZaEBpSGbAF5S3S4x9LBSc3rJG_SA&s',
+            'remark' => 'Analisis kebutuhan',
+            'created_at' => '2023-02-10 14:45:00'
+        ]
+    ];
+
     // Sample data for tracker (aggregates progress for parent activities)
     $trackers = [
         'WPT-001' => [
@@ -111,18 +135,18 @@
             'created_at' => '2023-01-20 10:15:00'
         ]
     ];
-    
+
     // Pagination configuration
     $perPage = 5;
     $currentPage = isset($_GET['page_num']) ? (int)$_GET['page_num'] : 1;
     $currentPage = max(1, $currentPage);
-    
+
     // Filter variables
     $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
     $statusFilter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';
     $typeFilter = isset($_GET['type_filter']) ? $_GET['type_filter'] : '';
     ?>
-    
+
     <!-- Navigation Tabs -->
     <div class="bg-white rounded-xl shadow-md p-4 mb-6 border border-gray-100">
         <nav class="flex space-x-4" aria-label="Tabs">
@@ -134,6 +158,9 @@
             </a>
             <a href="?page=trackers&action=list" class="<?= ($page == 'trackers') ? 'bg-blue-100 text-blue-700' : 'text-gray-500 hover:text-gray-700' ?> px-3 py-2 font-medium text-sm rounded-md">
                 Workplan Tracker
+            </a>
+            <a href="?page=timesheet&action=list" class="<?= ($page == 'timesheet') ? 'bg-blue-100 text-blue-700' : 'text-gray-500 hover:text-gray-700' ?> px-3 py-2 font-medium text-sm rounded-md">
+                Timesheet
             </a>
         </nav>
     </div>
@@ -207,34 +234,34 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <?php 
+                            <?php
                             // Apply filters
                             $filteredActivities = $activities;
                             if ($searchTerm !== '') {
-                                $filteredActivities = array_filter($filteredActivities, function($activity) use ($searchTerm) {
-                                    return stripos($activity['id'], $searchTerm) !== false || 
-                                           stripos($activity['name'], $searchTerm) !== false;
+                                $filteredActivities = array_filter($filteredActivities, function ($activity) use ($searchTerm) {
+                                    return stripos($activity['id'], $searchTerm) !== false ||
+                                        stripos($activity['name'], $searchTerm) !== false;
                                 });
                             }
-                            
+
                             if ($statusFilter !== '') {
-                                $filteredActivities = array_filter($filteredActivities, function($activity) use ($statusFilter) {
+                                $filteredActivities = array_filter($filteredActivities, function ($activity) use ($statusFilter) {
                                     return $activity['status'] === $statusFilter;
                                 });
                             }
-                            
+
                             if ($typeFilter !== '') {
-                                $filteredActivities = array_filter($filteredActivities, function($activity) use ($typeFilter) {
+                                $filteredActivities = array_filter($filteredActivities, function ($activity) use ($typeFilter) {
                                     return $activity['type'] === $typeFilter;
                                 });
                             }
-                            
+
                             $totalItems = count($filteredActivities);
                             $totalPages = ceil($totalItems / $perPage);
                             $currentPage = min($currentPage, $totalPages);
                             $offset = ($currentPage - 1) * $perPage;
                             $currentPageData = array_slice($filteredActivities, $offset, $perPage);
-                            
+
                             if (empty($currentPageData)): ?>
                                 <tr>
                                     <td colspan="6" class="px-6 py-4 text-center text-gray-500">
@@ -243,39 +270,39 @@
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($currentPageData as $activity): ?>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $activity['id'] ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900"><?= $activity['name'] ?></div>
-                                        <div class="text-sm text-gray-500"><?= substr($activity['description'], 0, 50) ?>...</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $activity['id'] ?></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900"><?= $activity['name'] ?></div>
+                                            <div class="text-sm text-gray-500"><?= substr($activity['description'], 0, 50) ?>...</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                             <?= $activity['type'] == 'parent' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800' ?>">
-                                            <?= ucfirst($activity['type']) ?>
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <?= isset($activity['parent_id']) ? $activity['parent_id'] : '-' ?>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                                <?= ucfirst($activity['type']) ?>
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <?= isset($activity['parent_id']) ? $activity['parent_id'] : '-' ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                             <?= $activity['status'] == 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
-                                            <?= $activity['status'] == 'active' ? 'Aktif' : 'Nonaktif' ?>
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="?page=activities&action=view&id=<?= $activity['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="?page=activities&action=edit&id=<?= $activity['id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="#" onclick="confirmDelete('activity', '<?= $activity['id'] ?>')" class="text-red-600 hover:text-red-900">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                                <?= $activity['status'] == 'active' ? 'Aktif' : 'Nonaktif' ?>
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a href="?page=activities&action=view&id=<?= $activity['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="?page=activities&action=edit&id=<?= $activity['id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="#" onclick="confirmDelete('activity', '<?= $activity['id'] ?>')" class="text-red-600 hover:text-red-900">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
@@ -356,17 +383,17 @@
                     <input type="hidden" name="type" value="<?= isset($_GET['type']) ? $_GET['type'] : 'parent' ?>">
                     <div class="grid grid-cols-1 gap-6">
                         <?php if (isset($_GET['type']) && $_GET['type'] == 'child'): ?>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Parent Activity</label>
-                            <select name="parent_id" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
-                                <option value="">Pilih Parent Activity</option>
-                                <?php foreach ($activities as $act): ?>
-                                    <?php if ($act['type'] == 'parent'): ?>
-                                        <option value="<?= $act['id'] ?>"><?= $act['name'] ?></option>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Parent Activity</label>
+                                <select name="parent_id" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="">Pilih Parent Activity</option>
+                                    <?php foreach ($activities as $act): ?>
+                                        <?php if ($act['type'] == 'parent'): ?>
+                                            <option value="<?= $act['id'] ?>"><?= $act['name'] ?></option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         <?php endif; ?>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Nama Aktivitas</label>
@@ -401,19 +428,19 @@
                                 value="<?= ucfirst($activity['type']) ?> Activity" readonly>
                         </div>
                         <?php if ($activity['type'] == 'child'): ?>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Parent Activity</label>
-                            <select name="parent_id" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
-                                <option value="">Pilih Parent Activity</option>
-                                <?php foreach ($activities as $act): ?>
-                                    <?php if ($act['type'] == 'parent'): ?>
-                                        <option value="<?= $act['id'] ?>" <?= ($act['id'] == $activity['parent_id']) ? 'selected' : '' ?>>
-                                            <?= $act['name'] ?>
-                                        </option>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Parent Activity</label>
+                                <select name="parent_id" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="">Pilih Parent Activity</option>
+                                    <?php foreach ($activities as $act): ?>
+                                        <?php if ($act['type'] == 'parent'): ?>
+                                            <option value="<?= $act['id'] ?>" <?= ($act['id'] == $activity['parent_id']) ? 'selected' : '' ?>>
+                                                <?= $act['name'] ?>
+                                            </option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         <?php endif; ?>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Nama Aktivitas</label>
@@ -485,10 +512,10 @@
                         </p>
                     </div>
                     <?php if ($activity['type'] == 'child'): ?>
-                    <div>
-                        <p class="text-sm text-gray-500">Parent Activity</p>
-                        <p class="font-medium"><?= $activity['parent_id'] ?></p>
-                    </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Parent Activity</p>
+                            <p class="font-medium"><?= $activity['parent_id'] ?></p>
+                        </div>
                     <?php endif; ?>
                     <div class="md:col-span-2">
                         <p class="text-sm text-gray-500">Deskripsi</p>
@@ -500,86 +527,86 @@
                     </div>
                 </div>
                 <?php if ($activity['type'] == 'parent'): ?>
-                <div class="mt-8">
-                    <h3 class="text-lg font-semibold mb-4">Child Activities</h3>
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <?php
-                        $hasChildren = false;
-                        foreach ($activities as $act):
-                            if ($act['type'] == 'child' && $act['parent_id'] == $activity['id']):
-                                $hasChildren = true;
-                        ?>
-                        <div class="mb-4 pb-4 border-b border-gray-200 last:border-0 last:mb-0 last:pb-0">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <p class="font-medium"><?= $act['name'] ?></p>
-                                    <p class="text-sm text-gray-500"><?= $act['id'] ?></p>
-                                </div>
-                                <div>
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                    <div class="mt-8">
+                        <h3 class="text-lg font-semibold mb-4">Child Activities</h3>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <?php
+                            $hasChildren = false;
+                            foreach ($activities as $act):
+                                if ($act['type'] == 'child' && $act['parent_id'] == $activity['id']):
+                                    $hasChildren = true;
+                            ?>
+                                    <div class="mb-4 pb-4 border-b border-gray-200 last:border-0 last:mb-0 last:pb-0">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <p class="font-medium"><?= $act['name'] ?></p>
+                                                <p class="text-sm text-gray-500"><?= $act['id'] ?></p>
+                                            </div>
+                                            <div>
+                                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                         <?= $act['status'] == 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' ?>">
-                                        <?= $act['status'] == 'active' ? 'Aktif' : 'Nonaktif' ?>
-                                    </span>
-                                </div>
-                            </div>
+                                                    <?= $act['status'] == 'active' ? 'Aktif' : 'Nonaktif' ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php
+                                endif;
+                            endforeach;
+                            if (!$hasChildren):
+                                ?>
+                                <p class="text-gray-500">Tidak ada child activity</p>
+                            <?php endif; ?>
                         </div>
-                        <?php
-                            endif;
-                        endforeach;
-                        if (!$hasChildren):
-                        ?>
-                        <p class="text-gray-500">Tidak ada child activity</p>
-                        <?php endif; ?>
                     </div>
-                </div>
                 <?php endif; ?>
-                 <?php if ($activity['type'] == 'child'): ?>
-                 <div class="mt-8">
-                     <h3 class="text-lg font-semibold mb-4">Progress Input</h3>
-                     <div class="bg-gray-50 rounded-lg p-4">
-                         <?php
-                         $hasProgress = false;
-                         foreach ($progress as $prog):
-                             if ($prog['child_activity_id'] == $activity['id']):
-                                 $hasProgress = true;
-                         ?>
-                         <div class="mb-4 pb-4 border-b border-gray-200 last:border-0 last:mb-0 last:pb-0">
-                             <div class="flex justify-between items-center mb-2">
-                                 <p class="font-medium"><?= date('F Y', strtotime($prog['month'].'-01')) ?></p>
-                                 <div class="flex items-center">
-                                     <span class="text-sm mr-2"><?= $prog['monthly_progress'] ?>% (bulanan)</span>
-                                     <span class="text-sm"><?= $prog['total_progress'] ?>% (total)</span>
-                                 </div>
-                             </div>
-                             <div class="flex space-x-2">
-                                 <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                     <div class="bg-blue-600 h-2.5 rounded-full" style="width: <?= $prog['monthly_progress'] ?>%"></div>
-                                 </div>
-                                 <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                     <div class="bg-green-600 h-2.5 rounded-full" style="width: <?= $prog['total_progress'] ?>%"></div>
-                                 </div>
-                             </div>
-                             <?php if ($prog['remark']): ?>
-                             <p class="text-sm text-gray-500 mt-2"><?= $prog['remark'] ?></p>
-                             <?php endif; ?>
-                         </div>
-                         <?php
-                             endif;
-                         endforeach;
-                         if (!$hasProgress):
-                         ?>
-                         <p class="text-gray-500">Belum ada progress</p>
-                         <?php endif; ?>
-                     </div>
-                 </div>
-                 <?php endif; ?>
+                <?php if ($activity['type'] == 'child'): ?>
+                    <div class="mt-8">
+                        <h3 class="text-lg font-semibold mb-4">Progress Input</h3>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <?php
+                            $hasProgress = false;
+                            foreach ($progress as $prog):
+                                if ($prog['child_activity_id'] == $activity['id']):
+                                    $hasProgress = true;
+                            ?>
+                                    <div class="mb-4 pb-4 border-b border-gray-200 last:border-0 last:mb-0 last:pb-0">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <p class="font-medium"><?= date('F Y', strtotime($prog['month'] . '-01')) ?></p>
+                                            <div class="flex items-center">
+                                                <span class="text-sm mr-2"><?= $prog['monthly_progress'] ?>% (bulanan)</span>
+                                                <span class="text-sm"><?= $prog['total_progress'] ?>% (total)</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: <?= $prog['monthly_progress'] ?>%"></div>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-green-600 h-2.5 rounded-full" style="width: <?= $prog['total_progress'] ?>%"></div>
+                                            </div>
+                                        </div>
+                                        <?php if ($prog['remark']): ?>
+                                            <p class="text-sm text-gray-500 mt-2"><?= $prog['remark'] ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php
+                                endif;
+                            endforeach;
+                            if (!$hasProgress):
+                                ?>
+                                <p class="text-gray-500">Belum ada progress</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         <?php else: ?>
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
                 <span class="block sm:inline">Aksi tidak valid atau aktivitas tidak ditemukan.</span>
             </div>
         <?php endif; ?>
-    <!-- Progress Section -->
+        <!-- Progress Section -->
     <?php elseif ($page == 'progress'): ?>
         <?php if ($action == 'list'): ?>
             <!-- Progress List -->
@@ -639,23 +666,23 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <?php 
+                            <?php
                             // Apply filters
                             $filteredProgress = $progress;
                             if ($searchTerm !== '') {
-                                $filteredProgress = array_filter($filteredProgress, function($prog) use ($searchTerm, $activities) {
+                                $filteredProgress = array_filter($filteredProgress, function ($prog) use ($searchTerm, $activities) {
                                     $childActivity = isset($prog['child_activity_id']) && isset($activities[$prog['child_activity_id']]) ? $activities[$prog['child_activity_id']] : null;
-                                    return stripos($prog['id'], $searchTerm) !== false || 
-                                           ($childActivity && stripos($childActivity['name'], $searchTerm) !== false);
+                                    return stripos($prog['id'], $searchTerm) !== false ||
+                                        ($childActivity && stripos($childActivity['name'], $searchTerm) !== false);
                                 });
                             }
-                            
+
                             $totalItems = count($filteredProgress);
                             $totalPages = ceil($totalItems / $perPage);
                             $currentPage = min($currentPage, $totalPages);
                             $offset = ($currentPage - 1) * $perPage;
                             $currentPageData = array_slice($filteredProgress, $offset, $perPage);
-                            
+
                             if (empty($currentPageData)): ?>
                                 <tr>
                                     <td colspan="6" class="px-6 py-4 text-center text-gray-500">
@@ -666,40 +693,40 @@
                                 <?php foreach ($currentPageData as $prog):
                                     $childActivity = isset($prog['child_activity_id']) && isset($activities[$prog['child_activity_id']]) ? $activities[$prog['child_activity_id']] : null;
                                 ?>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                        <?= $childActivity ? $childActivity['name'] . ' (' . $childActivity['id'] . ')' : 'Child Activity tidak ditemukan' ?>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <?= date('F Y', strtotime($prog['month'].'-01')) ?>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: <?= $prog['monthly_progress'] ?>%"></div>
-                                        </div>
-                                        <span class="mt-1 block"><?= $prog['monthly_progress'] ?>%</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                            <div class="bg-green-600 h-2.5 rounded-full" style="width: <?= $prog['total_progress'] ?>%"></div>
-                                        </div>
-                                        <span class="mt-1 block"><?= $prog['total_progress'] ?>%</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <?= date('d M Y', strtotime($prog['created_at'])) ?>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="?page=progress&action=view&id=<?= $prog['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="?page=progress&action=edit&id=<?= $prog['id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="#" onclick="confirmDelete('progress', '<?= $prog['id'] ?>')" class="text-red-600 hover:text-red-900">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            <?= $childActivity ? $childActivity['name'] . ' (' . $childActivity['id'] . ')' : 'Child Activity tidak ditemukan' ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <?= date('F Y', strtotime($prog['month'] . '-01')) ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: <?= $prog['monthly_progress'] ?>%"></div>
+                                            </div>
+                                            <span class="mt-1 block"><?= $prog['monthly_progress'] ?>%</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-green-600 h-2.5 rounded-full" style="width: <?= $prog['total_progress'] ?>%"></div>
+                                            </div>
+                                            <span class="mt-1 block"><?= $prog['total_progress'] ?>%</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <?= date('d M Y', strtotime($prog['created_at'])) ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a href="?page=progress&action=view&id=<?= $prog['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="?page=progress&action=edit&id=<?= $prog['id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="#" onclick="confirmDelete('progress', '<?= $prog['id'] ?>')" class="text-red-600 hover:text-red-900">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
@@ -906,7 +933,7 @@
 
                     <div>
                         <p class="text-sm text-gray-500">Bulan/Tahun</p>
-                        <p class="font-medium"><?= date('F Y', strtotime($prog['month'].'-01')) ?></p>
+                        <p class="font-medium"><?= date('F Y', strtotime($prog['month'] . '-01')) ?></p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">Tanggal Input</p>
@@ -942,7 +969,7 @@
                 <span class="block sm:inline">Aksi tidak valid atau progress tidak ditemukan.</span>
             </div>
         <?php endif; ?>
-     <!-- Trackers Section -->
+        <!-- Trackers Section -->
     <?php elseif ($page == 'trackers'): ?>
         <?php if ($action == 'list'): ?>
             <!-- Trackers List -->
@@ -999,22 +1026,22 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            <?php 
+                            <?php
                             // Apply filters
                             $filteredTrackers = $trackers;
                             if ($searchTerm !== '') {
-                                $filteredTrackers = array_filter($filteredTrackers, function($tracker) use ($searchTerm) {
-                                    return stripos($tracker['id'], $searchTerm) !== false || 
-                                           stripos($tracker['name'], $searchTerm) !== false;
+                                $filteredTrackers = array_filter($filteredTrackers, function ($tracker) use ($searchTerm) {
+                                    return stripos($tracker['id'], $searchTerm) !== false ||
+                                        stripos($tracker['name'], $searchTerm) !== false;
                                 });
                             }
-                            
+
                             $totalItems = count($filteredTrackers);
                             $totalPages = ceil($totalItems / $perPage);
                             $currentPage = min($currentPage, $totalPages);
                             $offset = ($currentPage - 1) * $perPage;
                             $currentPageData = array_slice($filteredTrackers, $offset, $perPage);
-                            
+
                             if (empty($currentPageData)): ?>
                                 <tr>
                                     <td colspan="6" class="px-6 py-4 text-center text-gray-500">
@@ -1047,32 +1074,32 @@
                                     }
                                     $avgProgress = $childCount > 0 ? round($totalProgress / $childCount) : 0;
                                 ?>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $tracker['id'] ?></td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-gray-900"><?= $tracker['name'] ?></div>
-                                        <?php if ($tracker['remark']): ?>
-                                        <div class="text-sm text-gray-500"><?= substr($tracker['remark'], 0, 50) ?>...</div>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <?= date('d M Y', strtotime($tracker['start_date'])) ?> - <?= date('d M Y', strtotime($tracker['end_date'])) ?>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <?= $parentActivity ? $parentActivity['name'] . ' (' . $parentActivity['id'] . ')' : '-' ?>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                            <div class="bg-green-600 h-2.5 rounded-full" style="width: <?= $avgProgress ?>%"></div>
-                                        </div>
-                                        <span class="mt-1 block"><?= $avgProgress ?>%</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="?page=trackers&action=view&id=<?= $tracker['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><?= $tracker['id'] ?></td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900"><?= $tracker['name'] ?></div>
+                                            <?php if ($tracker['remark']): ?>
+                                                <div class="text-sm text-gray-500"><?= substr($tracker['remark'], 0, 50) ?>...</div>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <?= date('d M Y', strtotime($tracker['start_date'])) ?> - <?= date('d M Y', strtotime($tracker['end_date'])) ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <?= $parentActivity ? $parentActivity['name'] . ' (' . $parentActivity['id'] . ')' : '-' ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                <div class="bg-green-600 h-2.5 rounded-full" style="width: <?= $avgProgress ?>%"></div>
+                                            </div>
+                                            <span class="mt-1 block"><?= $avgProgress ?>%</span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a href="?page=trackers&action=view&id=<?= $tracker['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>
                         </tbody>
@@ -1148,35 +1175,35 @@
         <?php elseif ($action == 'view' && $id && isset($trackers[$id])): ?>
             <!-- View Tracker -->
             <?php $tracker = $trackers[$id];
-                $parentActivity = isset($tracker['parent_activity_id']) && isset($activities[$tracker['parent_activity_id']]) ? $activities[$tracker['parent_activity_id']] : null;
+            $parentActivity = isset($tracker['parent_activity_id']) && isset($activities[$tracker['parent_activity_id']]) ? $activities[$tracker['parent_activity_id']] : null;
 
-                // Prepare data for progress bars
-                $progressData = [];
-                $overallTotalProgress = 0;
-                $childCount = 0;
-                foreach ($activities as $act) {
-                    if ($act['type'] == 'child' && $act['parent_id'] == $tracker['parent_activity_id']) {
-                        $childCount++;
-                        $childProgress = [
-                            'activity' => $act,
-                            'latest_progress' => null
-                        ];
-                        // Find the latest progress entry for this child
-                        foreach ($progress as $prog) {
-                            if ($prog['child_activity_id'] == $act['id']) {
-                                if (!$childProgress['latest_progress'] || $prog['month'] > $childProgress['latest_progress']['month']) {
-                                    $childProgress['latest_progress'] = $prog;
-                                }
+            // Prepare data for progress bars
+            $progressData = [];
+            $overallTotalProgress = 0;
+            $childCount = 0;
+            foreach ($activities as $act) {
+                if ($act['type'] == 'child' && $act['parent_id'] == $tracker['parent_activity_id']) {
+                    $childCount++;
+                    $childProgress = [
+                        'activity' => $act,
+                        'latest_progress' => null
+                    ];
+                    // Find the latest progress entry for this child
+                    foreach ($progress as $prog) {
+                        if ($prog['child_activity_id'] == $act['id']) {
+                            if (!$childProgress['latest_progress'] || $prog['month'] > $childProgress['latest_progress']['month']) {
+                                $childProgress['latest_progress'] = $prog;
                             }
                         }
-                        if ($childProgress['latest_progress']) {
-                            $overallTotalProgress += $childProgress['latest_progress']['total_progress'];
-                        }
-
-                        $progressData[] = $childProgress;
                     }
+                    if ($childProgress['latest_progress']) {
+                        $overallTotalProgress += $childProgress['latest_progress']['total_progress'];
+                    }
+
+                    $progressData[] = $childProgress;
                 }
-                $avgOverallProgress = $childCount > 0 ? round($overallTotalProgress / $childCount) : 0;
+            }
+            $avgOverallProgress = $childCount > 0 ? round($overallTotalProgress / $childCount) : 0;
             ?>
             <div class="bg-white rounded-xl shadow-md p-6 mb-8 border border-gray-100">
                 <div class="flex justify-between items-center mb-6">
@@ -1233,33 +1260,33 @@
                             if ($latestProg):
                                 $hasProgress = true;
                         ?>
-                        <div class="mb-4 pb-4 border-b border-gray-200 last:border-0 last:mb-0 last:pb-0">
-                            <div class="flex justify-between items-center mb-2">
-                                <p class="font-medium"><?= $childAct['name'] ?> (<?= $childAct['id'] ?>)</p>
-                                <div class="flex items-center">
-                                    <span class="text-sm mr-2"><?= $latestProg['monthly_progress'] ?>% (bulanan)</span>
-                                    <span class="text-sm"><?= $latestProg['total_progress'] ?>% (total)</span>
+                                <div class="mb-4 pb-4 border-b border-gray-200 last:border-0 last:mb-0 last:pb-0">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <p class="font-medium"><?= $childAct['name'] ?> (<?= $childAct['id'] ?>)</p>
+                                        <div class="flex items-center">
+                                            <span class="text-sm mr-2"><?= $latestProg['monthly_progress'] ?>% (bulanan)</span>
+                                            <span class="text-sm"><?= $latestProg['total_progress'] ?>% (total)</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-blue-600 h-2.5 rounded-full" style="width: <?= $latestProg['monthly_progress'] ?>%"></div>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                            <div class="bg-green-600 h-2.5 rounded-full" style="width: <?= $latestProg['total_progress'] ?>%"></div>
+                                        </div>
+                                    </div>
+                                    <?php if ($latestProg['remark']): ?>
+                                        <p class="text-sm text-gray-500 mt-2"><?= $latestProg['remark'] ?></p>
+                                    <?php endif; ?>
+                                    <p class="text-xs text-gray-400 mt-1">Terakhir diupdate: <?= date('F Y', strtotime($latestProg['month'] . '-01')) ?></p>
                                 </div>
-                            </div>
-                            <div class="flex space-x-2">
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: <?= $latestProg['monthly_progress'] ?>%"></div>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                                    <div class="bg-green-600 h-2.5 rounded-full" style="width: <?= $latestProg['total_progress'] ?>%"></div>
-                                </div>
-                            </div>
-                            <?php if ($latestProg['remark']): ?>
-                            <p class="text-sm text-gray-500 mt-2"><?= $latestProg['remark'] ?></p>
-                            <?php endif; ?>
-                             <p class="text-xs text-gray-400 mt-1">Terakhir diupdate: <?= date('F Y', strtotime($latestProg['month'].'-01')) ?></p>
-                        </div>
-                        <?php
+                            <?php
                             endif;
                         endforeach;
                         if (!$hasProgress):
-                        ?>
-                        <p class="text-gray-500">Belum ada progress untuk child activities ini.</p>
+                            ?>
+                            <p class="text-gray-500">Belum ada progress untuk child activities ini.</p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -1267,6 +1294,276 @@
         <?php else: ?>
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
                 <span class="block sm:inline">Workplan tracker tidak ditemukan.</span>
+            </div>
+        <?php endif; ?>
+    <?php elseif ($page == 'timesheet'): ?>
+        <?php if ($action == 'list'): ?>
+            <!-- Progress List -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8 border border-gray-100">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Daftar Timesheet</h2>
+                    <a href="?page=timesheet&action=create" class="px-4 py-2 bg-[#F0AB00] text-white rounded-md hover:bg-[#d69500] focus:outline-none focus:ring-2 focus:ring-[#F0AB00] flex items-center">
+                        <i class="fas fa-plus mr-2"></i> Input Timesheet
+                    </a>
+                </div>
+
+                <!-- Filter Section -->
+                <div class="p-4 bg-gray-50 border-b">
+                    <form method="get" class="flex flex-col gap-4">
+                        <input type="hidden" name="page" value="progress">
+                        <input type="hidden" name="action" value="list">
+
+                        <!-- Global Search -->
+                        <div class="flex-1">
+                            <input type="text" name="search" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Cari ID Progress/Child Activity..."
+                                value="<?= htmlspecialchars($searchTerm) ?>">
+                        </div>
+
+                        <!-- Additional Filters -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <select name="child_activity_filter" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="">Semua Child Activity</option>
+                                    <?php foreach ($activities as $act): ?>
+                                        <?php if ($act['type'] == 'child'): ?>
+                                            <option value="<?= $act['id'] ?>"><?= $act['name'] ?> (<?= $act['id'] ?>)</option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div>
+                                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-filter mr-2"></i> Filter
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Table Section -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Child Activity</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catatan</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Foto</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <?php
+                            // Apply filters
+                            $filteredProgress = $timesheet;
+                            if ($searchTerm !== '') {
+                                $filteredProgress = array_filter($filteredProgress, function ($prog) use ($searchTerm, $activities) {
+                                    $childActivity = isset($prog['child_activity_id']) && isset($activities[$prog['child_activity_id']]) ? $activities[$prog['child_activity_id']] : null;
+                                    return stripos($prog['id'], $searchTerm) !== false ||
+                                        ($childActivity && stripos($childActivity['name'], $searchTerm) !== false);
+                                });
+                            }
+
+                            $totalItems = count($filteredProgress);
+                            $totalPages = ceil($totalItems / $perPage);
+                            $currentPage = min($currentPage, $totalPages);
+                            $offset = ($currentPage - 1) * $perPage;
+                            $currentPageData = array_slice($filteredProgress, $offset, $perPage);
+
+                            if (empty($currentPageData)): ?>
+                                <tr>
+                                    <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                                        Tidak ada data ditemukan.
+                                    </td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($currentPageData as $prog):
+                                    $childActivity = isset($prog['child_activity_id']) && isset($activities[$prog['child_activity_id']]) ? $activities[$prog['child_activity_id']] : null;
+                                ?>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            <?= $childActivity ? $childActivity['name'] . ' (' . $childActivity['id'] . ')' : 'Child Activity tidak ditemukan' ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <?= date('d M Y', strtotime($prog['created_at'])) ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <?= $prog['remark'] ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <img src="<?= $prog['img'] ?>" alt="Foto" width="140" height="100">
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                            <a href="?page=timesheet&action=view&id=<?= $prog['id'] ?>" class="text-blue-600 hover:text-blue-900 mr-3">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="?page=timesheet&action=edit&id=<?= $prog['id'] ?>" class="text-yellow-600 hover:text-yellow-900 mr-3">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination Section -->
+                <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 mt-4">
+                    <div class="flex-1 flex justify-between sm:hidden">
+                        <a href="?<?= http_build_query(array_merge($_GET, ['page_num' => max(1, $currentPage - 1)])) ?>"
+                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                            Sebelumnya
+                        </a>
+                        <a href="?<?= http_build_query(array_merge($_GET, ['page_num' => min($totalPages, $currentPage + 1)])) ?>"
+                            class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                            Selanjutnya
+                        </a>
+                    </div>
+                    <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-sm text-gray-700">
+                                Menampilkan
+                                <span class="font-medium"><?= $offset + 1 ?></span>
+                                sampai
+                                <span class="font-medium"><?= min($offset + $perPage, $totalItems) ?></span>
+                                dari
+                                <span class="font-medium"><?= $totalItems ?></span>
+                                data
+                            </p>
+                        </div>
+                        <div>
+                            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                <a href="?<?= http_build_query(array_merge($_GET, ['page_num' => max(1, $currentPage - 1)])) ?>"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                    <span class="sr-only">Sebelumnya</span>
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+
+                                <?php
+                                $startPage = max(1, $currentPage - 2);
+                                $endPage = min($totalPages, $currentPage + 2);
+
+                                if ($startPage > 1) {
+                                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page_num' => 1])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</a>';
+                                    if ($startPage > 2) {
+                                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                                    }
+                                }
+
+                                for ($i = $startPage; $i <= $endPage; $i++) {
+                                    $activeClass = ($i == $currentPage) ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50';
+                                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page_num' => $i])) . '" class="relative inline-flex items-center px-4 py-2 border text-sm font-medium ' . $activeClass . '">' . $i . '</a>';
+                                }
+
+                                if ($endPage < $totalPages) {
+                                    if ($endPage < $totalPages - 1) {
+                                        echo '<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>';
+                                    }
+                                    echo '<a href="?' . http_build_query(array_merge($_GET, ['page_num' => $totalPages])) . '" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">' . $totalPages . '</a>';
+                                }
+                                ?>
+
+                                <a href="?<?= http_build_query(array_merge($_GET, ['page_num' => min($totalPages, $currentPage + 1)])) ?>"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 <?= $currentPage >= $totalPages ? 'opacity-50 cursor-not-allowed' : '' ?>">
+                                    <span class="sr-only">Selanjutnya</span>
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php elseif ($action == 'create' || $action == 'edit'): ?>
+            <!-- Create Progress Form -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8 border border-gray-100">
+                <h2 class="text-2xl font-bold mb-6">Input Timesheet</h2>
+                <form id="progress-form">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Child Activity</label>
+                            <select name="child_activity_id" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                                <option value="">Pilih Child Activity</option>
+                                <?php foreach ($activities as $activity): ?>
+                                    <?php if ($activity['type'] == 'child'): ?>
+                                        <option value="<?= $activity['id'] ?>"><?= $activity['name'] ?> (<?= $activity['id'] ?>)</option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
+                            <input type="date" name="month" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Catatan</label>
+                            <textarea name="remark" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Foto</label>
+                            <input type="file" name="month" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" required>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-end space-x-3">
+                        <a href="?page=timesheet&action=list" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg">
+                            Batal
+                        </a>
+                        <button type="button" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                            Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        <?php elseif ($action == 'view' && $id && isset($timesheet[$id])): ?>
+            <!-- View Progress Details -->
+            <?php
+            $prog = $timesheet[$id];
+            $childActivity = isset($prog['child_activity_id']) && isset($activities[$prog['child_activity_id']]) ? $activities[$prog['child_activity_id']] : null;
+            $parentActivity = $childActivity ? (isset($activities[$childActivity['parent_id']]) ? $activities[$childActivity['parent_id']] : null) : null;
+            ?>
+            <div class="bg-white rounded-xl shadow-md p-6 mb-8 border border-gray-100">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Detail Timesheet</h2>
+                    <div>
+                        <a href="?page=timesheet&action=edit&id=<?= $prog['id'] ?>" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg mr-2">
+                            <i class="fas fa-edit mr-2"></i> Edit
+                        </a>
+                        <a href="?page=timesheet&action=list" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg">
+                            <i class="fas fa-arrow-left mr-2"></i> Kembali
+                        </a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <p class="text-sm text-gray-500">ID Progress</p>
+                        <p class="font-medium text-lg"><?= $prog['id'] ?></p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Child Activity</p>
+                        <p class="font-medium text-lg"><?= $childActivity ? $childActivity['name'] . ' (' . $childActivity['id'] . ')' : 'Child Activity tidak ditemukan' ?></p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Parent Activity</p>
+                        <p class="font-medium"><?= $parentActivity ? $parentActivity['name'] . ' (' . $parentActivity['id'] . ')' : '-' ?></p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500">Tanggal Input</p>
+                        <p class="font-medium"><?= date('d M Y H:i', strtotime($prog['created_at'])) ?></p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <p class="text-sm text-gray-500">Keterangan</p>
+                        <p class="font-medium"><?= $prog['remark'] ?: '-' ?></p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <p class="text-sm text-gray-500">Foto</p>
+                        <p class="font-medium"><?= '<img src="' . $prog['img'] . '" alt="Foto" width="240" height="200">' ?: '-' ?></p>
+                    </div>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+                <span class="block sm:inline">Aksi tidak valid atau progress tidak ditemukan.</span>
             </div>
         <?php endif; ?>
     <?php else: ?>
