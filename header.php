@@ -72,7 +72,9 @@ $name_menu = [
   'region' => 'Region',
   'external' => 'Data External',
   'geoserver' => 'Geoserver',
-  'custom-query' => 'Custom Query'
+  'custom-query' => 'Custom Query',
+  'galery' => 'Galery',
+  'fasilitas' => 'Fasilitas',
 ];
 ?>
 
