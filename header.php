@@ -253,7 +253,7 @@ $name_menu = [
             <a href="fasilitas" @click="currentMenu = 'productionSummary'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Fasilitas') ? 'sidebar-item active' : ''; ?>">Fasilitas</a>
             <a href="organisasi" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Organisasi') ? 'sidebar-item active' : ''; ?>">Organisasi</a>
             <a href="pelatihan" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Pelatihan') ? 'sidebar-item active' : ''; ?>">Pelatihan</a>
-            <a href="aktivitas" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Aktivity') ? 'sidebar-item active' : ''; ?>">Aktivitas</a>
+            <a href="aktivitas" @click="currentMenu = 'dataExport'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black hidden <?php echo ($name_menu[$modified_uri] == 'Aktivity') ? 'sidebar-item active' : ''; ?>">Aktivitas</a>
           </div>
         </div>
 
