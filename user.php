@@ -391,7 +391,7 @@ $user_id = isset($_GET['id']) ? $_GET['id'] : '';
                                 <div>
                                     <label for="user_type" class="block text-sm font-medium text-gray-700">Role<span class="text-red-500">*</span></label>
                                     <select id="user_type" name="user_type" required
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" onchange="checkUserRole(this)">
                                         <option value="">Pilih Role</option>
                                         <option value="Super Admin" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Super Admin' ? 'selected' : '' ?>>Super Admin</option>
                                         <option value="Admin" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Admin' ? 'selected' : '' ?>>Admin</option>
@@ -399,6 +399,10 @@ $user_id = isset($_GET['id']) ? $_GET['id'] : '';
                                         <option value="Staff" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Staff' ? 'selected' : '' ?>>Staff</option>
                                         <option value="Admin ICS" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Admin ICS' ? 'selected' : '' ?>>Admin ICS</option>
                                     </select>
+                                    <!-- Notifikasi untuk persetujuan -->
+                                    <div id="notification" class="mt-4 hidden">
+                                        <small class="text-yellow-600">Perhatian: Super Admin membutuhkan persetujuan dari Manager untuk aktivasi. Status akan tetap non-aktif sampai persetujuan diberikan.</small>
+                                    </div>
                                 </div>
                                 <div>
                                     <label for="ics_type" class="block text-sm font-medium text-gray-700">ICS</label>
@@ -589,7 +593,6 @@ $user_id = isset($_GET['id']) ? $_GET['id'] : '';
         </div>
     </div>
 </div>
-
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -898,6 +901,30 @@ $user_id = isset($_GET['id']) ? $_GET['id'] : '';
         }, 3000); // Waktu simulasi upload (3 detik)
     }
 
+    function checkUserRole(selectElement) {
+        // Mendapatkan nilai role yang dipilih
+        var role = selectElement.value;
+
+        // Mendapatkan elemen status dan notification
+        var statusSelect = document.getElementById('status');
+        var notification = document.getElementById('notification');
+
+        // Jika role yang dipilih adalah Super Admin, set status ke non-aktif dan tampilkan notifikasi
+        if (role === 'Super Admin') {
+            statusSelect.value = 'inactive'; // Menetapkan status ke non-aktif
+            notification.classList.remove('hidden'); // Menampilkan notifikasi
+        } else {
+            notification.classList.add('hidden'); // Menyembunyikan notifikasi jika role bukan Super Admin
+        }
+    }
+
+    // Menangani perubahan status saat halaman pertama kali dimuat
+    window.onload = function() {
+        var userRole = document.getElementById('user_type').value;
+        checkUserRole({
+            value: userRole
+        });
+    };
 
     // Function to show form (add/edit) dan menyembunyikan tabel
     function showForm(action, id = null) {
