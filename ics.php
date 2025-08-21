@@ -459,10 +459,10 @@ $paginatedICS = array_slice($filtered_ics, $startIndex, $itemsPerPage, true);
                                 </div>
                             </div>
                         </div>
-                        <!-- Dokumen & Logo & SOP -->
+                        <!-- Dokumen & Logo -->
                         <div class="mt-6 border-t pt-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4">Dokumen & Logo & SOP</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Dokumen & Logo</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Dokumen Legalitas (Maks. 10 file)</label>
                                     <div class="flex items-center">
@@ -484,17 +484,6 @@ $paginatedICS = array_slice($filtered_ics, $startIndex, $itemsPerPage, true);
                                         <span class="ml-2 text-sm text-gray-500">JPG, PNG (Maks. 2MB)</span>
                                     </div>
                                     <div id="logo-preview" class="mt-2"></div>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">SOP (Maks. 5 file)</label>
-                                    <div class="flex items-center">
-                                        <input type="file" multiple class="hidden" id="sop-upload" accept=".pdf,.doc,.docx">
-                                        <label for="sop-upload" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm">
-                                            <i class="fas fa-file-alt mr-2"></i>Unggah SOP
-                                        </label>
-                                        <span class="ml-2 text-sm text-gray-500">PDF, DOC (Maks. 5MB/file)</span>
-                                    </div>
-                                    <div id="sop-preview" class="mt-2"></div>
                                 </div>
                             </div>
                         </div>
@@ -550,6 +539,31 @@ $paginatedICS = array_slice($filtered_ics, $startIndex, $itemsPerPage, true);
                                     <label for="area_wilayah" class="block text-sm font-medium text-gray-700 mb-1">Area Wilayah</label>
                                     <input type="text" id="area_wilayah" name="area_wilayah" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Contoh: Kawasan Perkebunan Sawit">
                                 </div>
+                            </div>
+                        </div>
+                        <!-- SOP -->
+                        <div class="mt-6 border-t pt-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-lg font-medium text-gray-900">SOP</h3>
+                                <button type="button" onclick="tambahSOP()" class="text-sm bg-[#F0AB00] hover:bg-yellow-600 text-white px-3 py-1 rounded-lg">
+                                    <i class="fas fa-plus mr-1"></i>Tambah SOP
+                                </button>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">File</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200" id="fasilitas-list">
+                                        <!-- Data fasilitas akan diisi oleh JavaScript -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <!-- Fasilitas -->
@@ -1033,7 +1047,7 @@ $paginatedICS = array_slice($filtered_ics, $startIndex, $itemsPerPage, true);
                                 </div>
                             </div>
                         </div>
-                        <!-- Dokumen & Logo & SOP -->
+                        <!-- Dokumen & Logo -->
                         <div class="mt-6 border-t pt-6">
                             <h3 class="text-lg font-medium text-gray-900 mb-4">Dokumen & Logo & SOP</h3>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1418,6 +1432,52 @@ $paginatedICS = array_slice($filtered_ics, $startIndex, $itemsPerPage, true);
                 Ya, Hapus
             </button>
         </div>
+    </div>
+</div>
+<!-- Modal SOP -->
+<div id="sop-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold" id="sop-modal-title">Tambah SOP</h3>
+            <button onclick="hideFasilitasModal()" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form id="sop-form">
+            <input type="hidden" id="sop-id">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">SOP</label>
+                    <div class="flex items-center">
+                        <input type="file" multiple class="hidden" id="sop-upload" accept=".pdf,.doc,.docx">
+                        <label for="sop-upload" class="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm">
+                            <i class="fas fa-file-alt mr-2"></i>Unggah SOP
+                        </label>
+                        <span class="ml-2 text-sm text-gray-500">PDF, DOC (Maks. 5MB/file)</span>
+                    </div>
+                    <div id="sop-preview" class="mt-2"></div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                    <select id="sop-status" class="w-full px-3 py-2 border border-gray-300 rounded-lg" required>
+                        <option value="Aktif">Aktif</option>
+                        <option value="Tidak Aktif">Tidak Aktif</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Keterangan</label>
+                    <textarea id="sop-keterangan" class="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Keterangan SOP"></textarea>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3 mt-6">
+                <button type="button" onclick="hideSOPModal()" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+                    Batal
+                </button>
+                <button type="submit" class="px-4 py-2 bg-[#F0AB00] hover:bg-yellow-600 text-white rounded-lg">
+                    Simpan
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 <!-- Modal Fasilitas -->
