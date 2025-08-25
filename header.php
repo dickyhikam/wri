@@ -75,6 +75,7 @@ $name_menu = [
   'custom-query' => 'Custom Query',
   'galery' => 'Galery',
   'fasilitas' => 'Fasilitas',
+  'kpi_project' => 'KPI Project',
 ];
 ?>
 
@@ -173,6 +174,14 @@ $name_menu = [
             <a href="mitra" @click="currentMenu = 'partners'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Mitra & Organisasi') ? 'sidebar-item active' : ''; ?>">Mitra & Organisasi</a>
             <a href="kelompok_tani" @click="currentMenu = 'farmers_gt'" class="block px-4 py-2 rounded-md hover:bg-yellow-300 hover:text-black <?php echo ($name_menu[$modified_uri] == 'Kelompok Tani') ? 'sidebar-item active' : ''; ?>">Kelompok Tani</a>
           </div>
+        </div>
+
+        <!-- Project -->
+        <div <?php echo ($user['akun']['role'] == 'Super Admin' || $user['akun']['role'] == 'User ICS') ? '' : 'hidden'; ?>>
+          <a href="kpi_project" @click="currentMenu = 'kpi_project'" class="flex items-center px-6 py-3 <?php echo ($name_menu[$modified_uri] == 'KPI Project') ? 'sidebar-item active' : ''; ?>">
+            <i class="fas fa-book w-5 mr-3 text-[#f0ab00]"></i>
+            KPI Project
+          </a>
         </div>
 
         <!-- WorkPlan -->
