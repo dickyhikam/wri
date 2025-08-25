@@ -158,7 +158,20 @@ foreach ($dummyKPIProjects as $dummyKPIProject) {
                                                     <td class="border p-2 pl-6 text-gray-700"><?= htmlspecialchars($submenu2['activity']) ?></td>
                                                     <td class="border p-2 pl-6 text-gray-700"><?= htmlspecialchars($submenu2['target']) ?></td>
                                                     <td class="border p-2 pl-6 text-gray-700"><?= htmlspecialchars($submenu2['actual']) ?></td>
-                                                    <td class="border p-2 pl-6 text-gray-700"><?= htmlspecialchars($submenu2['achievement']) ?>%</td>
+                                                    <td class="border p-2 pl-6 text-gray-700">
+                                                        <div class="relative pt-1">
+                                                            <div class="flex mb-2 items-center justify-between">
+                                                                <span class="text-xs font-semibold inline-block py-1 uppercase rounded-full"><?= htmlspecialchars($submenu2['achievement']) ?>%</span>
+                                                            </div>
+                                                            <div class="flex mb-2">
+                                                                <!-- Progress bar background -->
+                                                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                                                    <!-- Progress bar fill, width is dynamic based on achievement -->
+                                                                    <div class="bg-blue-500 h-2.5 rounded-full" style="width: <?= htmlspecialchars($submenu2['achievement']) ?>%"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
