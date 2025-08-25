@@ -129,6 +129,14 @@ include 'header.php';
 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
 $user_id = isset($_GET['id']) ? $_GET['id'] : '';
 ?>
+<!-- CDN untuk jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- CDN untuk Select2 CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+<!-- CDN untuk Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 <main class="flex-1 flex flex-col overflow-hidden">
     <header class="h-20   shadow-sm flex items-center justify-between px-8">
@@ -361,132 +369,210 @@ $user_id = isset($_GET['id']) ? $_GET['id'] : '';
                 <div class="p-6">
                     <form id="user-form-element">
                         <input type="hidden" id="user_id" name="user_id" value="<?= $user_id ?>">
+                        <div>
+                            <label for="full_name" class="block text-sm font-medium text-gray-700">Nama Lengkap<span class="text-red-500">*</span></label>
+                            <input type="text" id="full_name" name="full_name" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                value="<?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['full_name']) : '' ?>">
+                        </div>
+                        <br>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-4">
-                                <div>
-                                    <label for="full_name" class="block text-sm font-medium text-gray-700">Nama Lengkap<span class="text-red-500">*</span></label>
-                                    <input type="text" id="full_name" name="full_name" required
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                        value="<?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['full_name']) : '' ?>">
-                                </div>
-                                <div>
-                                    <label for="email" class="block text-sm font-medium text-gray-700">Email<span class="text-red-500">*</span></label>
-                                    <input type="email" id="email" name="email" required
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                        value="<?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['email']) : '' ?>">
-                                </div>
-                                <div>
-                                    <label for="username" class="block text-sm font-medium text-gray-700">Username<span class="text-red-500">*</span></label>
-                                    <input type="text" id="username" name="username" required
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                        value="<?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['username']) : '' ?>">
-                                </div>
-                                <div>
-                                    <label for="phone_number" class="block text-sm font-medium text-gray-700">No Telp<span class="text-red-500">*</span></label>
-                                    <input type="text" id="phone_number" name="phone_number" required
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                        value="<?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['phone_number']) : '' ?>">
-                                </div>
-                                <div>
-                                    <label for="user_type" class="block text-sm font-medium text-gray-700">Role<span class="text-red-500">*</span></label>
-                                    <select id="user_type" name="user_type" required
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" onchange="checkUserRole(this)">
-                                        <option value="">Pilih Role</option>
-                                        <option value="Super Admin" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Super Admin' ? 'selected' : '' ?>>Super Admin</option>
-                                        <option value="Admin" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Admin' ? 'selected' : '' ?>>Admin</option>
-                                        <option value="Manager" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Manager' ? 'selected' : '' ?>>Manager</option>
-                                        <option value="Staff" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Staff' ? 'selected' : '' ?>>Staff</option>
-                                        <option value="Admin ICS" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Admin ICS' ? 'selected' : '' ?>>Admin ICS</option>
-                                    </select>
-                                    <!-- Notifikasi untuk persetujuan -->
-                                    <div id="notification" class="mt-4 hidden">
-                                        <small class="text-yellow-600">Perhatian: Super Admin membutuhkan persetujuan dari Manager untuk aktivasi. Status akan tetap non-aktif sampai persetujuan diberikan.</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label for="ics_type" class="block text-sm font-medium text-gray-700">ICS</label>
-                                    <select id="ics_type" name="ics_type"
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih ICS</option>
-                                        <option value="ICS Siak" <?= $action == 'edit' && $data_pengguna[$user_id]['ics_type'] == 'ICS Siak' ? 'selected' : '' ?>>ICS Siak</option>
-                                        <option value="ICS Pekan" <?= $action == 'edit' && $data_pengguna[$user_id]['ics_type'] == 'ICS Pekan' ? 'selected' : '' ?>>ICS Pekan</option>
-                                    </select>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email<span class="text-red-500">*</span></label>
+                                <input type="email" id="email" name="email" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    value="<?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['email']) : '' ?>">
+                            </div>
+                            <div>
+                                <label for="username" class="block text-sm font-medium text-gray-700">Username<span class="text-red-500">*</span></label>
+                                <input type="text" id="username" name="username" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    value="<?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['username']) : '' ?>">
+                            </div>
+                            <div>
+                                <label for="phone_number" class="block text-sm font-medium text-gray-700">No Telp<span class="text-red-500">*</span></label>
+                                <input type="text" id="phone_number" name="phone_number" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    value="<?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['phone_number']) : '' ?>">
+                            </div>
+                            <div>
+                                <label for="user_type" class="block text-sm font-medium text-gray-700">Role<span class="text-red-500">*</span></label>
+                                <select id="user_type" name="user_type" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" onchange="checkUserRole(this)">
+                                    <option value="">Pilih Role</option>
+                                    <option value="Super Admin" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Super Admin' ? 'selected' : '' ?>>Super Admin</option>
+                                    <option value="Admin" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Admin' ? 'selected' : '' ?>>Admin</option>
+                                    <option value="Manager" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Manager' ? 'selected' : '' ?>>Manager</option>
+                                    <option value="Staff" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Staff' ? 'selected' : '' ?>>Staff</option>
+                                    <option value="Admin ICS" <?= $action == 'edit' && $data_pengguna[$user_id]['user_type'] == 'Admin ICS' ? 'selected' : '' ?>>Admin ICS</option>
+                                </select>
+                                <!-- Notifikasi untuk persetujuan -->
+                                <div id="notification" class="mt-4 hidden">
+                                    <small class="text-yellow-600">Perhatian: Super Admin membutuhkan persetujuan dari Manager untuk aktivasi. Status akan tetap non-aktif sampai persetujuan diberikan.</small>
                                 </div>
                             </div>
-
-                            <div class="space-y-4">
-                                <div>
-                                    <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap<span class="text-red-500">*</span></label>
-                                    <textarea id="alamat" name="alamat" rows="2" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"><?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['alamat']) : '' ?></textarea>
-                                </div>
-                                <div>
-                                    <label for="province_id" class="block text-sm font-medium text-gray-700">Provinsi</label>
-                                    <select id="province_id" name="province_id"
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih Provinsi</option>
-                                        <option value="1" <?= $action == 'edit' && $data_pengguna[$user_id]['province_id'] == '1' ? 'selected' : '' ?>>Aceh</option>
-                                        <option value="2" <?= $action == 'edit' && $data_pengguna[$user_id]['province_id'] == '2' ? 'selected' : '' ?>>Bali</option>
-                                        <option value="3" <?= $action == 'edit' && $data_pengguna[$user_id]['province_id'] == '3' ? 'selected' : '' ?>>Banten</option>
-                                        <option value="4" <?= $action == 'edit' && $data_pengguna[$user_id]['province_id'] == '4' ? 'selected' : '' ?>>Yogyakarta</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="city_id" class="block text-sm font-medium text-gray-700">Kota</label>
-                                    <select id="city_id" name="city_id"
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih Kota</option>
-                                        <option value="1" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '1' ? 'selected' : '' ?>>Banda Aceh</option>
-                                        <option value="2" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '2' ? 'selected' : '' ?>>Denpasar</option>
-                                        <option value="3" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '3' ? 'selected' : '' ?>>Serang</option>
-                                        <option value="4" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '4' ? 'selected' : '' ?>>Yogyakarta</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="subdistrict_id" class="block text-sm font-medium text-gray-700">Kecamatan</label>
-                                    <select id="subdistrict_id" name="subdistrict_id"
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih Kecamatan</option>
-                                        <option value="1" <?= $action == 'edit' && $data_pengguna[$user_id]['subdistrict_id'] == '1' ? 'selected' : '' ?>>Kecamatan 1</option>
-                                        <option value="2" <?= $action == 'edit' && $data_pengguna[$user_id]['subdistrict_id'] == '2' ? 'selected' : '' ?>>Kecamatan 2</option>
-                                        <option value="3" <?= $action == 'edit' && $data_pengguna[$user_id]['subdistrict_id'] == '3' ? 'selected' : '' ?>>Kecamatan 3</option>
-                                        <option value="4" <?= $action == 'edit' && $data_pengguna[$user_id]['subdistrict_id'] == '4' ? 'selected' : '' ?>>Kecamatan 4</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="village_id" class="block text-sm font-medium text-gray-700">Desa</label>
-                                    <select id="village_id" name="village_id"
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="">Pilih Desa</option>
-                                        <option value="1" <?= $action == 'edit' && $data_pengguna[$user_id]['village_id'] == '1' ? 'selected' : '' ?>>Kantor Pusat</option>
-                                        <option value="2" <?= $action == 'edit' && $data_pengguna[$user_id]['village_id'] == '2' ? 'selected' : '' ?>>Desa Makmur</option>
-                                        <option value="3" <?= $action == 'edit' && $data_pengguna[$user_id]['village_id'] == '3' ? 'selected' : '' ?>>Desa Sejahtera</option>
-                                        <option value="4" <?= $action == 'edit' && $data_pengguna[$user_id]['village_id'] == '4' ? 'selected' : '' ?>>Desa Baru</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="status" class="block text-sm font-medium text-gray-700">Status<span class="text-red-500">*</span></label>
-                                    <select id="status" name="status" required
-                                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                        <option value="active" <?= $action == 'edit' && $data_pengguna[$user_id]['status'] == 'active' ? 'selected' : '' ?>>Aktif</option>
-                                        <option value="inactive" <?= $action == 'edit' && $data_pengguna[$user_id]['status'] == 'inactive' ? 'selected' : '' ?>>Non-Aktif</option>
-                                    </select>
-                                </div>
+                            <div>
+                                <label for="ics_type" class="block text-sm font-medium text-gray-700">ICS</label> <select id="ics_type" name="ics_type" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Pilih ICS</option>
+                                    <option value="ICS Siak" <?= $action == 'edit' && $data_pengguna[$user_id]['ics_type'] == 'ICS Siak' ? 'selected' : '' ?>>ICS Siak</option>
+                                    <option value="ICS Pekan" <?= $action == 'edit' && $data_pengguna[$user_id]['ics_type'] == 'ICS Pekan' ? 'selected' : '' ?>>ICS Pekan</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-700">Status<span class="text-red-500">*</span></label>
+                                <select id="status" name="status" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="active" <?= $action == 'edit' && $data_pengguna[$user_id]['status'] == 'active' ? 'selected' : '' ?>>Aktif</option>
+                                    <option value="inactive" <?= $action == 'edit' && $data_pengguna[$user_id]['status'] == 'inactive' ? 'selected' : '' ?>>Non-Aktif</option>
+                                </select>
                             </div>
                         </div>
-
                         <br>
-                        <div class="flex justify-end space-x-3">
-                            <a href="user" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">Batal</a>
-                            <button type="button" id="saveUserBtn" onclick="saveUserData()" class="ml-2 bg-yellow-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-yellow-400 h-full">
-                                <span id="btnUserText">Simpan</span> <!-- Teks tombol -->
-                                <svg id="loadingUserSpinner" class="hidden w-5 h-5 animate-spin mr-2 text-white bg-yellow-500 hover:bg-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
-                                </svg>
-                            </button>
+
+                        <div>
+                            <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat Lengkap<span class="text-red-500">*</span></label>
+                            <textarea id="alamat" name="alamat" rows="2" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"><?= $action == 'edit' ? htmlspecialchars($data_pengguna[$user_id]['alamat']) : '' ?></textarea>
+                        </div>
+                        <br>
+
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <div>
+                                <label for="province_id" class="block text-sm font-medium text-gray-700">Provinsi</label>
+                                <select id="province_id" name="province_id"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Pilih Provinsi</option>
+                                    <option value="1" <?= $action == 'edit' && $data_pengguna[$user_id]['province_id'] == '1' ? 'selected' : '' ?>>Aceh</option>
+                                    <option value="2" <?= $action == 'edit' && $data_pengguna[$user_id]['province_id'] == '2' ? 'selected' : '' ?>>Bali</option>
+                                    <option value="3" <?= $action == 'edit' && $data_pengguna[$user_id]['province_id'] == '3' ? 'selected' : '' ?>>Banten</option>
+                                    <option value="4" <?= $action == 'edit' && $data_pengguna[$user_id]['province_id'] == '4' ? 'selected' : '' ?>>Yogyakarta</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="city_id" class="block text-sm font-medium text-gray-700">Kota</label>
+                                <select id="city_id" name="city_id"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Pilih Kota</option>
+                                    <option value="1" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '1' ? 'selected' : '' ?>>Banda Aceh</option>
+                                    <option value="2" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '2' ? 'selected' : '' ?>>Denpasar</option>
+                                    <option value="3" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '3' ? 'selected' : '' ?>>Serang</option>
+                                    <option value="4" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '4' ? 'selected' : '' ?>>Yogyakarta</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="subdistrict_id" class="block text-sm font-medium text-gray-700">Kecamatan</label>
+                                <select id="subdistrict_id" name="subdistrict_id"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Pilih Kecamatan</option>
+                                    <option value="1" <?= $action == 'edit' && $data_pengguna[$user_id]['subdistrict_id'] == '1' ? 'selected' : '' ?>>Kecamatan 1</option>
+                                    <option value="2" <?= $action == 'edit' && $data_pengguna[$user_id]['subdistrict_id'] == '2' ? 'selected' : '' ?>>Kecamatan 2</option>
+                                    <option value="3" <?= $action == 'edit' && $data_pengguna[$user_id]['subdistrict_id'] == '3' ? 'selected' : '' ?>>Kecamatan 3</option>
+                                    <option value="4" <?= $action == 'edit' && $data_pengguna[$user_id]['subdistrict_id'] == '4' ? 'selected' : '' ?>>Kecamatan 4</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="village_id" class="block text-sm font-medium text-gray-700">Desa</label>
+                                <select id="village_id" name="village_id"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Pilih Desa</option>
+                                    <option value="1" <?= $action == 'edit' && $data_pengguna[$user_id]['village_id'] == '1' ? 'selected' : '' ?>>Kantor Pusat</option>
+                                    <option value="2" <?= $action == 'edit' && $data_pengguna[$user_id]['village_id'] == '2' ? 'selected' : '' ?>>Desa Makmur</option>
+                                    <option value="3" <?= $action == 'edit' && $data_pengguna[$user_id]['village_id'] == '3' ? 'selected' : '' ?>>Desa Sejahtera</option>
+                                    <option value="4" <?= $action == 'edit' && $data_pengguna[$user_id]['village_id'] == '4' ? 'selected' : '' ?>>Desa Baru</option>
+                                </select>
+                            </div>
                         </div>
                     </form>
+                </div>
+            </div>
+
+            <div id="user-form" class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Pengaturan Akses Data</h2>
+                    <form id="user-form-element">
+                        <input type="hidden" id="user_id" name="user_id" value="<?= $user_id ?>">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- ICS Field -->
+                            <div>
+                                <label for="ics_type_akses" class="block text-sm font-medium text-gray-700">ICS</label>
+                                <select id="ics_type_akses" name="ics_type[]" multiple="multiple" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="All ICS">All ICS</option>
+                                    <option value="ICS Siak">ICS Siak</option>
+                                    <option value="ICS Pekan">ICS Pekan</option>
+                                    <option value="ICS Riau">ICS Riau</option>
+                                </select>
+                            </div>
+
+                            <!-- City Field -->
+                            <div>
+                                <label for="city_id_akses" class="block text-sm font-medium text-gray-700">Kota</label>
+                                <select id="city_id_akses" name="city_id[]" multiple="multiple" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="All Kota">All Kota</option>
+                                    <option value="1" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '1' ? 'selected' : '' ?>>Banda Aceh</option>
+                                    <option value="2" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '2' ? 'selected' : '' ?>>Denpasar</option>
+                                    <option value="3" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '3' ? 'selected' : '' ?>>Serang</option>
+                                    <option value="4" <?= $action == 'edit' && $data_pengguna[$user_id]['city_id'] == '4' ? 'selected' : '' ?>>Yogyakarta</option>
+                                </select>
+                            </div>
+
+                            <!-- Initialize Select2 -->
+                            <script>
+                                $(document).ready(function() {
+                                    // Initialize Select2 for ICS
+                                    $('#ics_type_akses').select2({
+                                        placeholder: "Pilih Akses Data ICS",
+                                        width: '100%',
+                                        dropdownAutoWidth: true,
+                                        templateResult: function(state) {
+                                            if (!state.id) {
+                                                return state.text;
+                                            }
+                                            var $state = $(
+                                                '<span class="flex items-center gap-2">' + state.text + '</span>'
+                                            );
+                                            return $state;
+                                        },
+                                        templateSelection: function(state) {
+                                            return state.text;
+                                        }
+                                    });
+
+                                    // Initialize Select2 for City
+                                    $('#city_id_akses').select2({
+                                        placeholder: "Pilih Kota",
+                                        width: '100%',
+                                        dropdownAutoWidth: true,
+                                        templateResult: function(state) {
+                                            if (!state.id) {
+                                                return state.text;
+                                            }
+                                            var $state = $(
+                                                '<span class="flex items-center gap-2">' + state.text + '</span>'
+                                            );
+                                            return $state;
+                                        },
+                                        templateSelection: function(state) {
+                                            return state.text;
+                                        }
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="user-form" class=" overflow-hidden mb-6">
+                <div class="flex justify-end space-x-3">
+                    <a href="user" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">Batal</a>
+                    <button type="button" id="saveUserBtn" onclick="saveUserData()" class="ml-2 bg-yellow-500 text-white py-2 px-4 rounded-md shadow-sm hover:bg-yellow-400 h-full">
+                        <span id="btnUserText">Simpan</span> <!-- Teks tombol -->
+                        <svg id="loadingUserSpinner" class="hidden w-5 h-5 animate-spin mr-2 text-white bg-yellow-500 hover:bg-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0H4z"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
 
